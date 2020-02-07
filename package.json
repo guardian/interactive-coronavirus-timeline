@@ -54,7 +54,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^4.0.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "mustache": "^2.3.0",
     "natives": "^1.1.6",
     "promise-polyfill": "^6.0.2",
