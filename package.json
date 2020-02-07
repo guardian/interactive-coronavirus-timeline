@@ -51,6 +51,8 @@
   },
   "dependencies": {
     "core-js": "^2.6.2",
+    "d3": "^5.15.0",
+    "d3-geo-projection": "^2.8.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^4.0.2",
@@ -61,6 +63,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "require-uncached": "^1.0.3",
+    "topojson": "^3.0.2",
     "unfetch": "^3.0.0"
   }
 }
