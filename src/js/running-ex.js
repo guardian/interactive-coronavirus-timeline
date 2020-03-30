@@ -9,27 +9,37 @@ const d3 = Object.assign({}, d3B, geo);
 
 const atomEl = $('.interactive-wrapper');
 
+let isMobile = window.matchMedia('(max-width: 620px)').matches;
+
 let width = atomEl.getBoundingClientRect().width;
-let height = width * 0.5;
+let height = isMobile ? width * 1.6 : width * 0.5;
 
 let points = [{
-    type: "Point",
-    coordinates: [102.4475613, 34.2710744],
-    zoom: 6,
-    location: "China",
-    icon: "\uF015"
+    area: ['China']
 }, {
-    type: "Point",
-    coordinates: [138.9170553, 35.9780493],
-    zoom: 12,
-    location: "Japan",
-    icon: "\uF236"
+    area: ['Japan', 'Taiwan','Thailand', 'United Sates']
 }, {
-    type: "Point",
-    coordinates: [128.4074583, 36.2336453],
-    zoom: 14,
-    location: "South Korea",
-    icon: "\uF236"
+    area: ['Macau', 'South Korea']
+}, {
+    area: ['Hong Kong', 'Singapore', 'Vietnam']
+}, {
+    area: ['France']
+}, {
+    area: ['Malaysia', 'Nepal']
+}, {
+    area: ['Australia', 'Canada']
+}, {
+    area: ['Cambodia', 'Germany', 'Sri Lanka']
+}, {
+    area: ['Finland', 'United Arab Emirates']
+}, {
+    area: ['India', 'Philippines']
+}, {
+    area: ['Italy', 'Russia', 'Sweden', 'United Kingdom']
+}, {
+    area: ['Spain']
+}, {
+    area: ['Belgium']
 }];
 
 const interpolateRotation = (initial, end) =>{
@@ -58,44 +68,59 @@ d3.select('.interactive-wrapper').selectAll('button')
 .data(points)
 .enter()
 .append('button')
-.text(d => d.location)
+.text(d => d.area)
 .on('click', d => {
 
-    let feature = topojson.feature(countries, countries.objects.countries).features.find(c => c.properties.CNTRY_NAME === d.location)
 
+    let selected = d3.set(d.area)
 
-    let interpolationR = interpolateRotation(projection.rotate(), [-d3.geoCentroid(feature)[0], -d3.geoCentroid(feature)[1]]);
+    let feature = topojson.merge(countries, countries.objects.countries.geometries.filter(c => selected.has(c.properties.CNTRY_NAME)))
 
+    let point = d3.geoCentroid(feature);
 
-    let scale = getScale(feature)
+    let currentRotate = projection.rotate();
+    let currentScale = projection.scale();
 
+    projection.rotate([-point[0], -point[1]]);
+    path.projection(projection);
 
-    let interpolationS = interpolateScale(projection.scale(), scale)
+    let bounds  = path.bounds(feature);
+    let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
+    let nextRotate = projection.rotate();
 
+    console.log(nextScale)
 
     d3.transition()
     .duration(1000)
-    .tween('tween', d => (t) => {
+    .tween('tween', d => {
 
-        projection.rotate(interpolationR(t));
+        let r = d3.interpolate(currentRotate, nextRotate);
+        let s = d3.interpolate(currentScale, nextScale);
 
-        projection.scale(interpolationS(t))
+        return (t) => {
 
-        context.clearRect(0, 0, width, height);
+            projection
+            .rotate(r(t))
+            .scale(s(t));
 
-        context.fillStyle = colorGlobe;
-        context.beginPath();
-        path(sphere);
-        context.fill();
+            path.projection(projection);
 
-        context.fillStyle = colorLand;
-        context.beginPath();
-        path(land);
-        context.fill();
+            context.clearRect(0, 0, width, height);
 
-        context.strokeStyle = lineLand;
-        context.lineWidth = 0.5;
-        context.stroke();
+            context.fillStyle = colorGlobe;
+            context.beginPath();
+            path(sphere);
+            context.fill();
+
+            context.fillStyle = colorLand;
+            context.beginPath();
+            path(land);
+            context.fill();
+
+            context.strokeStyle = lineLand;
+            context.lineWidth = 0.5;
+            context.stroke();
+        }
 
 
     })
@@ -108,20 +133,26 @@ const canvas = d3.select(".interactive-wrapper").append("canvas")
 
 let context = canvas.node().getContext("2d");
 
-let point = d3.geoCentroid(points[0]);
+let selected = d3.set(points[0].area)
 
-let chinaFeature = topojson.feature(countries, countries.objects.countries).features.find(c => c.properties.CNTRY_NAME === 'China')
+let feature = topojson.merge(countries, countries.objects.countries.geometries.filter(c => selected.has(c.properties.CNTRY_NAME)))
+
+let point = d3.geoCentroid(feature);
 
 let projection = d3.geoOrthographic()
-.rotate([-point[0], -point[1]]);
+.rotate([-point[0], -point[1]])
+.translate([width / 2, height / 2])
+.clipAngle(90);
 
 let path = d3.geoPath()
 .projection(projection)
 .context(context);
 
+let bounds = path.bounds(feature);
 
-projection.scale(getScale(chinaFeature))
-.rotate([-point[0], -point[1]]);
+let scale = projection.scale() * 1 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2));
+
+projection.scale(isMobile ? 484.1445606022003 : 755.358861794657)
 
 let colorLand = "#f6f6f6";
 let lineLand = "#cccccc";
@@ -130,7 +161,6 @@ let textColors = "#333";
 
 let sphere = { type: "Sphere" };
 let land = topojson.feature(countries, countries.objects.countries);
-let i = 0;
 
 context.fillStyle = colorGlobe;
 context.beginPath();
@@ -145,8 +175,3 @@ context.fill();
 context.strokeStyle = lineLand;
 context.lineWidth = 0.5;
 context.stroke();
-
-
-
-
-

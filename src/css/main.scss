@@ -1,6 +1,7 @@
 @import "mq";
 @import "fonts";
 @import "palette";
+@import "scrolly";
 
 // Uncomment for embeds
 //@import "embed";
@@ -16,11 +17,6 @@
 	max-width: 100%;
 }
 
-button{
-	width: auto;
-	height: 20px;
-	background: white;
-
-	padding: 12px;
-
+.scroll-text__div{
+	width: 50%;
 }

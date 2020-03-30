@@ -5,120 +5,90 @@ import * as d3B from 'd3'
 import { $ } from './util'
 import countries from '../assets/countries.json'
 
-const d3 = Object.assign({}, d3B, geo);
+export default (data) => {
 
-const atomEl = $('.interactive-wrapper');
+    const d3 = Object.assign({}, d3B, geo);
 
-let width = 400;
-let height = width;
+    const atomEl = $('.interactive-wrapper');
 
-let svg = d3.select('.interactive-wrapper').append('svg')
-.attr('width', width)
-.attr('height', height);
+    let isMobile = window.matchMedia('(max-width: 620px)').matches;
 
-let projection = d3.geoOrthographic()
-.rotate([-102,-20]);
+    let width = isMobile ? 300 : 400;
+    let height = width;
 
-const center = [width/2, height/2];
+    const canvas = d3.select(".interactive-wrapper").append("canvas")
+    .attr("width", width)
+    .attr("height", height);
 
-let data =[];
+    const context = canvas.node().getContext("2d");
 
-let path = d3.geoPath()
-.projection(projection);
+    const center = [width/2, height/2];
 
-projection.fitExtent([[0,0], [width,height]], topojson.feature(countries, countries.objects.countries));
+    const projection = d3.geoOrthographic()
+    .rotate([-102,-20])
+    .translate(center);
 
-const drawMap = () =>{
+    projection.fitExtent([[10,10], [width-10,height-10]], topojson.feature(countries, countries.objects.countries));
 
-	const map = svg.selectAll('path')
-				.data(topojson.feature(countries, countries.objects.countries).features)
+    //let data =[];
 
-	map
-	.enter()
-	.append('path')
-	.merge(map)
-	.attr('d', path)
-}
+    let path = d3.geoPath()
+    .projection(projection)
+    .context(context);
 
-const drawCircles = () => {
+    let sphere = { type: "Sphere" };
+    let land = topojson.feature(countries, countries.objects.countries);
 
-	const markers = svg.selectAll('circle')
-                    .data(data);
+    const drawMap = () =>{
 
-	markers
-	.enter()
-	.append('circle')
-	.merge(markers)
-	.attr('cx', d => projection([d[1], d[0]])[0])
-	.attr('cy', d => projection([d[1], d[0]])[1])
-	.attr('fill', d => {
-                        const coordinate = [d[1], d[0]];
-                        const gdistance = d3.geoDistance(coordinate, projection.invert(center));
-                        return gdistance > 1.57 ? 'none' : 'red';
-                    })
-	.attr('r', 3)
-}
+        context.clearRect(0, 0, width, height);
 
+        context.fillStyle = "#fffff3";
+        context.beginPath();
+        path(sphere);
+        context.fill();
 
+        context.fillStyle = "#f6f6f6";
+        context.beginPath();
+        path(land);
+        context.fill();
 
+        context.strokeStyle = "#cccccc";
+        context.lineWidth = 0.5;
+        context.stroke();
 
-loadJson('https://interactive.guim.co.uk/docsdata-test/1C7AlDFnxKzy1Tw8Rk9mP2wHNlUSEN22tfAXhN6arCNc.json')
-.then(fileRaw => {
+        data.map(d => {
 
-	
+            let posX = projection([d[1], d[0]])[0];
+            let posY = projection([d[1], d[0]])[1];
 
-	fileRaw.sheets.cases.map(place => {
-		data.push([place.Lat,place.Long])
-	})
+            let coordinate = [+d[1], +d[0]];
 
-	drawMap();
+            let gdistance = d3.geoDistance(coordinate, projection.invert(center));
 
-	drawCircles(data)
+            context.fillStyle = 'red';
 
-	let timer = d3.timer( (i) => {
-                    projection.rotate([0.005 * i - 120, -30, 0]);
-                    svg.selectAll("path").attr("d", path);
-
-                    if(i > 10000)
-                    {
-
-                    	timer.stop()
-
-                    /*	svg.selectAll("path").interrupt().transition()
-            					.duration(500).ease(d3.easeLinear)
-            					.attrTween("d", projectionTween(projection, projection = d3.geoEquirectangular()))*/
-
-                    	
-                    }
-
-                    drawCircles();
-                    drawMap()
-
-
-                    
-
-
-                    //console.log(i)
-                });
-})
-
-function projectionTween(projection0, projection1) {
-  return function(d) {
-    var t = 0;
-    var projection = d3.geoProjection(project)
-        .scale(1)
-        .translate([width /2, height / 2]);
-
-    var path = d3.geoPath(projection);
-    function project(λ, φ) {
-      λ *= 180 / Math.PI, φ *= 180 / Math.PI;
-      var p0 = projection0([λ, φ]), p1 = projection1([λ, φ]);
-      return [(1 - t) * p0[0] + t * p1[0], (1 - t) * -p0[1] + t * -p1[1]];
+            if( gdistance < 1.57)
+            {
+                context.beginPath()
+                context.arc(posX, posY, 3, 0, Math.PI*2)
+                context.fill();
+            }
+        })
     }
-    return function(_) {
-      t = _;
-      return path(d);
-    };
-  };
+
+
+
+
+        let timer = d3.timer( (i) => {
+
+            projection.rotate([0.01 * i - 120, -30, 0]);
+
+            drawMap()
+
+        });
+
 }
+
+
 
