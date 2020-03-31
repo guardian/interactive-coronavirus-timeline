@@ -1,7 +1,11 @@
 import loadJson from '../components/load-json'
 import { select } from 'd3-selection'
+import { set } from 'd3-collection'
 import ScrollyTeller from "./scrollyteller"
 import { updateMap } from './globe.js'
+import countriesLow from '../assets/countries__.json'
+
+import * as topojson from 'topojson'
 
 const points = [{
     area: ['China'],
@@ -97,7 +101,19 @@ loadJson('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH
     return Object.assign({}, d, { cases })
   })
 
-  pointsWithCases.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => updateMap(d, d.cases)}))
+
+  const pointsWithFeature = pointsWithCases.map(d => {
+    const cSet = set(d.area)
+    return Object.assign({}, d, {
+      cSet,
+      features: topojson.feature(countriesLow, {
+        type: "GeometryCollection",
+        geometries: countriesLow.objects.countries.geometries.filter(c => cSet.has(c.properties.NAME))
+      })
+    })
+  })
+
+  pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => updateMap(d, d.cases) }))
 
   scrolly.watchScroll();
 })
