@@ -1,13 +1,7 @@
-//import rotating from './rotating-globe.js'
-import globe from './globe.js'
 import loadJson from '../components/load-json'
-import * as d3 from 'd3'
-
+import { select } from 'd3-selection'
 import ScrollyTeller from "./scrollyteller"
-
 import { updateMap } from './globe.js'
-
-
 
 const points = [{
     area: ['China'],
@@ -52,41 +46,20 @@ const points = [{
 
 loadJson('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH1XydmGx7U3n9B2pESmI.json')
 .then(fileRaw => {
+  const dates = Object.keys(fileRaw.sheets.main_cases[0]).filter(key => key.indexOf(' ') > -1)
 
-
-  let data = [];
-  let currentDate =  points[0].date;
-
-
-  let places = []
-
-  fileRaw.sheets.main_cases.map((place, i) => {
-
-        //data.push([place.Lat,place.Long])
-
-        places.push({province:place['Province/State'], country:place['Country/Region'], lat:place.Lat, lon:place.Long, cases:[]})
-
-        Object.getOwnPropertyNames(place).map(name =>{
-          if(name.indexOf(' ') > -1)
-          {
-            places[i].cases.push({date:name, cases:+place[name]})
-          }
-        })
+  const places = fileRaw.sheets.main_cases.map(place => {
+    return {
+      province: place['Province/State'],
+      country: place['Country/Region'],
+      lat: place.Lat,
+      lon: place.Long,
+      cases: dates.map(date => ({ date, cases: place[date]}))
+    }
   })
 
-
-  //console.log(places)
-
-
-  //console.log(places)
-
-  //  rotating(data)
-
-  //globe()
-
-  points.map( (d,i) => {
-
-    let div = d3.select(".scroll-text")
+  points.forEach(d => {
+    let div = select(".scroll-text")
     .append('div')
     .attr('class', 'scroll-text__inner')
 
@@ -108,33 +81,23 @@ loadJson('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH
 
   });
 
-  points.map( (d,i) => {
+  const pointsWithCases = points.map(d => {
+    const currentDate = d.date;
+    let cases = []
 
-    scrolly.addTrigger({num: i+1 , do: () => {
+    places.forEach(p => {
+      let currentCases = p.cases.find(c => c.date === currentDate)
 
-      currentDate = points[i].date;
+      if (currentCases.cases > 0) {
+        cases.push({ lat: p.lat, lon: p.lon, cases: currentCases.cases })
+      }
 
-      let cases = []
+    });
 
-      places.map(p => {
-
-        let currentCases = (p.cases.find(c => c.date === currentDate))
-
-        if(currentCases.cases > 0)
-        {
-          cases.push({lat:p.lat, lon:p.lon, cases:currentCases.cases})
-        }
-
-      });
-
-      console.log(d)
-
-     updateMap(d, cases);
-
-    }});
-
+    return Object.assign({}, d, { cases })
   })
-  
-  scrolly.watchScroll();
 
+  pointsWithCases.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => updateMap(d, d.cases)}))
+
+  scrolly.watchScroll();
 })
