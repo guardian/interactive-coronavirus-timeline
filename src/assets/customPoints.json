@@ -3,21 +3,27 @@
     "area": [
       "China"
     ],
-    "date": "Jan 21"
+    "date": "Jan 21",
+    "totalDeathsMOCKDATA": 250,
+    "totalRecoveriesMOCKDATA": 250
   },
   {
     "area": [
       "China",
       "United States of America"
     ],
-    "date": "Jan 22"
+    "date": "Jan 22",
+    "totalDeathsMOCKDATA": 450,
+    "totalRecoveriesMOCKDATA": 450
   },
   {
     "area": [
       "Macao",
       "South Korea"
     ],
-    "date": "Jan 23"
+    "date": "Jan 23",
+    "totalDeathsMOCKDATA": 650,
+    "totalRecoveriesMOCKDATA": 650
   },
   {
     "area": [
@@ -25,27 +31,35 @@
       "Singapore",
       "Vietnam"
     ],
-    "date": "Jan 24"
+    "date": "Jan 24",
+    "totalDeathsMOCKDATA": 850,
+    "totalRecoveriesMOCKDATA": 850
   },
   {
     "area": [
       "France"
     ],
-    "date": "Jan 25"
+    "date": "Jan 25",
+    "totalDeathsMOCKDATA": 2950,
+    "totalRecoveriesMOCKDATA": 2950
   },
   {
     "area": [
       "Malaysia",
       "Nepal"
     ],
-    "date": "Jan 26"
+    "date": "Jan 26",
+    "totalDeathsMOCKDATA": 3250,
+    "totalRecoveriesMOCKDATA": 3250
   },
   {
     "area": [
       "Australia",
       "Canada"
     ],
-    "date": "Jan 27"
+    "date": "Jan 27",
+    "totalDeathsMOCKDATA": 5550,
+    "totalRecoveriesMOCKDATA": 5550
   },
   {
     "area": [
@@ -53,21 +67,27 @@
       "Germany",
       "Sri Lanka"
     ],
-    "date": "Jan 28"
+    "date": "Jan 28",
+    "totalDeathsMOCKDATA": 9950,
+    "totalRecoveriesMOCKDATA": 9950
   },
   {
     "area": [
       "Finland",
       "United Arab Emirates"
     ],
-    "date": "Jan 29"
+    "date": "Jan 29",
+    "totalDeathsMOCKDATA": 10000,
+    "totalRecoveriesMOCKDATA": 10000
   },
   {
     "area": [
       "India",
       "Philippines"
     ],
-    "date": "Jan 30"
+    "date": "Jan 30",
+    "totalDeathsMOCKDATA": 11000,
+    "totalRecoveriesMOCKDATA": 11000
   },
   {
     "area": [
@@ -76,18 +96,24 @@
       "Sweden",
       "United Kingdom"
     ],
-    "date": "Jan 31"
+    "date": "Jan 31",
+    "totalDeathsMOCKDATA": 12000,
+    "totalRecoveriesMOCKDATA": 12000
   },
   {
     "area": [
       "Spain"
     ],
-    "date": "Feb 1"
+    "date": "Feb 1",
+    "totalDeathsMOCKDATA": 13000,
+    "totalRecoveriesMOCKDATA": 13000
   },
   {
     "area": [
       "Belgium"
     ],
-    "date": "Feb 4"
+    "date": "Feb 4",
+    "totalDeathsMOCKDATA": 14000,
+    "totalRecoveriesMOCKDATA": 14000
   }
 ]

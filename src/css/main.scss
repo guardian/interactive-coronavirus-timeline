@@ -20,3 +20,49 @@
 .scroll-text__div{
 	width: 50%;
 }
+
+.gv-ticker {
+	@include mq(mobile) {
+    position: absolute;
+    top: 0;
+		display: flex;
+    justify-content: space-between;
+    max-width: 280px;
+    @include fs-textSans(3);
+
+		& > div {
+			padding-right: 24px;
+      padding-left: 8px;
+      border-left: 1px solid #dcdcdc;
+		}
+
+    & > div:first-of-type {
+      border-left: none;
+    }
+	}
+
+	@include mq(desktop) {
+    max-width: 480px;
+    border-top: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+    border-left: 1px solid #dcdcdc;
+    @include fs-titlepiece(1);
+    font-size: 32px;
+    bottom: 0;
+  }
+}
+
+.gv-toll {
+  @include mq(mobile) {
+    @include fs-titlepiece(1);
+    font-size: 32px;
+    // font-size: 32px;
+  }
+}
+
+.gv-ticker__cases {
+  color: $news-red;
+}
+.gv-ticker__recovered {
+  color: $sport-blue;
+}

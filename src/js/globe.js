@@ -17,7 +17,7 @@ let isMobile = window.matchMedia('(max-width: 620px)').matches;
 let width = atomEl.getBoundingClientRect().width;
 let height = isMobile ? width * 1.6 : 752 * width / 1260;
 
-const canvas = d3.select(".scroll-inner").append("canvas")
+const canvas = d3.select("canvas")
 .attr("width", width)
 .attr("height", height);
 

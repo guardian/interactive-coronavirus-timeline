@@ -1,16 +1,20 @@
-import { select } from 'd3-selection'
-// import { set } from 'd3-collection'
+import * as d3 from 'd3'
 import ScrollyTeller from "./scrollyteller"
 import { updateMap } from './globe.js'
-// import countriesLow from '../assets/countries__.json'
 import customPoints from '../assets/customPoints'
 import pointsWithFeature from '../assets/data'
+const casesCt = d3.select('.gv-ticker__cases')
+const deathsCt = d3.select('.gv-ticker__deaths')
+const recoveredCt = d3.select('.gv-ticker__recovered')
+
+casesCt.text(pointsWithFeature[0].totalCases);
+deathsCt.text(pointsWithFeature[0].totalDeathsMOCKDATA);
+recoveredCt.text(pointsWithFeature[0].totalRecoveriesMOCKDATA);
 
 updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
-// import * as topojson from 'topojson'
 
 customPoints.forEach(d => {
-  let div = select(".scroll-text")
+  let div = d3.select(".scroll-text")
   .append('div')
   .attr('class', 'scroll-text__inner')
 
@@ -31,6 +35,51 @@ const scrolly = new ScrollyTeller({
 
 });
 
-pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => updateMap(d, d.cases) }))
+pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
+  casesCt
+    .transition()
+    .duration(500)
+    .tween('text', function () {
+      const currentVal = parseInt(this.textContent.replace(/,/g, ""));
+      const i = d3.interpolate(currentVal, parseInt(d.totalCases))
+
+      console.log(currentVal)
+      return (t) => {
+        // if (i(t) !== 1) {
+        //   moreThan.style.display = "inline";
+        //   lessThan.style.display = "none";
+        // } else {
+        //   moreThan.style.display = "none";
+        //   lessThan.style.display = "inline";
+        // }
+        casesCt.text(parseInt(i(t)));
+      }
+    });
+  deathsCt
+    .transition()
+    .duration(500)
+    .tween('text', function () {
+      const currentVal = parseInt(this.textContent.replace(/,/g, ""));
+      const i = d3.interpolate(currentVal, parseInt(d.totalDeathsMOCKDATA))
+
+      console.log(currentVal)
+      return (t) => {
+        deathsCt.text(parseInt(i(t)));
+      }
+    });
+  recoveredCt
+    .transition()
+    .duration(500)
+    .tween('text', function () {
+      const currentVal = parseInt(this.textContent.replace(/,/g, ""));
+      const i = d3.interpolate(currentVal, parseInt(d.totalRecoveriesMOCKDATA))
+      return (t) => {
+        recoveredCt.text(parseInt(i(t)));
+      }
+    });
+
+
+  updateMap(d, d.cases) 
+}}))
 
 scrolly.watchScroll()

@@ -49,7 +49,8 @@ export async function render() {
             features: topojson.feature(countriesLow, {
                 type: "GeometryCollection",
                 geometries: countriesLow.objects.countries.geometries.filter(c => cSet.has(c.properties.NAME))
-            })
+            }),
+            totalCases: d.cases.map(c => c.cases).reduce((a, b) => Number(a) + Number(b))
         })
     })
     // console.log(pointsWithFeature)
