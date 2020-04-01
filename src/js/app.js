@@ -1,11 +1,12 @@
-import loadJson from '../components/load-json'
 import { select } from 'd3-selection'
-import { set } from 'd3-collection'
+// import { set } from 'd3-collection'
 import ScrollyTeller from "./scrollyteller"
 import { updateMap } from './globe.js'
-import countriesLow from '../assets/countries__.json'
+// import countriesLow from '../assets/countries__.json'
+import pointsWithFeature from '../assets/data'
 
-import * as topojson from 'topojson'
+updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
+// import * as topojson from 'topojson'
 
 const points = [{
     area: ['China'],
@@ -48,72 +49,28 @@ const points = [{
     date:'Feb 4'
 }];
 
-loadJson('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH1XydmGx7U3n9B2pESmI.json')
-.then(fileRaw => {
-  const dates = Object.keys(fileRaw.sheets.main_cases[0]).filter(key => key.indexOf(' ') > -1)
+points.forEach(d => {
+  let div = select(".scroll-text")
+  .append('div')
+  .attr('class', 'scroll-text__inner')
 
-  const places = fileRaw.sheets.main_cases.map(place => {
-    return {
-      province: place['Province/State'],
-      country: place['Country/Region'],
-      lat: place.Lat,
-      lon: place.Long,
-      cases: dates.map(date => ({ date, cases: place[date]}))
-    }
-  })
+  div.html(
+          '<div class="scroll-text__div">' +
+            '<p>'+ d.area +'</p>' +
+            '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non ligula eu magna luctus venenatis. Vestibulum eu auctor enim</p>' +
+          '</div>'
+          )
 
-  points.forEach(d => {
-    let div = select(".scroll-text")
-    .append('div')
-    .attr('class', 'scroll-text__inner')
-
-    div.html(
-            '<div class="scroll-text__div">' +
-              '<p>'+ d.area +'</p>' +
-              '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non ligula eu magna luctus venenatis. Vestibulum eu auctor enim</p>' +
-            '</div>'
-            )
-
-  })
-
-  const scrolly = new ScrollyTeller({
-
-    parent: document.querySelector("#scrolly-1"),
-    triggerTop: 1/3, // percentage from the top of the screen that the trigger should fire
-    triggerTopMobile: 0.75,
-    transparentUntilActive: true
-
-  });
-
-  const pointsWithCases = points.map(d => {
-    const currentDate = d.date;
-    let cases = []
-
-    places.forEach(p => {
-      let currentCases = p.cases.find(c => c.date === currentDate)
-
-      if (currentCases.cases > 0) {
-        cases.push({ lat: p.lat, lon: p.lon, cases: currentCases.cases })
-      }
-
-    });
-
-    return Object.assign({}, d, { cases })
-  })
-
-
-  const pointsWithFeature = pointsWithCases.map(d => {
-    const cSet = set(d.area)
-    return Object.assign({}, d, {
-      cSet,
-      features: topojson.feature(countriesLow, {
-        type: "GeometryCollection",
-        geometries: countriesLow.objects.countries.geometries.filter(c => cSet.has(c.properties.NAME))
-      })
-    })
-  })
-
-  pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => updateMap(d, d.cases) }))
-
-  scrolly.watchScroll();
 })
+
+const scrolly = new ScrollyTeller({
+  parent: document.querySelector("#scrolly-1"),
+  triggerTop: 1/3, // percentage from the top of the screen that the trigger should fire
+  triggerTopMobile: 0.75,
+  transparentUntilActive: true
+
+});
+
+pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => updateMap(d, d.cases) }))
+
+scrolly.watchScroll()
