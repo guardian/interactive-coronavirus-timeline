@@ -5,7 +5,8 @@
     ],
     "date": "Jan 21",
     "totalDeathsMOCKDATA": 250,
-    "totalRecoveriesMOCKDATA": 250
+    "totalRecoveriesMOCKDATA": 250,
+    "keyDay": true
   },
   {
     "area": [
@@ -14,7 +15,8 @@
     ],
     "date": "Jan 22",
     "totalDeathsMOCKDATA": 450,
-    "totalRecoveriesMOCKDATA": 450
+    "totalRecoveriesMOCKDATA": 450,
+    "keyDay": true
   },
   {
     "area": [
@@ -23,7 +25,8 @@
     ],
     "date": "Jan 23",
     "totalDeathsMOCKDATA": 650,
-    "totalRecoveriesMOCKDATA": 650
+    "totalRecoveriesMOCKDATA": 650,
+    "keyDay": false
   },
   {
     "area": [
@@ -33,7 +36,8 @@
     ],
     "date": "Jan 24",
     "totalDeathsMOCKDATA": 850,
-    "totalRecoveriesMOCKDATA": 850
+    "totalRecoveriesMOCKDATA": 850,
+    "keyDay": false
   },
   {
     "area": [
@@ -41,7 +45,8 @@
     ],
     "date": "Jan 25",
     "totalDeathsMOCKDATA": 2950,
-    "totalRecoveriesMOCKDATA": 2950
+    "totalRecoveriesMOCKDATA": 2950,
+    "keyDay": false
   },
   {
     "area": [
@@ -50,7 +55,8 @@
     ],
     "date": "Jan 26",
     "totalDeathsMOCKDATA": 3250,
-    "totalRecoveriesMOCKDATA": 3250
+    "totalRecoveriesMOCKDATA": 3250,
+    "keyDay": false
   },
   {
     "area": [
@@ -59,7 +65,8 @@
     ],
     "date": "Jan 27",
     "totalDeathsMOCKDATA": 5550,
-    "totalRecoveriesMOCKDATA": 5550
+    "totalRecoveriesMOCKDATA": 5550,
+    "keyDay": true
   },
   {
     "area": [
@@ -69,7 +76,8 @@
     ],
     "date": "Jan 28",
     "totalDeathsMOCKDATA": 9950,
-    "totalRecoveriesMOCKDATA": 9950
+    "totalRecoveriesMOCKDATA": 9950,
+    "keyDay": true
   },
   {
     "area": [
@@ -78,7 +86,8 @@
     ],
     "date": "Jan 29",
     "totalDeathsMOCKDATA": 10000,
-    "totalRecoveriesMOCKDATA": 10000
+    "totalRecoveriesMOCKDATA": 10000,
+    "keyDay": false
   },
   {
     "area": [
@@ -87,7 +96,8 @@
     ],
     "date": "Jan 30",
     "totalDeathsMOCKDATA": 11000,
-    "totalRecoveriesMOCKDATA": 11000
+    "totalRecoveriesMOCKDATA": 11000,
+    "keyDay": true
   },
   {
     "area": [
@@ -98,7 +108,8 @@
     ],
     "date": "Jan 31",
     "totalDeathsMOCKDATA": 12000,
-    "totalRecoveriesMOCKDATA": 12000
+    "totalRecoveriesMOCKDATA": 12000,
+    "keyDay": false
   },
   {
     "area": [
@@ -106,7 +117,8 @@
     ],
     "date": "Feb 1",
     "totalDeathsMOCKDATA": 13000,
-    "totalRecoveriesMOCKDATA": 13000
+    "totalRecoveriesMOCKDATA": 13000,
+    "keyDay": false
   },
   {
     "area": [
@@ -114,6 +126,7 @@
     ],
     "date": "Feb 4",
     "totalDeathsMOCKDATA": 14000,
-    "totalRecoveriesMOCKDATA": 14000
+    "totalRecoveriesMOCKDATA": 14000,
+    "keyDay": true
   }
 ]

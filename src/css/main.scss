@@ -28,6 +28,7 @@
 		display: flex;
     justify-content: space-between;
     max-width: 280px;
+    // height: 60px;
     @include fs-textSans(3);
 
 		& > div {
@@ -43,12 +44,14 @@
 
 	@include mq(desktop) {
     max-width: 480px;
+    // height: 100px;
     border-top: 1px solid #dcdcdc;
     border-right: 1px solid #dcdcdc;
     border-left: 1px solid #dcdcdc;
     @include fs-titlepiece(1);
     font-size: 32px;
     bottom: 0;
+    top: auto;
   }
 }
 
@@ -61,8 +64,8 @@
 }
 
 .gv-ticker__cases {
-  color: $news-red;
+  color: $feature-red;
 }
 .gv-ticker__recovered {
-  color: $sport-blue;
+  color: $feature-blue;
 }

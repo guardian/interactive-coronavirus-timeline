@@ -14,16 +14,15 @@ recoveredCt.text(pointsWithFeature[0].totalRecoveriesMOCKDATA);
 updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
 
 customPoints.forEach(d => {
-  let div = d3.select(".scroll-text")
+  d3.select(".scroll-text")
   .append('div')
-  .attr('class', 'scroll-text__inner')
-
-  div.html(
-          '<div class="scroll-text__div">' +
-            '<p>'+ d.area +'</p>' +
-            '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non ligula eu magna luctus venenatis. Vestibulum eu auctor enim</p>' +
-          '</div>'
-          )
+  .attr('class', d.keyDay === true ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
+  .html(
+    '<div class="scroll-text__div">' +
+      '<p>'+ d.area +'</p>' +
+      '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non ligula eu magna luctus venenatis. Vestibulum eu auctor enim</p>' +
+    '</div>'
+  )
 
 })
 
