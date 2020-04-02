@@ -13,20 +13,35 @@ recoveredCt.text(pointsWithFeature[0].totalRecoveriesMOCKDATA);
 
 updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
 
-customPoints.forEach(d => {
+customPoints.forEach((d, i) => {
   const div = d3.select(".scroll-text")
   .append('div')
   .attr('class', d.keyDay === true ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
   
   if (d.keyDay === true) {
     div.html(
-      '<div class="scroll-text__div">' +
-        '<p>' + d.area + '</p>' +
-        '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non ligula eu magna luctus venenatis. Vestibulum eu auctor enim</p>' +
-      '</div>'
+      `<div class="scroll-text__div">
+        <div class='date-bullet'>&nbsp;</div>
+        <h2 class='h2-key-date'>
+          <span>Day ${i + 1}</span> /
+          <span>Case ${d.totalCases}</span>
+        </h2>
+        <h3 class='h3-key-date'>${d.area}</h3>
+        <h3 class='h3-key-date'>${d.date}</h3>
+        <p>${d.copy}</p>
+      </div>`
     )
   } else {
-    div.html('<div class="scroll-text__div">' + '</div>')
+    div.html(
+      `<div class="scroll-text__div">
+        <div class='date-bullet'>&nbsp;</div>
+        <h2>
+          <span>Day ${i + 1}</span> /
+          <span>Case ${d.totalCases}</span>
+        </h2>
+        <h3>${d.date}</h3>
+      </div>`
+    )
   }
 })
 
@@ -34,7 +49,7 @@ const scrolly = new ScrollyTeller({
   parent: document.querySelector("#scrolly-1"),
   triggerTop: 1/3, // percentage from the top of the screen that the trigger should fire
   triggerTopMobile: 0.75,
-  transparentUntilActive: true
+  transparentUntilActive: false
 
 });
 
