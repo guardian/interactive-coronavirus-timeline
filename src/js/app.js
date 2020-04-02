@@ -14,16 +14,20 @@ recoveredCt.text(pointsWithFeature[0].totalRecoveriesMOCKDATA);
 updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
 
 customPoints.forEach(d => {
-  d3.select(".scroll-text")
+  const div = d3.select(".scroll-text")
   .append('div')
   .attr('class', d.keyDay === true ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
-  .html(
-    '<div class="scroll-text__div">' +
-      '<p>'+ d.area +'</p>' +
-      '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non ligula eu magna luctus venenatis. Vestibulum eu auctor enim</p>' +
-    '</div>'
-  )
-
+  
+  if (d.keyDay === true) {
+    div.html(
+      '<div class="scroll-text__div">' +
+        '<p>' + d.area + '</p>' +
+        '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non ligula eu magna luctus venenatis. Vestibulum eu auctor enim</p>' +
+      '</div>'
+    )
+  } else {
+    div.html('<div class="scroll-text__div">' + '</div>')
+  }
 })
 
 const scrolly = new ScrollyTeller({
@@ -41,8 +45,6 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
     .tween('text', function () {
       const currentVal = parseInt(this.textContent.replace(/,/g, ""));
       const i = d3.interpolate(currentVal, parseInt(d.totalCases))
-
-      console.log(currentVal)
       return (t) => {
         // if (i(t) !== 1) {
         //   moreThan.style.display = "inline";
@@ -61,7 +63,6 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
       const currentVal = parseInt(this.textContent.replace(/,/g, ""));
       const i = d3.interpolate(currentVal, parseInt(d.totalDeathsMOCKDATA))
 
-      console.log(currentVal)
       return (t) => {
         deathsCt.text(parseInt(i(t)));
       }
