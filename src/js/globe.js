@@ -41,11 +41,40 @@ let sphere = { type: "Sphere" };
 let feature;
 let bounds;
 
+let timer = d3.timer( (i) => {
+
+            projection.rotate([0.01 * i - 120, -30, 0]);
+
+            path.projection(projection);
+
+            context.clearRect(0, 0, width, height);
+
+            context.fillStyle = colorGlobe;
+            context.beginPath();
+            path(sphere);
+            context.fill();
+
+            context.fillStyle = colorLand;
+            context.beginPath();
+            path(countriesLowFC);
+            context.fill();
+
+            context.strokeStyle = lineLand;
+            context.lineWidth = 0.5;
+            context.stroke();
+
+
+        });
+timer.stop()
+
+console.log(timer)
+
 const radius = d3.scaleSqrt()
     .range([10, 100])
     .domain([0, 1000])
 
 const updateMap = (d, cases) => {
+
     feature = d.features
     let point = d3.geoCentroid(feature);
     let currentRotate = projection.rotate();
@@ -90,34 +119,14 @@ const updateMap = (d, cases) => {
             context.lineWidth = 0.5;
             context.stroke();
 
-            // after on end
-
-            // context.clearRect(0, 0, width, height);
-
-            // context.fillStyle = colorGlobe;
-            // context.beginPath();
-            // path(sphere);
-            // context.fill();
-
-            // context.fillStyle = colorLand;
-
-            // context.beginPath();
-            // path(countriesLowFC);
-            // context.fill();
-
-            // context.strokeStyle = lineLand;
-            // context.lineWidth = 0.5;
-            // context.stroke();
-
             updateCases(cases)
         }
     })
 }
 
+
 const updateCases = (cases) =>{
     cases.forEach(c => {
-        if (d3.geoContains(feature, [c.lon, c.lat]))
-        {
             let posX = projection([c.lon, c.lat])[0];
             let posY = projection([c.lon, c.lat])[1];
 
@@ -125,7 +134,6 @@ const updateCases = (cases) =>{
             context.beginPath()
             context.arc(posX, posY, radius(c.cases), 0, Math.PI*2)
             context.fill();
-        }
     })
 }
 
