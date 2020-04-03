@@ -6,6 +6,7 @@ import countriesLow from './assets/countries__.json'
 // import customPoints from './assets/customPoints'
 import { set } from 'd3-collection'
 
+
 export async function render() {
     // const data = await rp('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH1XydmGx7U3n9B2pESmI.json')
     const data = await rp('https://interactive.guim.co.uk/docsdata-test/1KVnPUoUDkracHpXlQapzIjsHOs9DtnrvNM8gsWarR3Q.json')

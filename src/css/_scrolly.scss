@@ -64,7 +64,7 @@
 
     @include mq(desktop) {
         right: -20px;
-        width: 50%;
+        width: 33%;
     }
 }
 
@@ -93,9 +93,9 @@
 .scroll-text__div {
     position: relative;
     max-width: 620px;
-    width: 100%;
+    // width: 100%;
     @include mq(desktop) {
-        width: 620px;
+        // width: 620px;
     }
     margin-left: 0px;
     padding: 6px 10px 0px;

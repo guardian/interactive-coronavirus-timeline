@@ -14,8 +14,8 @@ const atomEl = $('.scroll-inner');
 
 let isMobile = window.matchMedia('(max-width: 600px)').matches;
 
-let width = isMobile ? window.innerWidth : atomEl.getBoundingClientRect().width / 2;
-let height = isMobile ? width : 752 * width / 1260;
+let width = isMobile ? window.innerWidth : window.innerHeight;
+let height = width
 
 
 const canvas = d3.select("canvas")

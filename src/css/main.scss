@@ -13,6 +13,13 @@
     margin: 0 !important;
 }
 
+// .gs-container {
+//   @include mq(desktop) {
+//     padding-left: 0.14rem !important;
+//     padding-right: 0.14rem !important;
+//   }
+// }
+
 .interactive-wrapper{
 	max-width: 100%;
 }
@@ -30,6 +37,10 @@
     // height: 60px;
     @include fs-textSans(3);
 
+    & div {
+      width: 50%;
+    }
+
 		& > div {
 			padding-right: 24px;
       padding-left: 8px;
@@ -46,7 +57,6 @@
     // height: 100px;
     // border-top: 1px solid #dcdcdc;
     border-right: 1px solid #dcdcdc;
-    border-left: 1px solid #dcdcdc;
     @include fs-titlepiece(1);
     font-size: 32px;
   }
@@ -74,5 +84,8 @@ canvas {
     z-index: 9;
     left: -10px;
     background: #fff;
+  }
+  @include mq(desktop) {
+    background: none;
   }
 }

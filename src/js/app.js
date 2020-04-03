@@ -24,7 +24,6 @@ pointsWithFeature.forEach((d, i) => {
           <span>Day ${i + 1}</span> /
           <span>Case ${d.totalCases}</span>
         </h2>
-        <h3 class='h3-key-date'>${d.areas}</h3>
         <h3 class='h3-key-date'>${d.displayDate}</h3>
         <p>${d.keyDayCopy}</p>
       </div>`
