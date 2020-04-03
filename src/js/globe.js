@@ -83,6 +83,7 @@ const updateMap = (d, cases) => {
                 context.clearRect(0, 0, width, height);
 
                 context.fillStyle = colorGlobe;
+                context.globalAlpha =1;
                 context.beginPath();
                 path(sphere);
                 context.fill();
@@ -111,11 +112,30 @@ const updateMap = (d, cases) => {
 
 
 const updateCases = (cases) =>{
+
+    context.clearRect(0, 0, width, height);
+
+    context.fillStyle = colorGlobe;
+    context.globalAlpha =1;
+    context.beginPath();
+    path(sphere);
+    context.fill();
+
+    context.fillStyle = colorLand;
+    context.beginPath();
+    path(countriesLowFC);
+    context.fill();
+
+    context.strokeStyle = lineLand;
+    context.lineWidth = 0.5;
+    context.stroke();
+
     cases.forEach(c => {
             let posX = projection([c.lon, c.lat])[0];
             let posY = projection([c.lon, c.lat])[1];
 
             context.fillStyle = 'red';
+            context.globalAlpha =0.3;
             context.beginPath()
             context.arc(posX, posY, radius(c.cases), 0, Math.PI*2)
             context.fill();
