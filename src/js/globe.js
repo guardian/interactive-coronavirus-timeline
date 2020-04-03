@@ -12,9 +12,9 @@ const d3 = Object.assign({}, d3B, geo);
 
 const atomEl = $('.scroll-inner');
 
-let isMobile = window.matchMedia('(max-width: 600px)').matches;
+let isMobile = window.matchMedia('(max-width: 740px)').matches;
 
-let width = isMobile ? window.innerWidth : window.innerHeight;
+let width = isMobile ? window.innerWidth : window.innerHeight - 100;
 let height = width
 
 
