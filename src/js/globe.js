@@ -12,10 +12,10 @@ const d3 = Object.assign({}, d3B, geo);
 
 const atomEl = $('.scroll-inner');
 
-let isMobile = window.matchMedia('(max-width: 740px)').matches;
+let isMobile = window.matchMedia('(max-width: 600px)').matches;
 
 let width = isMobile ? window.innerWidth : atomEl.getBoundingClientRect().width / 2;
-let height = isMobile ? width : 752 * width / 1260;
+let height = width
 
 
 const canvas = d3.select("canvas")
@@ -39,100 +39,107 @@ let textColors = "#333";
 
 let sphere = { type: "Sphere" };
 
+let graticule = d3.geoGraticule();
+
 let feature;
 let bounds;
 
-let timer = d3.timer( (i) => {
-
-            projection.rotate([0.01 * i - 120, -30, 0]);
-
-            path.projection(projection);
-
-            context.clearRect(0, 0, width, height);
-
-            context.fillStyle = colorGlobe;
-            context.beginPath();
-            path(sphere);
-            context.fill();
-
-            context.fillStyle = colorLand;
-            context.beginPath();
-            path(countriesLowFC);
-            context.fill();
-
-            context.strokeStyle = lineLand;
-            context.lineWidth = 0.5;
-            context.stroke();
-
-
-        });
-timer.stop()
-
-const radius = d3.scaleSqrt()
-    .range([10, 100])
-    .domain([0, 1000])
+const radius = d3.scaleLog()
+.range([1, 10])
+.domain([1, 1500000]);
 
 const updateMap = (d, cases) => {
 
-    feature = d.features
-    let point = d3.geoCentroid(feature);
-    let currentRotate = projection.rotate();
-    let currentScale = projection.scale();
 
-    projection.rotate([-point[0], -point[1]]);
-    path.projection(projection);
+    if(d.features.features.length > 0)
+    {
+        feature = d.features;
 
-    bounds = path.bounds(feature);
+        let point = d3.geoCentroid(feature);
+        let currentRotate = projection.rotate();
+        let currentScale = projection.scale();
 
-    let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
-    let nextRotate = projection.rotate();
+        projection.rotate([-point[0], -point[1]]);
+        path.projection(projection);
 
-    d3.transition()
-    .duration(500)
-    .tween('tween', () => {
+        bounds = path.bounds(feature);
 
-        let r = d3.interpolate(currentRotate, nextRotate);
-        let s = d3.interpolate(currentScale, nextScale);
+        let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
+        let nextRotate = projection.rotate();
 
-        return (t) => {
+        d3.transition()
+        .duration(500)
+        .tween('tween', () => {
 
-            projection
-            .rotate(r(t))
-            .scale(s(t));
+            let r = d3.interpolate(currentRotate, nextRotate);
+            let s = d3.interpolate(currentScale, nextScale);
 
-            path.projection(projection);
+            return (t) => {
 
-            context.clearRect(0, 0, width, height);
+                projection
+                .rotate(r(t))
+                //.scale(s(t));
 
-            context.fillStyle = colorGlobe;
-            context.beginPath();
-            path(sphere);
-            context.fill();
+                path.projection(projection);
 
-            context.fillStyle = colorLand;
-            context.beginPath();
-            path(countriesLowFC);
-            context.fill();
 
-            context.strokeStyle = lineLand;
-            context.lineWidth = 0.5;
-            context.stroke();
+                updateCases(cases)
+            }
+        })
 
-            updateCases(cases)
-        }
-    })
+    }
+    else
+    {
+        updateCases(cases)
+    }
+
+    
 }
 
 
 const updateCases = (cases) =>{
+
+    context.clearRect(0, 0, width, height);
+
+    context.clearRect(0, 0, width, height);
+
+    context.fillStyle = colorGlobe;
+    context.globalAlpha =1;
+    context.beginPath();
+    path(sphere);
+    context.fill();
+
+    context.beginPath();
+    context.strokeStyle = '#ccc';
+    path(graticule());
+    context.stroke();
+
+    context.fillStyle = colorLand;
+    context.beginPath();
+    path(countriesLowFC);
+    context.fill();
+
+    context.strokeStyle = lineLand;
+    context.lineWidth = 0.5;
+    context.stroke();
+
+
+
     cases.forEach(c => {
             let posX = projection([c.lon, c.lat])[0];
             let posY = projection([c.lon, c.lat])[1];
 
-            context.fillStyle = 'red';
+            /*context.fillStyle = 'red';
+            context.globalAlpha =0.3;
             context.beginPath()
             context.arc(posX, posY, radius(c.cases), 0, Math.PI*2)
-            context.fill();
+            context.fill();*/
+
+            let circle = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
+            context.beginPath();
+            context.strokeStyle = 'red';
+            path(circle());
+            context.stroke();
     })
 }
 
