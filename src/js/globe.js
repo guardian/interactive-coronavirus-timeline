@@ -76,7 +76,7 @@ const updateMap = (d, cases) => {
 
                 projection
                 .rotate(r(t))
-                .scale(s(t));
+                //.scale(s(t));
 
                 path.projection(projection);
 
