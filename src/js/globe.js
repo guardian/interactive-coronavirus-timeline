@@ -28,6 +28,8 @@ let projection = d3.geoOrthographic()
 .translate([width / 2, height / 2])
 .clipAngle(90);
 
+projection.fitExtent([[0, 0], [width, height - 50]], countriesLowFC);
+
 let path = d3.geoPath()
 .projection(projection)
 .context(context);
@@ -64,7 +66,7 @@ const updateMap = (d, cases) => {
 
         bounds = path.bounds(feature);
 
-        let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
+        //let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
         let nextRotate = projection.rotate();
 
         d3.transition()
@@ -72,7 +74,7 @@ const updateMap = (d, cases) => {
         .tween('tween', () => {
 
             let r = d3.interpolate(currentRotate, nextRotate);
-            let s = d3.interpolate(currentScale, nextScale);
+            //let s = d3.interpolate(currentScale, nextScale);
 
             return (t) => {
 
