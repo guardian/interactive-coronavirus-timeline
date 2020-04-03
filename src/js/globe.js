@@ -28,6 +28,8 @@ let projection = d3.geoOrthographic()
 .translate([width / 2, height / 2])
 .clipAngle(90);
 
+projection.fitExtent([[0, 0], [width, height - 50]], countriesLowFC);
+
 let path = d3.geoPath()
 .projection(projection)
 .context(context);
@@ -39,12 +41,14 @@ let textColors = "#333";
 
 let sphere = { type: "Sphere" };
 
+let graticule = d3.geoGraticule();
+
 let feature;
 let bounds;
 
-const radius = d3.scaleSqrt()
-.range([0, isMobile ? 500 : 1000])
-.domain([0, 1500000]);
+const radius = d3.scaleLog()
+.range([1, 10])
+.domain([1, 1500000]);
 
 const updateMap = (d, cases) => {
 
@@ -62,7 +66,7 @@ const updateMap = (d, cases) => {
 
         bounds = path.bounds(feature);
 
-        let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
+        //let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
         let nextRotate = projection.rotate();
 
         d3.transition()
@@ -70,7 +74,7 @@ const updateMap = (d, cases) => {
         .tween('tween', () => {
 
             let r = d3.interpolate(currentRotate, nextRotate);
-            let s = d3.interpolate(currentScale, nextScale);
+            //let s = d3.interpolate(currentScale, nextScale);
 
             return (t) => {
 
@@ -80,22 +84,6 @@ const updateMap = (d, cases) => {
 
                 path.projection(projection);
 
-                context.clearRect(0, 0, width, height);
-
-                context.fillStyle = colorGlobe;
-                context.globalAlpha =1;
-                context.beginPath();
-                path(sphere);
-                context.fill();
-
-                context.fillStyle = colorLand;
-                context.beginPath();
-                path(countriesLowFC);
-                context.fill();
-
-                context.strokeStyle = lineLand;
-                context.lineWidth = 0.5;
-                context.stroke();
 
                 updateCases(cases)
             }
@@ -115,11 +103,18 @@ const updateCases = (cases) =>{
 
     context.clearRect(0, 0, width, height);
 
+    context.clearRect(0, 0, width, height);
+
     context.fillStyle = colorGlobe;
     context.globalAlpha =1;
     context.beginPath();
     path(sphere);
     context.fill();
+
+    context.beginPath();
+    context.strokeStyle = '#ccc';
+    path(graticule());
+    context.stroke();
 
     context.fillStyle = colorLand;
     context.beginPath();
@@ -130,15 +125,23 @@ const updateCases = (cases) =>{
     context.lineWidth = 0.5;
     context.stroke();
 
+
+
     cases.forEach(c => {
             let posX = projection([c.lon, c.lat])[0];
             let posY = projection([c.lon, c.lat])[1];
 
-            context.fillStyle = 'red';
+            /*context.fillStyle = 'red';
             context.globalAlpha =0.3;
             context.beginPath()
             context.arc(posX, posY, radius(c.cases), 0, Math.PI*2)
-            context.fill();
+            context.fill();*/
+
+            let circle = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
+            context.beginPath();
+            context.strokeStyle = 'red';
+            path(circle());
+            context.stroke();
     })
 }
 
