@@ -51,56 +51,61 @@ const updateMap = (d, cases) => {
 
     if(d.features.features.length > 0)
     {
+        feature = d.features;
 
-    feature = d.features;
 
-    let point = d3.geoCentroid(feature);
-    let currentRotate = projection.rotate();
-    let currentScale = projection.scale();
 
-    projection.rotate([-point[0], -point[1]]);
-    path.projection(projection);
+        let point = d3.geoCentroid(feature);
+        let currentRotate = projection.rotate();
+        let currentScale = projection.scale();
 
-    bounds = path.bounds(feature);
+        projection.rotate([-point[0], -point[1]]);
+        path.projection(projection);
 
-    let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
-    let nextRotate = projection.rotate();
+        bounds = path.bounds(feature);
 
-    d3.transition()
-    .duration(500)
-    .tween('tween', () => {
+        let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
+        let nextRotate = projection.rotate();
 
-        let r = d3.interpolate(currentRotate, nextRotate);
-        let s = d3.interpolate(currentScale, nextScale);
+        d3.transition()
+        .duration(500)
+        .tween('tween', () => {
 
-        return (t) => {
+            let r = d3.interpolate(currentRotate, nextRotate);
+            let s = d3.interpolate(currentScale, nextScale);
 
-            projection
-            .rotate(r(t))
-            .scale(s(t));
+            return (t) => {
 
-            path.projection(projection);
+                projection
+                .rotate(r(t))
+                .scale(s(t));
 
-            context.clearRect(0, 0, width, height);
+                path.projection(projection);
 
-            context.fillStyle = colorGlobe;
-            context.beginPath();
-            path(sphere);
-            context.fill();
+                context.clearRect(0, 0, width, height);
 
-            context.fillStyle = colorLand;
-            context.beginPath();
-            path(countriesLowFC);
-            context.fill();
+                context.fillStyle = colorGlobe;
+                context.beginPath();
+                path(sphere);
+                context.fill();
 
-            context.strokeStyle = lineLand;
-            context.lineWidth = 0.5;
-            context.stroke();
+                context.fillStyle = colorLand;
+                context.beginPath();
+                path(countriesLowFC);
+                context.fill();
 
-            updateCases(cases)
-        }
-    })
+                context.strokeStyle = lineLand;
+                context.lineWidth = 0.5;
+                context.stroke();
 
+                updateCases(cases)
+            }
+        })
+
+    }
+    else
+    {
+        updateCases(cases)
     }
 
     
