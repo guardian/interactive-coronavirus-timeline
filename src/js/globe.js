@@ -12,10 +12,11 @@ const d3 = Object.assign({}, d3B, geo);
 
 const atomEl = $('.scroll-inner');
 
-let isMobile = window.matchMedia('(max-width: 620px)').matches;
+let isMobile = window.matchMedia('(max-width: 740px)').matches;
 
-let width = atomEl.getBoundingClientRect().width;
-let height = isMobile ? width * 1.6 : 752 * width / 1260;
+let width = isMobile ? window.innerWidth : atomEl.getBoundingClientRect().width / 2;
+let height = isMobile ? width : 752 * width / 1260;
+
 
 const canvas = d3.select("canvas")
 .attr("width", width)
@@ -66,8 +67,6 @@ let timer = d3.timer( (i) => {
 
         });
 timer.stop()
-
-console.log(timer)
 
 const radius = d3.scaleSqrt()
     .range([10, 100])

@@ -3,19 +3,19 @@ import rp from 'request-promise'
 import { writeFileSync } from 'fs'
 import * as topojson from 'topojson'
 import countriesLow from './assets/countries__.json'
-import customPoints from './assets/customPoints'
+// import customPoints from './assets/customPoints'
 import { set } from 'd3-collection'
 
 export async function render() {
-    const data = await rp('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH1XydmGx7U3n9B2pESmI.json')
+    // const data = await rp('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH1XydmGx7U3n9B2pESmI.json')
+    const data = await rp('https://interactive.guim.co.uk/docsdata-test/1KVnPUoUDkracHpXlQapzIjsHOs9DtnrvNM8gsWarR3Q.json')
     const json = await JSON.parse(data)
     
-    const dates = Object.keys(json.sheets.main_cases[0]).filter(key => key.indexOf(' ') > -1)
+    // const dates = Object.keys(json.sheets.places[0]).filter(key => key.indexOf(' ') > -1)
+    // const dates = Object.keys(json.sheets.place).filter(key => key.indexOf(' ') > -1)
+    const dates = json.sheets.output.map(d => d.displayDate)
 
-
-
-    // console.log(data.sheets.main_cases)
-    const places = json.sheets.main_cases.map(place => {
+    const places = json.sheets.places.map(place => {
         return {
             province: place['Province/State'],
             country: place['Country/Region'],
@@ -25,8 +25,15 @@ export async function render() {
         }
     })
 
-    const pointsWithCases = customPoints.map(d => {
-        const currentDate = d.date;
+    const datesWithLocalisedCases = json.sheets.output.map(d => {
+        d.totalCases = d.cases
+        d.totalDeaths = d.deaths
+        delete d.cases
+        delete d.deaths
+        return d
+    })
+    .map(d => {
+        const currentDate = d.displayDate;
         let cases = []
 
         places.forEach(p => {
@@ -42,15 +49,17 @@ export async function render() {
     })
 
 
-    const pointsWithFeature = pointsWithCases.map(d => {
-        const cSet = set(d.area)
+    const pointsWithFeature = datesWithLocalisedCases.map(d => {
+        const cSet = set(d.areas ? JSON.parse(d.areas) : [])
+
+
         return Object.assign({}, d, {
             cSet,
             features: topojson.feature(countriesLow, {
                 type: "GeometryCollection",
-                geometries: countriesLow.objects.countries.geometries.filter(c => cSet.has(c.properties.NAME))
+                geometries: countriesLow.objects.countries.geometries.filter(c => cSet.has(c.properties.ISO_A3))
             }),
-            totalCases: d.cases.map(c => c.cases).reduce((a, b) => Number(a) + Number(b))
+            // totalCases: d.cases.map(c => c.cases).reduce((a, b) => Number(a) + Number(b))
         })
     })
     // console.log(pointsWithFeature)

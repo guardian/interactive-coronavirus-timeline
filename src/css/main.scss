@@ -17,17 +17,17 @@
 	max-width: 100%;
 }
 
-.scroll-text__div{
-	width: 50%;
-}
-
 .gv-ticker {
 	@include mq(mobile) {
-    position: absolute;
+    background: #fff;
+    padding-bottom: 8px;
+    // position: absolute;
     top: 0;
+    margin-left: -10px;
 		display: flex;
     justify-content: space-between;
-    max-width: 280px;
+    // max-width: 280px;
+    // height: 60px;
     @include fs-textSans(3);
 
 		& > div {
@@ -43,12 +43,12 @@
 
 	@include mq(desktop) {
     max-width: 480px;
-    border-top: 1px solid #dcdcdc;
+    // height: 100px;
+    // border-top: 1px solid #dcdcdc;
     border-right: 1px solid #dcdcdc;
     border-left: 1px solid #dcdcdc;
     @include fs-titlepiece(1);
     font-size: 32px;
-    bottom: 0;
   }
 }
 
@@ -56,13 +56,23 @@
   @include mq(mobile) {
     @include fs-titlepiece(1);
     font-size: 32px;
+    line-height: 24px;
     // font-size: 32px;
   }
 }
 
 .gv-ticker__cases {
-  color: $news-red;
+  color: $feature-red;
 }
 .gv-ticker__recovered {
-  color: $sport-blue;
+  color: $feature-blue;
+}
+
+canvas {
+  @include mq(mobile) {
+    position: relative;
+    z-index: 9;
+    left: -10px;
+    background: #fff;
+  }
 }
