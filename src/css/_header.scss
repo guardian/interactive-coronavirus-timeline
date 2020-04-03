@@ -1,3 +1,151 @@
 .content__headline {
-    font-weight: 700;
+  font-weight: 700;
+}
+
+.content--interactive .content__headline,
+.headline {
+  @include fs-titlepiece(1);
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 700;
+
+  @include mq(tablet) {
+    font-size: 34px;
+    line-height: 38px;
+  }
+
+  @include mq(leftCol) {
+    font-size: 50px;
+    line-height: 50px;
+  }
+  @include mq(wide) {
+    font-size: 6vw;
+    line-height: 1;
+  }
+}
+
+.headline {
+  font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia, serif;
+  padding-top: 0px;
+}
+
+.content__standfirst,
+.standfirst {
+  font-weight: 200;
+  line-height: 24px;
+  font-size: 18px;
+  margin-top: 24px;
+  max-width: 90%;
+  @include mq(mobileLandscape) {
+    max-width: 80%;
+  }
+  @include mq(tablet) {
+    max-width: 540px;
+  }
+  @include mq(desktop) {
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
+
+.l-side-margins::before,
+.l-side-margins::after {
+  z-index: 9999;
+}
+
+.content__main,
+.content__head {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    top: 0;
+
+    height: 100%;
+    min-height: 500px;
+    content: " ";
+    border-left: 1px solid #dcdcdc;
+
+    @include mq(leftCol) {
+      left: calc((100% - 1140px) / 2 + 170px);
+    }
+
+    @include mq(wide) {
+      left: calc((100% - 1300px) / 2 + 650px);
+    }
+  }
+
+  .byline {
+    border-top: none !important;
+    margin-top: 5px;
+  }
+}
+
+a,
+.u-fauxlink {
+  color: #c70000;
+  cursor: pointer;
+  text-decoration: none;
+}
+.tonal--tone-news .tone-colour {
+  color: #c70000;
+}
+
+.content__meta-container {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #dcdcdc,
+    #dcdcdc 0.0625rem,
+    transparent 0.0625rem,
+    transparent 0.25rem
+  );
+  background-repeat: repeat-x;
+  background-position: top;
+  -webkit-background-size: 0.0625rem 0.8125rem;
+  background-size: 0.0625rem 0.8125rem;
+  padding-top: 12px;
+  border-top: none;
+}
+
+.content__labels {
+  position: relative;
+  margin-bottom: 0px;
+}
+
+.meta__numbers {
+  @include mq(leftCol) {
+    padding-right: 10px;
+  }
+}
+
+.content__labels,
+.content__headline,
+.content__standfirst {
+  @include mq(wide) {
+    margin-left: 400px;
+  }
+}
+
+.content__standfirst {
+  margin-top: 48px;
+  margin-bottom: 20vh;
+}
+
+.content__main-column {
+  max-width: initial;
+  margin-right: 0;
+}
+
+.content--interactive .content__meta-container {
+  @include mq(wide) {
+    margin-left: 390px;
+    max-width: 650px;
+  }
+}
+
+.meta__contact-wrap,
+.meta__social {
+  @include mq(leftCol) {
+    padding-left: 10px;
+  }
 }
