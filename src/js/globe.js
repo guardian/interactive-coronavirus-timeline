@@ -12,7 +12,7 @@ const d3 = Object.assign({}, d3B, geo);
 
 const atomEl = $('.scroll-inner');
 
-let isMobile = window.matchMedia('(max-width: 740px)').matches;
+let isMobile = window.matchMedia('(max-width: 600px)').matches;
 
 let width = isMobile ? window.innerWidth : atomEl.getBoundingClientRect().width / 2;
 let height = isMobile ? width : 752 * width / 1260;
@@ -43,8 +43,8 @@ let feature;
 let bounds;
 
 const radius = d3.scaleSqrt()
-    .range([10, 100])
-    .domain([0, 1000])
+.range([0, isMobile ? 500 : 1000])
+.domain([0, 1500000]);
 
 const updateMap = (d, cases) => {
 
@@ -52,8 +52,6 @@ const updateMap = (d, cases) => {
     if(d.features.features.length > 0)
     {
         feature = d.features;
-
-
 
         let point = d3.geoCentroid(feature);
         let currentRotate = projection.rotate();
