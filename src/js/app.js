@@ -1,24 +1,22 @@
 import * as d3 from 'd3'
 import ScrollyTeller from "./scrollyteller"
 import { updateMap } from './globe.js'
-import customPoints from '../assets/customPoints'
+// import customPoints from '../assets/customPoints'
 import pointsWithFeature from '../assets/data'
 const casesCt = d3.select('.gv-ticker__cases')
 const deathsCt = d3.select('.gv-ticker__deaths')
-const recoveredCt = d3.select('.gv-ticker__recovered')
 
 casesCt.text(pointsWithFeature[0].totalCases);
-deathsCt.text(pointsWithFeature[0].totalDeathsMOCKDATA);
-recoveredCt.text(pointsWithFeature[0].totalRecoveriesMOCKDATA);
+deathsCt.text(pointsWithFeature[0].totalDeaths);
 
 updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
 
-customPoints.forEach((d, i) => {
+pointsWithFeature.forEach((d, i) => {
   const div = d3.select(".scroll-text")
   .append('div')
-  .attr('class', d.keyDay === true ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
+  .attr('class', d.keyDay === "TRUE" ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
   
-  if (d.keyDay === true) {
+  if (d.keyDay === "TRUE") {
     div.html(
       `<div class="scroll-text__div">
         <div class='date-bullet'>&nbsp;</div>
@@ -26,9 +24,9 @@ customPoints.forEach((d, i) => {
           <span>Day ${i + 1}</span> /
           <span>Case ${d.totalCases}</span>
         </h2>
-        <h3 class='h3-key-date'>${d.area}</h3>
-        <h3 class='h3-key-date'>${d.date}</h3>
-        <p>${d.copy}</p>
+        <h3 class='h3-key-date'>${d.areas}</h3>
+        <h3 class='h3-key-date'>${d.displayDate}</h3>
+        <p>${d.keyDayCopy}</p>
       </div>`
     )
   } else {
@@ -39,7 +37,7 @@ customPoints.forEach((d, i) => {
           <span>Day ${i + 1}</span> /
           <span>Case ${d.totalCases}</span>
         </h2>
-        <h3>${d.date}</h3>
+        <h3>${d.displayDate}</h3>
       </div>`
     )
   }
@@ -76,24 +74,12 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
     .duration(500)
     .tween('text', function () {
       const currentVal = parseInt(this.textContent.replace(/,/g, ""));
-      const i = d3.interpolate(currentVal, parseInt(d.totalDeathsMOCKDATA))
+      const i = d3.interpolate(currentVal, parseInt(d.totalDeaths))
 
       return (t) => {
         deathsCt.text(parseInt(i(t)));
       }
     });
-  recoveredCt
-    .transition()
-    .duration(500)
-    .tween('text', function () {
-      const currentVal = parseInt(this.textContent.replace(/,/g, ""));
-      const i = d3.interpolate(currentVal, parseInt(d.totalRecoveriesMOCKDATA))
-      return (t) => {
-        recoveredCt.text(parseInt(i(t)));
-      }
-    });
-
-
   updateMap(d, d.cases) 
 }}))
 
