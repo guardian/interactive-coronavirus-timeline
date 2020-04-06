@@ -55,7 +55,7 @@
 
 .scroll-text {
     @include mq(mobile) {
-        position: absolute;
+        position: relative;
         top: 0;
         border-left: 1px solid #dcdcdc;
         pointer-events: none;
@@ -64,6 +64,7 @@
     }
 
     @include mq(desktop) {
+        position: absolute;
         right: -20px;
         width: 33%;
         // height: 100%;
