@@ -61,16 +61,23 @@
       width: 1px;
       height: calc(100% + 1px);
       background-color: $neutral-86;
+      display: block;
 
       @include mq(tablet) {
+        display: block;
         height: calc(100% + 12px);
       }
     }
   }
 
   & > div:first-of-type {
-    border-left: none;
     width: 75px;
+    &:before {
+      display: none;
+      @include mq(tablet) {
+        display: block;
+      }
+    }
     @include mq(mobileMedium) {
       width: 90px;
     }
