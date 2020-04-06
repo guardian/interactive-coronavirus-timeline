@@ -20,24 +20,31 @@ export async function render() {
     const dates = json.sheets.output.map(d => d.displayDate)
 
     const canada = json.sheets.places.filter(place => place['Country/Region'] === 'Canada');
-    const places = json.sheets.places.map(place => {
-        if (place['Country/Region'] === 'Canada') {
-            return {
-                province: 'Canada',
-                country: 'Canada',
-                lat: '53.1355',
-                lon: '-57.6604',
-                cases: dates.map(date => ({ date, cases: canada.map(region => Number(region[date])).reduce((a, b) => a + b) }))
-            }
-        } else {
-            return {
-                province: place['Province/State'],
-                country: place['Country/Region'],
-                lat: place.Lat,
-                lon: place.Long,
-                cases: dates.map(date => ({ date, cases: place[date] }))
-            }
-        }
+    const aussie = json.sheets.places.filter(place => place['Country/Region'] === 'Australia');
+
+    const places = json.sheets.places
+    .filter(place => place['Country/Region'] !== 'Canada')
+    .filter(place => place['Country/Region'] !== 'Australia')
+    .map(place => ({
+            province: place['Province/State'],
+            country: place['Country/Region'],
+            lat: place.Lat,
+            lon: place.Long,
+            cases: dates.map(date => ({ date, cases: place[date] }))
+    }))
+    .concat({
+        province: 'Canada',
+        country: 'Canada',
+        lat: '53.1355',
+        lon: '-57.6604',
+        cases: dates.map(date => ({ date, cases: canada.map(region => Number(region[date])).reduce((a, b) => a + b) }))
+    })
+    .concat({
+        province: 'Australia',
+        country: 'Australia',
+        lat: '53.1355',
+        lon: '-57.6604',
+        cases: dates.map(date => ({ date, cases: aussie.map(region => Number(region[date])).reduce((a, b) => a + b) }))
     })
 
     const datesWithLocalisedCases = json.sheets.output.map(d => {

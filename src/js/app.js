@@ -43,7 +43,7 @@ pointsWithFeature.forEach((d, i) => {
 const scrolly = new ScrollyTeller({
   parent: document.querySelector("#scrolly-1"),
   triggerTop: 1 / 2, // percentage from the top of the screen that the trigger should fire
-  triggerTopMobile: 0.75,
+  triggerTopMobile: 0,
   transparentUntilActive: false,
   bigBoxHeight: 25,
   smallBoxHeight: 10
