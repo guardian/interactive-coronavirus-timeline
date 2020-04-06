@@ -3,9 +3,12 @@ import rp from 'request-promise'
 import { writeFileSync } from 'fs'
 import * as topojson from 'topojson'
 import countriesLow from './assets/countries__.json'
+import * as d3B from 'd3'
+import * as geo from 'd3-geo-projection'
 // import customPoints from './assets/customPoints'
 import { set } from 'd3-collection'
 
+const d3 = Object.assign({}, d3B, geo);
 
 export async function render() {
     // const data = await rp('https://interactive.guim.co.uk/docsdata-test/1QIw3MRZDHT2xsLpZ1p9pa0nH1XydmGx7U3n9B2pESmI.json')
@@ -89,14 +92,16 @@ export async function render() {
 
     const pointsWithFeature = datesWithLocalisedCases.map(d => {
         const cSet = set(d.areas ? JSON.parse(d.areas) : [])
-        
+
+        const features = topojson.feature(countriesLow, {
+            type: "GeometryCollection",
+            geometries: countriesLow.objects.countries.geometries.filter(c => cSet.has(c.properties.ISO_A3))
+        })
+
         return Object.assign({}, d, {
             cSet,
-            features: topojson.feature(countriesLow, {
-                type: "GeometryCollection",
-                geometries: countriesLow.objects.countries.geometries.filter(c => cSet.has(c.properties.ISO_A3))
-            }),
-            // totalCases: d.cases.map(c => c.cases).reduce((a, b) => Number(a) + Number(b))
+            point: d3.geoCentroid(features),
+            fLengthPos: features.features.length > 0
         })
     })
     // console.log(pointsWithFeature)
