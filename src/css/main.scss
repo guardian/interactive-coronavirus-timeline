@@ -10,7 +10,7 @@
 
 .element-atom,
 .interactive-atom {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 // .gs-container {
@@ -20,18 +20,18 @@
 //   }
 // }
 
-.interactive-wrapper{
-	max-width: 100%;
+.interactive-wrapper {
+  max-width: 100%;
 }
 
 .gv-ticker {
-	@include mq(mobile) {
+  @include mq(mobile) {
     background: #fff;
     padding-bottom: 8px;
     position: absolute;
     top: 0;
     margin-left: -10px;
-		display: flex;
+    display: flex;
     justify-content: space-between;
     width: 100%;
     // max-width: 280px;
@@ -42,18 +42,18 @@
       width: 50%;
     }
 
-		& > div {
-			padding-right: 24px;
+    & > div {
+      padding-right: 24px;
       padding-left: 8px;
       border-left: 1px solid #dcdcdc;
-		}
+    }
 
     & > div:first-of-type {
       border-left: none;
     }
-	}
+  }
 
-	@include mq(desktop) {
+  @include mq(desktop) {
     max-width: 480px;
     margin-bottom: 24px;
     position: static;
