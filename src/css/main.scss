@@ -25,47 +25,61 @@
 }
 
 .gv-ticker {
-  @include mq(mobile) {
-    background: #fff;
-    padding-bottom: 8px;
-    position: absolute;
-    top: 0;
-    margin-left: -10px;
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    // max-width: 280px;
-    // height: 60px;
-    @include fs-textSans(3);
-    font-size: 12px;
+  background: #fff;
+  padding-bottom: 8px;
+  position: absolute;
+  top: 0;
+  margin-left: -10px;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  // max-width: 280px;
+  // height: 60px;
+  @include fs-textSans(3);
+  font-size: 11px;
 
-    @include mq(mobileMedium) {
-      @include fs-textSans(3);
-    }
+  @include mq(mobileMedium) {
+    font-size: 14px;
+  }
+  @include mq(tablet) {
+    margin-left: -20px;
+  }
 
-    & div {
-      // width: 50%;
-    }
+  & div {
+    // width: 50%;
+  }
 
-    & > div {
-      padding-right: 10px;
-      padding-left: 8px;
-      border-left: 1px solid #dcdcdc;
-    }
+  & > div {
+    padding-right: 10px;
+    padding-left: 8px;
+    position: relative;
 
-    & > div:first-of-type {
-      border-left: none;
-      width: 70px;
-      @include mq(mobileMedium) {
-        width: 90px;
-      }
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0px;
+      width: 1px;
+      height: calc(100% + 1px);
+      background-color: $neutral-86;
+
       @include mq(tablet) {
-        width: 200px;
+        height: calc(100% + 12px);
       }
     }
-    & > div:nth-of-type(2) {
-      width: 30%;
+  }
+
+  & > div:first-of-type {
+    border-left: none;
+    width: 75px;
+    @include mq(mobileMedium) {
+      width: 90px;
     }
+    @include mq(tablet) {
+      width: 124px;
+    }
+  }
+  & > div:nth-of-type(2) {
+    width: 30%;
   }
 
   @include mq(desktop) {
@@ -75,17 +89,27 @@
     // height: 100px;
     // border-top: 1px solid #dcdcdc;
     border-right: 1px solid #dcdcdc;
+    border-bottom: 1px solid $neutral-86;
     @include fs-titlepiece(1);
     font-size: 32px;
+    line-height: 44px;
+    padding-bottom: 12px;
   }
 
   &__date {
     font-weight: bold;
     line-height: 36px;
     @include fs-textSans(3);
+    font-size: 12px;
+    position: absolute;
+    line-height: 32px;
+
+    @include mq(mobileMedium) {
+      font-size: 14px;
+    }
 
     @include mq(tablet) {
-      line-height: 36px;
+      line-height: 40px;
     }
   }
 }
@@ -100,10 +124,13 @@
   @include mq(mobileMedium) {
     font-size: 32px;
   }
+  @include mq(tablet) {
+    font-size: 40px;
+  }
 }
 
 .gv-ticker__cases {
-  color: $feature-red;
+  color: $news-red;
 }
 .gv-ticker__recovered {
   color: $feature-blue;
@@ -115,9 +142,13 @@ canvas {
     z-index: 9;
     left: -10px;
     background: #fff;
-    margin-top: 56px;
+    margin-top: 50px;
+  }
+  @include mq(mobileMedium) {
+    margin-top: 52px;
   }
   @include mq(desktop) {
     background: none;
+    margin-top: 0px;
   }
 }
