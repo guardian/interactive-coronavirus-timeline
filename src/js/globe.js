@@ -34,6 +34,7 @@ let path = d3.geoPath()
 .context(context);
 
 let colorLand = "#f6f6f6";
+let colorLandSelected = "#bababa";
 let lineLand = "#cccccc";
 let colorGlobe = "#fffff3";
 let textColors = "#333";
@@ -55,19 +56,14 @@ const updateMap = (d, cases) => {
 
     if (d.fLengthPos)
     {
-        // feature = d.features;
         point = d.point
 
-        // let point = d3.geoCentroid(feature);
         let currentRotate = projection.rotate();
         let currentScale = projection.scale();
 
         projection.rotate([- point[0], - point[1]]);
         path.projection(projection);
 
-        // bounds = path.bounds(feature);
-
-        //let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
         let nextRotate = projection.rotate();
 
         d3.transition()
@@ -75,32 +71,29 @@ const updateMap = (d, cases) => {
         .tween('tween', () => {
 
             let r = d3.interpolate(currentRotate, nextRotate);
-            //let s = d3.interpolate(currentScale, nextScale);
 
             return (t) => {
 
                 projection
                 .rotate(r(t))
-                //.scale(s(t));
 
                 path.projection(projection);
 
-
-                updateCases(cases)
+                updateCases(cases, d.cases)
             }
         })
 
     }
     else
     {
-        updateCases(cases)
+        updateCases(cases, d.cases)
     }
 
     
 }
 
 
-const updateCases = (cases) =>{
+const updateCases = (cases, countries) =>{
 
     context.clearRect(0, 0, width, height);
 
@@ -123,6 +116,20 @@ const updateCases = (cases) =>{
     context.strokeStyle = lineLand;
     context.lineWidth = 0.5;
     context.stroke();
+
+    countries.map(coun => {
+
+        const feature = topojson.feature(countriesLow, {
+            type: "GeometryCollection",
+            geometries: countriesLow.objects.countries.geometries.filter(c => c.properties.ISO_A3 === coun.iso)
+        })
+
+
+        context.fillStyle = colorLandSelected;
+        context.beginPath();
+        path(feature);
+        context.fill();
+    })
 
     cases.forEach(c => {
             let posX = projection([c.lon, c.lat])[0];
