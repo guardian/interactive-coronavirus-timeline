@@ -12,9 +12,9 @@ const d3 = Object.assign({}, d3B, geo);
 
 const atomEl = $('.scroll-inner');
 
-let isMobile = window.matchMedia('(max-width: 600px)').matches;
+let isMobile = window.matchMedia('(max-width: 740px)').matches;
 
-let width = isMobile ? window.innerWidth : atomEl.getBoundingClientRect().width / 2;
+let width = isMobile ? window.innerWidth : window.innerHeight - 100;
 let height = width
 
 
@@ -46,12 +46,13 @@ let graticule = d3.geoGraticule();
 let feature;
 let bounds;
 
-const radius = d3.scaleLog()
-.range([1, 10])
-.domain([1, 1500000]);
+const radius = d3.scaleSqrt()
+.range([0, 30])
+.domain([0, 200000]);
 
 const updateMap = (d, cases) => {
 
+    console.log(d.cSet,cases)
 
     if(d.features.features.length > 0)
     {
@@ -103,8 +104,6 @@ const updateCases = (cases) =>{
 
     context.clearRect(0, 0, width, height);
 
-    context.clearRect(0, 0, width, height);
-
     context.fillStyle = colorGlobe;
     context.globalAlpha =1;
     context.beginPath();
@@ -125,8 +124,6 @@ const updateCases = (cases) =>{
     context.lineWidth = 0.5;
     context.stroke();
 
-
-
     cases.forEach(c => {
             let posX = projection([c.lon, c.lat])[0];
             let posY = projection([c.lon, c.lat])[1];
@@ -136,6 +133,8 @@ const updateCases = (cases) =>{
             context.beginPath()
             context.arc(posX, posY, radius(c.cases), 0, Math.PI*2)
             context.fill();*/
+
+            //console.log(c.cases, radius(c.cases))
 
             let circle = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();

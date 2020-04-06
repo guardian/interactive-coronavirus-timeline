@@ -64,13 +64,13 @@
 
     @include mq(desktop) {
         right: -20px;
-        width: 50%;
+        width: 33%;
     }
 }
 
 .scroll-text__inner {
     box-sizing: border-box;
-    height: 100vh;
+    height: 25vh;
     position: relative;
     z-index: 100;
 
@@ -87,21 +87,25 @@
 }
 
 .scroll-text__inner--half {
-    height: 15vh;
+    height: 10vh;
+}
+
+.div-key {
+    border-top: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
 }
 
 .scroll-text__div {
     position: relative;
     max-width: 620px;
-    width: 100%;
+    // width: 100%;
     @include mq(desktop) {
-        width: 620px;
+        // width: 620px;
     }
     margin-left: 0px;
     padding: 6px 10px 0px;
     padding-top: 4px;
     padding-bottom: 0px;
-    border-top: 1px solid #dcdcdc;
 
     h2 {
         @include fs-titlepiece(1);
@@ -114,8 +118,8 @@
     }
 
     .h2-key-date {
-        font-size: 50px;
-        margin-bottom: 28px;
+        font-size: 36px;
+        margin-bottom: 4px;
     }
 
     h3 {
@@ -148,9 +152,21 @@
 
 .date-bullet {
     position: absolute;
-    background: $news-red;
-    height: 20px;
-    width: 20px;
+    background: #fff;
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
-    transform: translate(-20px, 12px);
+    transform: translate(-22px, 12px);
+    border: 2px solid $news-red;
+}
+
+.date-bullet--small {
+    height: 12px;
+    width: 12px;
+    transform: translate(-19px, 15px);
+}
+
+.date-bullet--full {
+    background: $news-red;
+    transition: 0.25s linear;
 }

@@ -14,6 +14,13 @@
     margin: 0 !important;
 }
 
+// .gs-container {
+//   @include mq(desktop) {
+//     padding-left: 0.14rem !important;
+//     padding-right: 0.14rem !important;
+//   }
+// }
+
 .interactive-wrapper{
 	max-width: 100%;
 }
@@ -22,14 +29,19 @@
 	@include mq(mobile) {
     background: #fff;
     padding-bottom: 8px;
-    // position: absolute;
+    position: absolute;
     top: 0;
     margin-left: -10px;
 		display: flex;
     justify-content: space-between;
+    width: 100%;
     // max-width: 280px;
     // height: 60px;
     @include fs-textSans(3);
+
+    & div {
+      width: 50%;
+    }
 
 		& > div {
 			padding-right: 24px;
@@ -44,10 +56,11 @@
 
 	@include mq(desktop) {
     max-width: 480px;
+    margin-bottom: 24px;
+    position: static;
     // height: 100px;
     // border-top: 1px solid #dcdcdc;
     border-right: 1px solid #dcdcdc;
-    border-left: 1px solid #dcdcdc;
     @include fs-titlepiece(1);
     font-size: 32px;
   }
@@ -75,5 +88,8 @@ canvas {
     z-index: 9;
     left: -10px;
     background: #fff;
+  }
+  @include mq(desktop) {
+    background: none;
   }
 }
