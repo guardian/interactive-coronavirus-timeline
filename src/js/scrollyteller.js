@@ -12,8 +12,18 @@ class ScrollyTeller {
         this.triggerPoints = [];
         this.textBoxes = [].slice.apply(this.scrollText.querySelectorAll(".scroll-text__inner"));
         this.transparentUntilActive = config.transparentUntilActive;
+        this.bigBoxHeight = config.bigBoxHeight
+        this.smallBoxHeight = config.smallBoxHeight
 
-        this.scrollWrapper.style.height = this.textBoxes.length * 100 + "vh";
+
+        const noSmallBoxes = document.querySelectorAll('.scroll-text__inner--half').length
+        const noBigBoxes = document.querySelectorAll('.scroll-text__inner').length - noSmallBoxes
+
+        console.log()
+
+        this.scrollWrapper.style.height = (noSmallBoxes * this.smallBoxHeight) + (noBigBoxes * this.bigBoxHeight) + "vh";
+
+        console.log(this.scrollWrapper.style.height)
 
         if(this.transparentUntilActive) {
             config.parent.classList.add("transparent-until-active");
