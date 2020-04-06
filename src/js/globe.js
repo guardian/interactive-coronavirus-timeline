@@ -54,8 +54,6 @@ const radius = d3.scaleSqrt()
 
 const updateMap = (d, cases) => {
 
-    console.log(d.cSet,cases)
-
     if (d.fLengthPos)
     {
         // feature = d.features;
