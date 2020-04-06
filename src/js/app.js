@@ -34,12 +34,6 @@ pointsWithFeature.forEach((d, i) => {
     div.html(
       `<div class="scroll-text__div">
         <div class='date-bullet date-bullet--small'>&nbsp;</div>
-        <h2>
-          <span>Day ${i + 1}</span>
-          <span></span>
-          
-        </h2>
-        <h3>${d.displayDate}</h3>
       </div>`
     )
   }
