@@ -16,14 +16,17 @@ class ScrollyTeller {
         this.smallBoxHeight = config.smallBoxHeight
 
 
-        const noSmallBoxes = document.querySelectorAll('.scroll-text__inner--half').length
+        const noSmallBoxes = document.querySelectorAll('.scroll-text__inner--half').length 
         const noBigBoxes = document.querySelectorAll('.scroll-text__inner').length - noSmallBoxes
 
-        console.log()
+        
+        const height = ((noSmallBoxes -1) * this.smallBoxHeight) + (noBigBoxes * this.bigBoxHeight) + 100
+        
+        // const newL = (100 * (height / 100)) / 100
 
-        this.scrollWrapper.style.height = (noSmallBoxes * this.smallBoxHeight) + (noBigBoxes * this.bigBoxHeight) + "vh";
-
-        console.log(this.scrollWrapper.style.height)
+        this.scrollWrapper.style.height = height + "vh";
+        
+        // console.log(this.scrollWrapper.style.height)
 
         if(this.transparentUntilActive) {
             config.parent.classList.add("transparent-until-active");

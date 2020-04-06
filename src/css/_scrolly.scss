@@ -60,11 +60,13 @@
         border-left: 1px solid #dcdcdc;
         pointer-events: none;
         z-index: -1;
+        border-bottom: 1px solid #dcdcdc
     }
 
     @include mq(desktop) {
         right: -20px;
         width: 33%;
+        // height: 100%;
     }
 }
 
@@ -89,6 +91,10 @@
 .scroll-text__inner--half {
     height: 10vh;
 }
+
+// .scroll-text__inner--half:last-of-type {
+//     height: 50vh;
+// }
 
 .div-key {
     border-top: 1px solid #dcdcdc;

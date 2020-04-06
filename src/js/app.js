@@ -14,6 +14,7 @@ deathsCt.text(pointsWithFeature[0].totalDeaths);
 updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
 
 pointsWithFeature.forEach((d, i) => {
+  
   const div = d3.select(".scroll-text")
   .append('div')
   .attr('class', d.keyDay === "TRUE" ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
@@ -21,9 +22,9 @@ pointsWithFeature.forEach((d, i) => {
   if (d.keyDay === "TRUE") {
     div.html(
       `<div class="scroll-text__div div-key">
-        <div class='date-bullet'>&nbsp;</div>
+        <div class='date-bullet ${i === 0 ? 'date-bullet--full' : ''}'>&nbsp;</div>
         <h2 class='h2-key-date'>
-          <span>Day ${i + 1}</span> /
+          <span>Day ${d.day}</span> /
           <span>Case ${d.totalCases}</span>
         </h2>
         <h3 class='h3-key-date'>${d.displayDate}</h3>
@@ -41,7 +42,7 @@ pointsWithFeature.forEach((d, i) => {
 
 const scrolly = new ScrollyTeller({
   parent: document.querySelector("#scrolly-1"),
-  triggerTop: 1/3, // percentage from the top of the screen that the trigger should fire
+  triggerTop: 1 / 2, // percentage from the top of the screen that the trigger should fire
   triggerTopMobile: 0.75,
   transparentUntilActive: false,
   bigBoxHeight: 25,
