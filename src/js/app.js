@@ -5,6 +5,8 @@ import { updateMap } from './globe.js'
 import pointsWithFeature from '../assets/data'
 const casesCt = d3.select('.gv-ticker__cases')
 const deathsCt = d3.select('.gv-ticker__deaths')
+const dayCt = d3.select('.gv-ticker__day')
+const dateCt = d3.select('.gv-ticker__date')
 
 casesCt.text(pointsWithFeature[0].totalCases);
 deathsCt.text(pointsWithFeature[0].totalDeaths);
@@ -18,13 +20,12 @@ pointsWithFeature.forEach((d, i) => {
   
   if (d.keyDay === "TRUE") {
     div.html(
-      `<div class="scroll-text__div">
+      `<div class="scroll-text__div div-key">
         <div class='date-bullet'>&nbsp;</div>
         <h2 class='h2-key-date'>
           <span>Day ${i + 1}</span> /
           <span>Case ${d.totalCases}</span>
         </h2>
-        <h3 class='h3-key-date'>${d.areas}</h3>
         <h3 class='h3-key-date'>${d.displayDate}</h3>
         <p>${d.keyDayCopy}</p>
       </div>`
@@ -32,10 +33,11 @@ pointsWithFeature.forEach((d, i) => {
   } else {
     div.html(
       `<div class="scroll-text__div">
-        <div class='date-bullet'>&nbsp;</div>
+        <div class='date-bullet date-bullet--small'>&nbsp;</div>
         <h2>
-          <span>Day ${i + 1}</span> /
-          <span>Case ${d.totalCases}</span>
+          <span>Day ${i + 1}</span>
+          <span></span>
+          
         </h2>
         <h3>${d.displayDate}</h3>
       </div>`
@@ -51,7 +53,12 @@ const scrolly = new ScrollyTeller({
 
 });
 
+const bullets = document.querySelectorAll('.date-bullet')
+
 pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
+  bullets.forEach(b => b.classList.remove('date-bullet--full'))
+  bullets[i].classList.add('date-bullet--full')
+  const displayDate = d.displayDate.split(" ")
   casesCt
     .transition()
     .duration(500)
@@ -80,6 +87,41 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
         deathsCt.text(parseInt(i(t)));
       }
     });
+
+  dayCt
+    .transition()
+    .duration(500)
+    .tween('text', function () {
+
+
+      const currentVal = parseInt(this.textContent.split(" ")[1].replace(/,/g, ""));
+
+      const i = d3.interpolate(currentVal, parseInt(d.day))
+
+      return (t) => {
+        dayCt.text(`Day ${parseInt(i(t))}`);
+      }
+    });
+
+  dateCt
+    .transition()
+    .duration(500)
+    .tween('text', function () {
+
+      const currentDay = parseInt(this.textContent.split(" ")[0].replace(/,/g, ""));
+      // const currentYear = parseInt(this.textContent.split(" ")[2].replace(/,/g, ""));
+
+      const i = d3.interpolate(currentDay, parseInt(d.displayDate.split(" ")[0]))
+
+      return (t) => {
+        dateCt.text(`${parseInt(i(t))} ${displayDate[1]} ${displayDate[2]}`);
+      }
+    });
+
+
+
+
+
   updateMap(d, d.cases) 
 }}))
 
