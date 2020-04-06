@@ -115,11 +115,8 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
       }
     });
 
-
-
-
-
-  updateMap(d, d.cases) 
+  updateMap(d, d.cases)
+  
 }}))
 
 scrolly.watchScroll()
