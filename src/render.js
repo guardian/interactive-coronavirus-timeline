@@ -20,51 +20,25 @@ export async function render() {
     const dates = json.sheets.output.map(d => d.displayDate)
 
     const canada = json.sheets.places.filter(place => place['Country/Region'] === 'Canada');
-
-    let canObj = {
-        province:'Canada',
-        country:'Canada',
-        lat:'53.1355',
-        lon:'-57.6604',
-        cases:[]
-    }
-
-    dates.map(d => {
-        canObj.cases[d] = 0;
-    })
-
-    const canadaCases = canada.map(c => {
-
-        let names = Object.getOwnPropertyNames(c);
-
-        names.map( (n,i) => {
-
-            if(i >4) canObj.cases[n] += +c[n]
-            
-        })
-
-    });
-
     const places = json.sheets.places.map(place => {
-
-        /*if(place['Country/Region'] != 'Canada')
-        {
-            */return {
+        if (place['Country/Region'] === 'Canada') {
+            return {
+                province: 'Canada',
+                country: 'Canada',
+                lat: '59.980158',
+                lon: '-109.9936007',
+                cases: dates.map(date => ({ date, cases: canada.map(region => Number(region[date])).reduce((a, b) => a + b) }))
+            }
+        } else {
+            return {
                 province: place['Province/State'],
                 country: place['Country/Region'],
                 lat: place.Lat,
                 lon: place.Long,
                 cases: dates.map(date => ({ date, cases: place[date] }))
             }
-        /*}
-        else{
-            return canObj
-        }*/
-
-        
+        }
     })
-
-    console.log('========================', places)
 
     const datesWithLocalisedCases = json.sheets.output.map(d => {
         d.totalCases = d.cases
