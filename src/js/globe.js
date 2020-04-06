@@ -41,11 +41,14 @@ let sphere = { type: "Sphere" };
 let feature;
 let bounds;
 
+const i = d3.interpolateLab('red', 'purple');
+
 const radius = d3.scaleSqrt()
     .range([10, 100])
     .domain([0, 1000])
 
 const updateMap = (d, cases) => {
+
     feature = d.features
     let point = d3.geoCentroid(feature);
     let currentRotate = projection.rotate();
@@ -58,6 +61,8 @@ const updateMap = (d, cases) => {
 
     let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
     let nextRotate = projection.rotate();
+
+
 
     d3.transition()
     .duration(500)
@@ -90,31 +95,13 @@ const updateMap = (d, cases) => {
             context.lineWidth = 0.5;
             context.stroke();
 
-            // after on end
-
-            // context.clearRect(0, 0, width, height);
-
-            // context.fillStyle = colorGlobe;
-            // context.beginPath();
-            // path(sphere);
-            // context.fill();
-
-            // context.fillStyle = colorLand;
-
-            // context.beginPath();
-            // path(countriesLowFC);
-            // context.fill();
-
-            // context.strokeStyle = lineLand;
-            // context.lineWidth = 0.5;
-            // context.stroke();
-
             updateCases(cases)
         }
     })
 }
 
 const updateCases = (cases) =>{
+
     cases.forEach(c => {
         if (d3.geoContains(feature, [c.lon, c.lat]))
         {
