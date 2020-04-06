@@ -56,22 +56,25 @@
 .content__main,
 .content__head {
   position: relative;
-
   &:before {
     position: absolute;
     top: 0;
-
     height: 100%;
     min-height: 500px;
     content: " ";
     border-left: 1px solid #dcdcdc;
+    display: none;
+    @include mq(desktop) {
+      display: block;
+      left: calc(50% - 10px);
+    }
 
     @include mq(leftCol) {
-      left: calc((100% - 1140px) / 2 + 170px);
+      left: calc(50% - 10px);
     }
 
     @include mq(wide) {
-      left: calc((100% - 1300px) / 2 + 650px);
+      left: calc(50% - 10px);
     }
   }
 
@@ -121,9 +124,12 @@ a,
 .content__labels,
 .content__headline,
 .content__standfirst {
-  @include mq(wide) {
-    margin-left: 400px;
+  @include mq(desktop) {
+    margin-left: 50%;
   }
+  // @include mq(wide) {
+  //   margin-left: 400px;
+  // }
 }
 
 .content__standfirst {
@@ -134,18 +140,19 @@ a,
 .content__main-column {
   max-width: initial;
   margin-right: 0;
+  margin-left: 0;
 }
 
 .content--interactive .content__meta-container {
-  @include mq(wide) {
-    margin-left: 390px;
-    max-width: 650px;
+  @include mq(desktop) {
+    margin-left: calc(50% - 10px);
+    max-width: calc(50% + 30px);
   }
 }
 
 .meta__contact-wrap,
 .meta__social {
-  @include mq(leftCol) {
+  @include mq(desktop) {
     padding-left: 10px;
   }
 }
