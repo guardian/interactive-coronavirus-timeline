@@ -20,11 +20,12 @@ class ScrollyTeller {
         const noBigBoxes = document.querySelectorAll('.scroll-text__inner').length - noSmallBoxes
 
         
-        const height = ((noSmallBoxes -1) * this.smallBoxHeight) + (noBigBoxes * this.bigBoxHeight) + 100
-        
+        // const height = ((noSmallBoxes -1) * this.smallBoxHeight) + (noBigBoxes * this.bigBoxHeight) + 100
+
+        const height = [...document.querySelectorAll('.scroll-text__inner')].map(d => d.getBoundingClientRect().height).reduce((a, b) => a + b) + 100
         // const newL = (100 * (height / 100)) / 100
 
-        this.scrollWrapper.style.height = height + "vh";
+        this.scrollWrapper.style.height = height + "px";
         
         // console.log(this.scrollWrapper.style.height)
 

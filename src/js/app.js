@@ -43,11 +43,10 @@ pointsWithFeature.forEach((d, i) => {
 const scrolly = new ScrollyTeller({
   parent: document.querySelector("#scrolly-1"),
   triggerTop: 1 / 2, // percentage from the top of the screen that the trigger should fire
-  triggerTopMobile: 0,
+  triggerTopMobile: 0.75,
   transparentUntilActive: false,
-  bigBoxHeight: 25,
+  bigBoxHeight: 35,
   smallBoxHeight: 10
-
 });
 
 const bullets = document.querySelectorAll('.date-bullet')
@@ -55,6 +54,8 @@ const bullets = document.querySelectorAll('.date-bullet')
 pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
   bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets[i].classList.add('date-bullet--full')
+
+
   const displayDate = d.displayDate.split(" ")
   casesCt
     .transition()
