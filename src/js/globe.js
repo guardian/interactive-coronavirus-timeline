@@ -34,6 +34,7 @@ let path = d3.geoPath()
 .context(context);
 
 let colorLand = "#f6f6f6";
+let colorLandSelected = "#bababa";
 let lineLand = "#cccccc";
 let colorGlobe = "#fffff3";
 let textColors = "#333";
@@ -52,8 +53,6 @@ const radius = d3.scaleSqrt()
 .domain([0, 200000]);
 
 const updateMap = (d, cases) => {
-
-    console.log(d)
 
     if (d.fLengthPos)
     {
@@ -80,21 +79,21 @@ const updateMap = (d, cases) => {
 
                 path.projection(projection);
 
-                updateCases(cases)
+                updateCases(cases, d.cases)
             }
         })
 
     }
     else
     {
-        updateCases(cases)
+        updateCases(cases, d.cases)
     }
 
     
 }
 
 
-const updateCases = (cases) =>{
+const updateCases = (cases, countries) =>{
 
     context.clearRect(0, 0, width, height);
 
@@ -117,6 +116,20 @@ const updateCases = (cases) =>{
     context.strokeStyle = lineLand;
     context.lineWidth = 0.5;
     context.stroke();
+
+    countries.map(coun => {
+
+        const feature = topojson.feature(countriesLow, {
+            type: "GeometryCollection",
+            geometries: countriesLow.objects.countries.geometries.filter(c => c.properties.ISO_A3 === coun.iso)
+        })
+
+
+        context.fillStyle = colorLandSelected;
+        context.beginPath();
+        path(feature);
+        context.fill();
+    })
 
     cases.forEach(c => {
             let posX = projection([c.lon, c.lat])[0];

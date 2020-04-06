@@ -30,6 +30,7 @@ export async function render() {
             country: place['Country/Region'],
             lat: place.Lat,
             lon: place.Long,
+            iso:place.ISO_A3,
             cases: dates.map(date => ({ date, cases: place[date] }))
     }))
     .concat({
@@ -37,6 +38,7 @@ export async function render() {
         country: 'Canada',
         lat: '59.980158',
         lon: '-109.9936007',
+        iso:'CAN',
         cases: dates.map(date => ({ date, cases: canada.map(region => Number(region[date])).reduce((a, b) => a + b) }))
     })
     .concat({
@@ -44,6 +46,7 @@ export async function render() {
         country: 'Australia',
         lat: '-24.649542',
         lon: '133.0017953',
+        iso:'AUS',
         cases: dates.map(date => ({ date, cases: aussie.map(region => Number(region[date])).reduce((a, b) => a + b) }))
     })
 
@@ -62,7 +65,7 @@ export async function render() {
             let currentCases = p.cases.find(c => c.date === currentDate)
 
             if (currentCases.cases > 0) {
-                cases.push({ lat: p.lat, lon: p.lon, cases: currentCases.cases })
+                cases.push({ iso:p.iso, lat: p.lat, lon: p.lon, cases: currentCases.cases })
             }
 
         });
