@@ -42,8 +42,8 @@ export async function render() {
     .concat({
         province: 'Australia',
         country: 'Australia',
-        lat: '53.1355',
-        lon: '-57.6604',
+        lat: '-24.649542',
+        lon: '133.0017953',
         cases: dates.map(date => ({ date, cases: aussie.map(region => Number(region[date])).reduce((a, b) => a + b) }))
     })
 

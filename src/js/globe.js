@@ -53,21 +53,18 @@ const radius = d3.scaleSqrt()
 
 const updateMap = (d, cases) => {
 
+    console.log(d)
+
     if (d.fLengthPos)
     {
-        // feature = d.features;
         point = d.point
 
-        // let point = d3.geoCentroid(feature);
         let currentRotate = projection.rotate();
         let currentScale = projection.scale();
 
         projection.rotate([- point[0], - point[1]]);
         path.projection(projection);
 
-        // bounds = path.bounds(feature);
-
-        //let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
         let nextRotate = projection.rotate();
 
         d3.transition()
@@ -75,16 +72,13 @@ const updateMap = (d, cases) => {
         .tween('tween', () => {
 
             let r = d3.interpolate(currentRotate, nextRotate);
-            //let s = d3.interpolate(currentScale, nextScale);
 
             return (t) => {
 
                 projection
                 .rotate(r(t))
-                //.scale(s(t));
 
                 path.projection(projection);
-
 
                 updateCases(cases)
             }
