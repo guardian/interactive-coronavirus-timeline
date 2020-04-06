@@ -43,8 +43,10 @@ let sphere = { type: "Sphere" };
 
 let graticule = d3.geoGraticule();
 
-let feature;
-let bounds;
+// let feature;
+// let bounds;
+
+let point
 
 const radius = d3.scaleSqrt()
 .range([0, 30])
@@ -52,20 +54,19 @@ const radius = d3.scaleSqrt()
 
 const updateMap = (d, cases) => {
 
-    console.log(d.cSet,cases)
-
-    if(d.features.features.length > 0)
+    if (d.fLengthPos)
     {
-        feature = d.features;
+        // feature = d.features;
+        point = d.point
 
-        let point = d3.geoCentroid(feature);
+        // let point = d3.geoCentroid(feature);
         let currentRotate = projection.rotate();
         let currentScale = projection.scale();
 
-        projection.rotate([-point[0], -point[1]]);
+        projection.rotate([- point[0], - point[1]]);
         path.projection(projection);
 
-        bounds = path.bounds(feature);
+        // bounds = path.bounds(feature);
 
         //let nextScale = currentScale * (1.5 / Math.max((bounds[1][0] - bounds[0][0]) / (width/2), (bounds[1][1] - bounds[0][1]) / (height/2)));
         let nextRotate = projection.rotate();

@@ -1,172 +1,193 @@
 .scroll-wrapper {
-    @include mq(tablet) {
-        width: 740px;
-    }
+  @include mq(tablet) {
+    width: 740px;
+  }
 
-    @include mq(desktop) {
-        width:960px;
-    }
+  @include mq(desktop) {
+    width: 960px;
+  }
 
-    @include mq(leftCol) {
-        width: 1140px;
+  @include mq(leftCol) {
+    width: 1140px;
+  }
+  @include mq(wide) {
+    width: 1260px;
+  }
+  box-sizing: border-box;
+  margin: auto;
+  background-color: #fff;
+  position: relative;
+  z-index: 100;
+  //   border-top: 1px solid #dcdcdc;
+  margin-top: 36px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid #dcdcdc;
+
+  &:before {
+    content: "";
+    border-top: 1px solid $neutral-86;
+    width: calc(100% + 20px);
+    z-index: 1000;
+    position: absolute;
+    left: -10px;
+
+    @include mq(mobileLandscape) {
+      width: calc(100% + 40px);
+      left: -20px;
     }
-    @include mq(wide) {
-        width: 1260px;
-    }
-    box-sizing: border-box;
-    margin: auto;
-    background-color:#fff;
-    position: relative;
-    z-index: 100;
-    border-top: 1px solid #dcdcdc;
-    margin-top: 36px;
-    margin-bottom: 36px;
-    border-bottom: 1px solid #dcdcdc;
+  }
 }
 
 .scroll-inner {
-    position: -webkit-sticky;
-    position: sticky;
-    width: 100%;
-    top: 0;
-    height: auto;
-    max-height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100%;
+  top: 0;
+  height: auto;
+  max-height: 100vh;
 
-    &.fixed-top {
-        position: fixed;
-    }
+  &.fixed-top {
+    position: fixed;
+  }
 
-    &.absolute-top {
-        position: absolute;
-    }
+  &.absolute-top {
+    position: absolute;
+  }
 
-    &.absolute-bottom {
-        position: absolute;
-        top: auto;
-        @include mq(tablet) {
-            bottom: 0;
-        }
+  &.absolute-bottom {
+    position: absolute;
+    top: auto;
+    @include mq(tablet) {
+      bottom: 0;
     }
+  }
 
-    svg {
-        overflow: visible;
-    }
+  svg {
+    overflow: visible;
+  }
 }
 
 .scroll-text {
-    @include mq(mobile) {
-        position: absolute;
-        top: 0;
-        border-left: 1px solid #dcdcdc;
-        pointer-events: none;
-        z-index: -1;
-    }
+  @include mq(mobile) {
+    position: relative;
+    top: 0;
+    border-left: 1px solid #dcdcdc;
+    pointer-events: none;
+    z-index: -1;
+    border-bottom: 1px solid #dcdcdc;
+  }
 
-    @include mq(desktop) {
-        right: -20px;
-        width: 33%;
-    }
+  @include mq(desktop) {
+    position: absolute;
+    right: -20px;
+    width: 33%;
+    // height: 100%;
+  }
 }
 
 .scroll-text__inner {
-    box-sizing: border-box;
-    height: 25vh;
-    position: relative;
-    z-index: 100;
+  box-sizing: border-box;
+  height: 25vh;
+  position: relative;
+  z-index: 100;
 
+  .transparent-until-active & {
+    opacity: 0.25;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  &:first-of-type {
     .transparent-until-active & {
-        opacity: 0.25;
-        transition: opacity 0.5s ease-in-out;
+      opacity: 1;
     }
-
-    &:first-of-type {
-        .transparent-until-active & {
-            opacity: 1;
-        }
-    }
+  }
 }
 
 .scroll-text__inner--half {
-    height: 10vh;
+  height: 10vh;
 }
 
+// .scroll-text__inner--half:last-of-type {
+//     height: 50vh;
+// }
+
 .div-key {
-    border-top: 1px solid #dcdcdc;
-    border-bottom: 1px solid #dcdcdc;
+  border-top: 1px solid #dcdcdc;
+  border-bottom: 1px solid #dcdcdc;
 }
 
 .scroll-text__div {
-    position: relative;
-    max-width: 620px;
-    // width: 100%;
-    @include mq(desktop) {
-        // width: 620px;
-    }
-    margin-left: 0px;
-    padding: 6px 10px 0px;
-    padding-top: 4px;
-    padding-bottom: 0px;
+  position: relative;
+  max-width: 620px;
+  // width: 100%;
+  @include mq(desktop) {
+    // width: 620px;
+  }
+  margin-left: 0px;
+  padding: 6px 10px 0px;
+  padding-top: 4px;
+  padding-bottom: 0px;
 
-    h2 {
-        @include fs-titlepiece(1);
-        font-size: 24px;
-        margin-left: 4px;
-        margin-bottom: 0px;
-        span:last-of-type {
-            color: $news-red;
-        }
+  h2 {
+    @include fs-titlepiece(1);
+    font-size: 24px;
+    margin-left: 4px;
+    margin-bottom: 0px;
+    span:last-of-type {
+      color: $news-red;
     }
+  }
 
-    .h2-key-date {
-        font-size: 36px;
-        margin-bottom: 4px;
-    }
+  .h2-key-date {
+    font-size: 36px;
+    margin-bottom: 4px;
+  }
 
-    h3 {
-        @include fs-headline(2);
-        font-weight: bold;
-        font-size: 20px;
-    }
-    
-    h3:first-of-type {
-        margin-bottom: 0;
-    }
+  h3 {
+    @include fs-headline(2);
+    font-weight: bold;
+    font-size: 20px;
+  }
 
-    h3:last-of-type {
-        font-style: italic;
-        font-weight: lighter;
-        margin-bottom: 8px;
-    }
+  h3:first-of-type {
+    margin-bottom: 0;
+  }
 
-    .h3-key-date {
-        font-size: 28px;
-        line-height: 32px;
-    }
+  h3:last-of-type {
+    font-style: italic;
+    font-weight: lighter;
+    margin-bottom: 8px;
+  }
+
+  .h3-key-date {
+    font-size: 28px;
+    line-height: 32px;
+  }
 }
 
 .scroll-text__inner:first-of-type {
-    .scroll-text__div {
-        border-top: none;
-    }
+  .scroll-text__div {
+    border-top: none;
+  }
 }
 
 .date-bullet {
-    position: absolute;
-    background: #fff;
-    height: 18px;
-    width: 18px;
-    border-radius: 50%;
-    transform: translate(-22px, 12px);
-    border: 2px solid $news-red;
+  position: absolute;
+  background: #fff;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  transform: translate(-22px, 12px);
+  border: 2px solid $news-red;
 }
 
 .date-bullet--small {
-    height: 12px;
-    width: 12px;
-    transform: translate(-19px, 15px);
+  height: 8px;
+  width: 8px;
+  transform: translate(-17px, 15px);
 }
 
 .date-bullet--full {
-    background: $news-red;
-    transition: 0.25s linear;
+  background: $news-red;
+  transition: 0.25s linear;
 }
