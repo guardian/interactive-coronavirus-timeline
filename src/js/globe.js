@@ -34,11 +34,13 @@ let path = d3.geoPath()
 .projection(projection)
 .context(context);
 
-let colorLand = "#f6f6f6";
-let colorLandSelected = "#bababa";
-let lineLand = "#cccccc";
-let colorGlobe = "#fffff3";
+let colorLand = "#ffffff";
+let colorLandSelected = "#333333";
+let graticuleColor = "#333333";
+let lineLand = "#333333";
+let colorGlobe = "#ffffff";
 let textColors = "#333";
+let blobColor = "#007abc";
 
 let sphere = { type: "Sphere" };
 
@@ -105,7 +107,8 @@ const updateCases = (cases, countries) =>{
     context.fill();
 
     context.beginPath();
-    context.strokeStyle = '#ccc';
+    context.strokeStyle = graticuleColor;
+    context.lineWidth = 0.1;
     path(graticule());
     context.stroke();
 
@@ -136,18 +139,19 @@ const updateCases = (cases, countries) =>{
             let posX = projection([c.lon, c.lat])[0];
             let posY = projection([c.lon, c.lat])[1];
 
-            /*context.fillStyle = 'red';
-            context.globalAlpha =0.3;
-            context.beginPath()
-            context.arc(posX, posY, radius(c.cases), 0, Math.PI*2)
-            context.fill();*/
-
-            //console.log(c.cases, radius(c.cases))
-
-            let circle = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
+            let circleFill = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();
-            context.strokeStyle = 'red';
-            path(circle());
+            context.fillStyle = blobColor;
+            context.globalAlpha = 0.2;
+            path(circleFill());
+            context.fill();
+
+            let circleStroke = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
+            context.beginPath();
+            context.strokeStyle = blobColor;
+            context.globalAlpha = 1;
+            context.lineWidth = 2;
+            path(circleStroke());
             context.stroke();
     })
 }
