@@ -160,3 +160,9 @@ canvas {
     margin-top: 0px;
   }
 }
+
+.ios, .android {
+  .article {
+    overflow: visible !important;
+  }
+}

@@ -15,9 +15,42 @@ export async function render() {
     const data = await rp('https://interactive.guim.co.uk/docsdata-test/1KVnPUoUDkracHpXlQapzIjsHOs9DtnrvNM8gsWarR3Q.json')
     const json = await JSON.parse(data)
     
-    // const dates = Object.keys(json.sheets.places[0]).filter(key => key.indexOf(' ') > -1)
-    // const dates = Object.keys(json.sheets.place).filter(key => key.indexOf(' ') > -1)
-    const dates = json.sheets.output.map(d => d.displayDate)
+    /* NIKOS SCRIPT */
+    const totals = json.sheets.totals
+
+    const out = []
+
+    const keys = []
+
+    totals.forEach(row => {
+        keys.push(row.day)
+    })
+
+    const fakeKeys = Object.keys(totals[0]).filter(k => k !== 'day')
+
+    const withoutHeader = fakeKeys.map(k => {
+        return totals.map(row => row[k])
+    })
+
+    const withHeader = withoutHeader.map((arr, i) => {
+
+        const out = { day: i + 1 }
+
+        arr.forEach((el, i) => {
+
+            out[keys[i]] = el
+
+        })
+
+        return out
+
+    })
+
+    /* NIKOS SCRIPT */ 
+
+
+    // const dates = json.sheets.output.map(d => d.displayDate)
+    const dates = withHeader.map(d => d.displayDate)
 
     const canada = json.sheets.places.filter(place => place['Country/Region'] === 'Canada');
     const aussie = json.sheets.places.filter(place => place['Country/Region'] === 'Australia');
@@ -50,7 +83,7 @@ export async function render() {
         cases: dates.map(date => ({ date, cases: aussie.map(region => Number(region[date])).reduce((a, b) => a + b) }))
     })
 
-    const datesWithLocalisedCases = json.sheets.output.map(d => {
+    const datesWithLocalisedCases = withHeader.map(d => {
         d.totalCases = d.cases
         d.totalDeaths = d.deaths
         delete d.cases
@@ -89,7 +122,7 @@ export async function render() {
         })
     })
     // console.log(pointsWithFeature)
-    // writeFileSync('src/assets/data.json', JSON.stringify(pointsWithFeature))
+    writeFileSync('src/assets/data.json', JSON.stringify(pointsWithFeature))
 
     return templateHTML;
 }

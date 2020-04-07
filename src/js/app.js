@@ -53,11 +53,12 @@ const scrolly = new ScrollyTeller({
 const bullets = document.querySelectorAll('.date-bullet')
 
 pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
-  
+  console.log(d)
+  // console.log(d)
   bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets[i].classList.add('date-bullet--full')
 
-  const displayDate = d.displayDate.split(" ")
+  // const displayDate = d.displayDate.split(" ")
   casesCt
     .transition()
     .duration(500)
@@ -107,7 +108,7 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
     .tween('text', function () {
 
       const currentDay = parseInt(this.innerText.split(" ")[0].replace(/,/g, ""));
-      const splitDate = d.displayDate.split(" ")
+      const splitDate = d.displayDate ? d.displayDate.split(" ") : []
       const i = d3.interpolate(currentDay, parseInt(splitDate[0]))
 
       return (t) => {
