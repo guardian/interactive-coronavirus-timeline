@@ -3,10 +3,10 @@ import * as geo from 'd3-geo-projection'
 import * as d3B from 'd3'
 import { $ } from './util'
 // import countries from '../assets/countries.json'
-import countriesLow from '../assets/countries__.json'
+import countriesLow from '../assets/ne_10m_admin_0_countries.json'
 
 // const countriesFC = topojson.feature(countries, countries.objects.countries);
-const countriesLowFC = topojson.feature(countriesLow, countriesLow.objects.countries);
+const countriesLowFC = topojson.feature(countriesLow, countriesLow.objects.ne_10m_admin_0_countries);
 
 const d3 = Object.assign({}, d3B, geo);
 
@@ -33,13 +33,13 @@ let path = d3.geoPath()
 .projection(projection)
 .context(context);
 
-let colorLand = "#ffffff";
-let colorLandSelected = "#333333";
+let colorLand = "#ececec";
+let colorLandSelected = "#fff3f5";
 let graticuleColor = "#333333";
-let lineLand = "#333333";
+let lineLand = "#e4e4e4";
 let colorGlobe = "#ffffff";
 let textColors = "#333";
-let blobColor = "#007abc";
+let blobColor = "#c70000";
 
 let sphere = { type: "Sphere" };
 
@@ -55,6 +55,8 @@ const radius = d3.scaleSqrt()
 .domain([0, 200000]);
 
 const updateMap = (d, cases) => {
+
+    console.log(d)
 
     if (d.fLengthPos)
     {
@@ -121,10 +123,9 @@ const updateCases = (cases, countries) =>{
     context.stroke();
 
     countries.map(coun => {
-
         const feature = topojson.feature(countriesLow, {
             type: "GeometryCollection",
-            geometries: countriesLow.objects.countries.geometries.filter(c => c.properties.ISO_A3 === coun.iso)
+            geometries: countriesLow.objects.ne_10m_admin_0_countries.geometries.filter(c => c.properties.ISO_A3 === coun.iso)
         })
 
 
@@ -132,6 +133,11 @@ const updateCases = (cases, countries) =>{
         context.beginPath();
         path(feature);
         context.fill();
+
+        context.strokeStyle = lineLand;
+        context.beginPath();
+        path(feature);
+        context.stroke();
     })
 
     cases.forEach(c => {
@@ -141,7 +147,7 @@ const updateCases = (cases, countries) =>{
             let circleFill = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();
             context.fillStyle = blobColor;
-            context.globalAlpha = 0.2;
+            context.globalAlpha = 0.1;
             path(circleFill());
             context.fill();
 
@@ -149,7 +155,7 @@ const updateCases = (cases, countries) =>{
             context.beginPath();
             context.strokeStyle = blobColor;
             context.globalAlpha = 1;
-            context.lineWidth = 2;
+            context.lineWidth = 1 ;
             path(circleStroke());
             context.stroke();
     })
