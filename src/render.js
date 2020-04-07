@@ -56,6 +56,7 @@ export async function render() {
     const aussie = json.sheets.places.filter(place => place['Country/Region'] === 'Australia');
 
     const places = json.sheets.places
+    .filter(place => place.ISO_A3 !== "")
     .filter(place => place['Country/Region'] !== 'Canada')
     .filter(place => place['Country/Region'] !== 'Australia')
     .map(place => ({
@@ -90,24 +91,41 @@ export async function render() {
         delete d.deaths
         return d
     })
-    .map(d => {
+    .map((d, i) => {
         const currentDate = d.displayDate;
         let cases = []
 
         places.forEach(p => {
             let currentCases = p.cases.find(c => c.date === currentDate)
 
+            
+
             if (currentCases.cases > 0) {
                 cases.push({ iso:p.iso, lat: p.lat, lon: p.lon, cases: currentCases.cases })
             }
 
         });
-
+        
         return Object.assign({}, d, { cases })
     })
 
+    const duped = datesWithLocalisedCases.map((d, i) => {
 
-    const pointsWithFeature = datesWithLocalisedCases.map(d => {
+        if (i >= 97 && d.cases.length === 0) {
+            console.log(datesWithLocalisedCases[i - 1])
+            d.cases = datesWithLocalisedCases[i - 1].cases
+        }
+        if (i >= 97 && d.totalCases === "0") {
+            d.totalCases = datesWithLocalisedCases[i - 1].totalCases
+        }
+        if (i >= 97 && d.totalDeaths === "0") {
+            d.totalDeaths = datesWithLocalisedCases[i - 1].totalDeaths
+        }
+        return d
+    })
+
+
+    const pointsWithFeature = duped.map((d, i) => {
         const cSet = set(d.areas ? JSON.parse(d.areas) : [])
 
         const features = topojson.feature(countriesLow, {

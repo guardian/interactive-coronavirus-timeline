@@ -1,4 +1,4 @@
-import { supportsSticky } from "./util.js"
+import { supportsSticky, $$ } from "./util.js"
 
 class ScrollyTeller {
     constructor(config) {
@@ -14,7 +14,7 @@ class ScrollyTeller {
         this.transparentUntilActive = config.transparentUntilActive;
         this.bigBoxHeight = config.bigBoxHeight
         this.smallBoxHeight = config.smallBoxHeight
-
+        this.allBoxes = $$('.scroll-text__div')
 
         const noSmallBoxes = document.querySelectorAll('.scroll-text__inner--half').length 
         const noBigBoxes = document.querySelectorAll('.scroll-text__inner').length - noSmallBoxes
@@ -48,7 +48,8 @@ class ScrollyTeller {
             }
     
             if(bbox.top < (window.innerHeight*(this.triggerTop)) && bbox.bottom > window.innerHeight/2) {
-                const i = Math.floor(Math.abs(bbox.top - (window.innerHeight*(this.triggerTop)))/bbox.height*this.textBoxes.length);
+                // const i = Math.floor(Math.abs(bbox.top - (window.innerHeight*(this.triggerTop)))/bbox.height*this.textBoxes.length);
+                const i = Math.max(0, this.allBoxes.findIndex(el => el.getBoundingClientRect().top > this.triggerTop * window.innerHeight) - 1)
     
                 if(i !== this.lastI) {
                     this.lastI = i; 

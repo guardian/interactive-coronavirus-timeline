@@ -66,7 +66,6 @@ const radius = d3.scaleSqrt().range([0, 30]).domain([0, 200000]);
 
 const updateMap = (d, cases) => {
 
-    console.log(d)
 
     if (d.fLengthPos)
     {
@@ -96,7 +95,8 @@ const updateMap = (d, cases) => {
                 //updateCases(cases, d.cases)
             }
         })
-        .on('end', d =>  updateCases(cases, d.cases));
+        // .on('end', d =>  updateCases(cases, d.cases));
+        .on('end', updateCases(cases, d.cases));
 
     }
     else

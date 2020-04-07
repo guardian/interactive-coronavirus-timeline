@@ -146,9 +146,10 @@
   padding-top: 4px;
   padding-bottom: 0px;
 
-  p {
+  > p {
     margin-bottom: 32px;
-
+    margin-left: 0 !important;
+    max-width: auto;
     @include mq(desktop) {
       margin-bottom: 48px;
     }
