@@ -95,6 +95,7 @@
   }
 
   @include mq(desktop) {
+    height: 100%;
     position: absolute;
     right: -20px;
     width: 33%;

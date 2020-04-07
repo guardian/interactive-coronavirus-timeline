@@ -14,12 +14,13 @@ class ScrollyTeller {
         this.transparentUntilActive = config.transparentUntilActive;
         this.bigBoxHeight = config.bigBoxHeight
         this.smallBoxHeight = config.smallBoxHeight
-        this.allBoxes = $$('.scroll-text__div')
+        // this.allBoxes = $$('.scroll-text__div')
+        this.allBoxes = $$('.scroll-text__inner')
 
         const noSmallBoxes = document.querySelectorAll('.scroll-text__inner--half').length 
         const noBigBoxes = document.querySelectorAll('.scroll-text__inner').length - noSmallBoxes
 
-        const height = [...document.querySelectorAll('.scroll-text__inner')].map(d => d.getBoundingClientRect().height).reduce((a, b) => a + b) + 100
+        const height = [...document.querySelectorAll('.scroll-text__inner')].map(d => d.getBoundingClientRect().height).reduce((a, b) => a + b) + 300
 
         this.scrollWrapper.style.height = height + "px";
 
@@ -74,7 +75,7 @@ class ScrollyTeller {
     }
 
     doScrollAction(i) {
-        const trigger = this.triggerPoints.find(d => d.num === i+1);
+        const trigger = this.triggerPoints.find(d => d.num === i);
         if(trigger) {
             trigger.do();
         }

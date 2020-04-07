@@ -12,38 +12,51 @@ const dateCt = d3.select('.gv-ticker__date')
 casesCt.text(pointsWithFeature[0].totalCases);
 deathsCt.text(pointsWithFeature[0].totalDeaths);
 
+let stopUpdates = false
+
 updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
 
-pointsWithFeature.forEach((d, i) => {
-  
-  const div = d3.select(".scroll-text")
-  .append('div')
-  .attr('class', d.keyDay === "TRUE" ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
-  
-  if (d.keyDay === "TRUE") {
-    div.html(
-      `<div class="scroll-text__div div-key">
-        <div class='date-bullet ${i === 0 ? 'date-bullet--full' : ''}'>&nbsp;</div>
-        <h2 class='h2-key-date'>
-          <span>Day ${d.day}</span> /
-          <span>Case ${numberWithCommas(d.totalCases)}</span>
-        </h2>
-        <h3 class='h3-key-date'>${d.displayDate}</h3>
-        <p>${d.keyDayCopy}</p>
-      </div>`
-    )
+const scrollText = d3.select(".scroll-text")
+
+pointsWithFeature
+.concat([{}, {}, {}])
+.forEach((d, i) => {
+    if (i <= 99) {
+    const div = scrollText
+    .append('div')
+    .attr('class', d.keyDay === "TRUE" ? 'scroll-text__inner' : 'scroll-text__inner scroll-text__inner--half')
+    
+
+
+    if (d.keyDay === "TRUE") {
+      div.html(
+        `<div class="scroll-text__div div-key">
+          <div class='date-bullet ${i === 0 ? 'date-bullet--full' : ''}'>&nbsp;</div>
+          <h2 class='h2-key-date'>
+            <span>Day ${d.day}</span> /
+            <span>Case ${numberWithCommas(d.totalCases)}</span>
+          </h2>
+          <h3 class='h3-key-date'>${d.displayDate}</h3>
+          <p>${d.keyDayCopy}</p>
+        </div>`
+      )
+    } else {
+      div.html(
+        `<div class="scroll-text__div">
+          <div class='date-bullet date-bullet--small'>&nbsp;</div>
+        </div>`
+      )
+    }
   } else {
-    div.html(
-      `<div class="scroll-text__div">
-        <div class='date-bullet date-bullet--small'>&nbsp;</div>
-      </div>`
-    )
+      scrollText
+        .append('div')
+        .attr('class', 'scroll-text__inner inner-spacer')
   }
 })
 
 const scrolly = new ScrollyTeller({
   parent: document.querySelector("#scrolly-1"),
-  triggerTop: 1 / 2, // percentage from the top of the screen that the trigger should fire
+  triggerTop: 1/2, // percentage from the top of the screen that the trigger should fire
   triggerTopMobile: 0.8,
   transparentUntilActive: false,
   bigBoxHeight: 35,
@@ -52,8 +65,12 @@ const scrolly = new ScrollyTeller({
 
 const bullets = document.querySelectorAll('.date-bullet')
 
-pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
+pointsWithFeature
+.concat([{}, {}, {}])
+.forEach((d, i) => scrolly.addTrigger({ num: i , do: () => {
 
+  if (i <= 99) {
+  if (stopUpdates === false) {
   
 
   // bullets.forEach(b => b.classList.remove('date-bullet--full'))
@@ -118,8 +135,15 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
         dateCt.text(`${parseInt(i(t))} ${splitDate[1]} ${splitDate[2]}`);
       }
     });
+    
 
   updateMap(d, d.cases)
+
+  
+}
+if (i <= 98 && stopUpdates === true) { stopUpdates = false }
+if (i > 99) { stopUpdates = true }
+  }
   
 }}))
 
