@@ -1,14 +1,14 @@
 .scroll-wrapper {
   @include mq(tablet) {
-    width: 740px;
+    width: 700px;
   }
 
   @include mq(desktop) {
-    width: 960px;
+    width: 940px;
   }
 
   @include mq(leftCol) {
-    width: 1140px;
+    width: 1100px;
   }
   @include mq(wide) {
     width: 1260px;
@@ -65,6 +65,23 @@
   svg {
     overflow: visible;
   }
+  &:after {
+    content: "";
+    border-bottom: 1px solid $neutral-86;
+    width: calc(100% + 20px);
+    z-index: 1000;
+    position: absolute;
+    bottom: 6px;
+    left: -10px;
+
+    @include mq(mobileLandscape) {
+      width: calc(100% + 40px);
+      left: -20px;
+    }
+    @include mq(desktop) {
+      display: none;
+    }
+  }
 }
 
 .scroll-text {
@@ -87,7 +104,7 @@
 
 .scroll-text__inner {
   box-sizing: border-box;
-  height: 25vh;
+  //   height: 35vh;
   position: relative;
   z-index: 100;
 
@@ -104,7 +121,7 @@
 }
 
 .scroll-text__inner--half {
-  height: 10vh;
+  height: 40px;
 }
 
 // .scroll-text__inner--half:last-of-type {
@@ -119,6 +136,7 @@
 .scroll-text__div {
   position: relative;
   max-width: 620px;
+  height: 100%;
   // width: 100%;
   @include mq(desktop) {
     // width: 620px;
@@ -127,6 +145,14 @@
   padding: 6px 10px 0px;
   padding-top: 4px;
   padding-bottom: 0px;
+
+  p {
+    margin-bottom: 32px;
+
+    @include mq(desktop) {
+      margin-bottom: 48px;
+    }
+  }
 
   h2 {
     @include fs-titlepiece(1);
@@ -139,8 +165,19 @@
   }
 
   .h2-key-date {
-    font-size: 36px;
-    margin-bottom: 4px;
+    font-size: 26px;
+    // margin-bottom: 4px;
+
+    @include mq(mobileMedium) {
+      font-size: 28px;
+    }
+
+    @include mq(mobileLandscape) {
+      font-size: 36px;
+    }
+    @include mq(desktop) {
+      font-size: 38px;
+    }
   }
 
   h3 {
@@ -156,12 +193,21 @@
   h3:last-of-type {
     font-style: italic;
     font-weight: lighter;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .h3-key-date {
-    font-size: 28px;
-    line-height: 32px;
+    font-size: 24px;
+    line-height: 1;
+
+    @include mq(mobileMedium) {
+      font-size: 28px;
+    }
+
+    @include mq(mobileLandscape) {
+      // font-size: 36px;
+      line-height: 1.2;
+    }
   }
 }
 
@@ -174,17 +220,23 @@
 .date-bullet {
   position: absolute;
   background: #fff;
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  transform: translate(-22px, 12px);
-  border: 2px solid $news-red;
+  transform: translate(-19px, 75%);
+  border: 1px solid $news-red;
+
+  @include mq(desktop) {
+    width: 20px;
+    height: 20px;
+    transform: translate(-22px, 50%);
+  }
 }
 
 .date-bullet--small {
-  height: 8px;
-  width: 8px;
-  transform: translate(-17px, 15px);
+  height: 9px;
+  width: 9px;
+  transform: translate(-16px, 10px);
 }
 
 .date-bullet--full {

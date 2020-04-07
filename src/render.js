@@ -15,32 +15,75 @@ export async function render() {
     const data = await rp('https://interactive.guim.co.uk/docsdata-test/1KVnPUoUDkracHpXlQapzIjsHOs9DtnrvNM8gsWarR3Q.json')
     const json = await JSON.parse(data)
     
-    // const dates = Object.keys(json.sheets.places[0]).filter(key => key.indexOf(' ') > -1)
-    // const dates = Object.keys(json.sheets.place).filter(key => key.indexOf(' ') > -1)
-    const dates = json.sheets.output.map(d => d.displayDate)
+    /* NIKOS SCRIPT */
+    const totals = json.sheets.totals
 
-    const canada = json.sheets.places.filter(place => place['Country/Region'] === 'Canada');
-    const places = json.sheets.places.map(place => {
-        if (place['Country/Region'] === 'Canada') {
-            return {
-                province: 'Canada',
-                country: 'Canada',
-                lat: '53.1355',
-                lon: '-57.6604',
-                cases: dates.map(date => ({ date, cases: canada.map(region => Number(region[date])).reduce((a, b) => a + b) }))
-            }
-        } else {
-            return {
-                province: place['Province/State'],
-                country: place['Country/Region'],
-                lat: place.Lat,
-                lon: place.Long,
-                cases: dates.map(date => ({ date, cases: place[date] }))
-            }
-        }
+    const out = []
+
+    const keys = []
+
+    totals.forEach(row => {
+        keys.push(row.day)
     })
 
-    const datesWithLocalisedCases = json.sheets.output.map(d => {
+    const fakeKeys = Object.keys(totals[0]).filter(k => k !== 'day')
+
+    const withoutHeader = fakeKeys.map(k => {
+        return totals.map(row => row[k])
+    })
+
+    const withHeader = withoutHeader.map((arr, i) => {
+
+        const out = { day: i + 1 }
+
+        arr.forEach((el, i) => {
+
+            out[keys[i]] = el
+
+        })
+
+        return out
+
+    })
+
+    /* NIKOS SCRIPT */ 
+
+
+    // const dates = json.sheets.output.map(d => d.displayDate)
+    const dates = withHeader.map(d => d.displayDate)
+
+    const canada = json.sheets.places.filter(place => place['Country/Region'] === 'Canada');
+    const aussie = json.sheets.places.filter(place => place['Country/Region'] === 'Australia');
+
+    const places = json.sheets.places
+    .filter(place => place['Country/Region'] !== 'Canada')
+    .filter(place => place['Country/Region'] !== 'Australia')
+    .map(place => ({
+            province: place['Province/State'],
+            country: place['Country/Region'],
+            lat: place.Lat,
+            lon: place.Long,
+            iso:place.ISO_A3,
+            cases: dates.map(date => ({ date, cases: place[date] }))
+    }))
+    .concat({
+        province: 'Canada',
+        country: 'Canada',
+        lat: '59.980158',
+        lon: '-109.9936007',
+        iso:'CAN',
+        cases: dates.map(date => ({ date, cases: canada.map(region => Number(region[date])).reduce((a, b) => a + b) }))
+    })
+    .concat({
+        province: 'Australia',
+        country: 'Australia',
+        lat: '-24.649542',
+        lon: '133.0017953',
+        iso:'AUS',
+        cases: dates.map(date => ({ date, cases: aussie.map(region => Number(region[date])).reduce((a, b) => a + b) }))
+    })
+
+    const datesWithLocalisedCases = withHeader.map(d => {
         d.totalCases = d.cases
         d.totalDeaths = d.deaths
         delete d.cases
@@ -55,7 +98,7 @@ export async function render() {
             let currentCases = p.cases.find(c => c.date === currentDate)
 
             if (currentCases.cases > 0) {
-                cases.push({ lat: p.lat, lon: p.lon, cases: currentCases.cases })
+                cases.push({ iso:p.iso, lat: p.lat, lon: p.lon, cases: currentCases.cases })
             }
 
         });

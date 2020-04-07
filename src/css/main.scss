@@ -133,7 +133,7 @@
     font-size: 32px;
   }
   @include mq(tablet) {
-    font-size: 40px;
+    font-size: 38px;
   }
 }
 
@@ -150,6 +150,7 @@ canvas {
     z-index: 9;
     left: -10px;
     background: #fff;
+    margin: 0 auto;
     margin-top: 50px;
   }
   @include mq(mobileMedium) {
@@ -158,5 +159,11 @@ canvas {
   @include mq(desktop) {
     background: none;
     margin-top: 0px;
+  }
+}
+
+.ios, .android {
+  .article {
+    overflow: visible !important;
   }
 }
