@@ -146,6 +146,14 @@
   padding-top: 4px;
   padding-bottom: 0px;
 
+  p {
+    margin-bottom: 32px;
+
+    @include mq(desktop) {
+      margin-bottom: 48px;
+    }
+  }
+
   h2 {
     @include fs-titlepiece(1);
     font-size: 24px;
@@ -157,8 +165,19 @@
   }
 
   .h2-key-date {
-    font-size: 36px;
-    margin-bottom: 4px;
+    font-size: 26px;
+    // margin-bottom: 4px;
+
+    @include mq(mobileMedium) {
+      font-size: 28px;
+    }
+
+    @include mq(mobileLandscape) {
+      font-size: 36px;
+    }
+    @include mq(desktop) {
+      font-size: 38px;
+    }
   }
 
   h3 {
@@ -174,12 +193,21 @@
   h3:last-of-type {
     font-style: italic;
     font-weight: lighter;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .h3-key-date {
-    font-size: 28px;
-    line-height: 32px;
+    font-size: 24px;
+    line-height: 1;
+
+    @include mq(mobileMedium) {
+      font-size: 28px;
+    }
+
+    @include mq(mobileLandscape) {
+      // font-size: 36px;
+      line-height: 1.2;
+    }
   }
 }
 
@@ -192,17 +220,23 @@
 .date-bullet {
   position: absolute;
   background: #fff;
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  transform: translate(-22px, 50%);
-  border: 2px solid $news-red;
+  transform: translate(-19px, 75%);
+  border: 1px solid $news-red;
+
+  @include mq(desktop) {
+    width: 20px;
+    height: 20px;
+    transform: translate(-22px, 50%);
+  }
 }
 
 .date-bullet--small {
-  height: 8px;
-  width: 8px;
-  transform: translate(-17px, 10px);
+  height: 9px;
+  width: 9px;
+  transform: translate(-16px, 10px);
 }
 
 .date-bullet--full {
