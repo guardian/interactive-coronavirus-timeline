@@ -47,7 +47,7 @@ let path = d3.geoPath().projection(projection).context(context);
 
 let colorLand = "#eaeaea";
 let colorLandSelected = "#fff7b2";
-let graticuleColor = "#4d4d4d";
+let graticuleColor = "#333333";
 let lineLand = "#dcdcdc";
 let colorGlobe = "#ffffff";
 let textColors = "#333";
