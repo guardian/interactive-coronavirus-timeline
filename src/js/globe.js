@@ -46,7 +46,7 @@ projection.fitExtent(
 let path = d3.geoPath().projection(projection).context(context);
 
 let colorLand = "#eaeaea";
-let colorLandSelected = "#fff7b2";
+let colorLandSelected = "#fff1f4";
 let graticuleColor = "#333333";
 let lineLand = "#dcdcdc";
 let colorGlobe = "#ffffff";
