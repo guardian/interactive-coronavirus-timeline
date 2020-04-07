@@ -43,24 +43,25 @@ pointsWithFeature.forEach((d, i) => {
 const scrolly = new ScrollyTeller({
   parent: document.querySelector("#scrolly-1"),
   triggerTop: 1 / 2, // percentage from the top of the screen that the trigger should fire
-  triggerTopMobile: 0,
+  triggerTopMobile: 0.75,
   transparentUntilActive: false,
-  bigBoxHeight: 25,
+  bigBoxHeight: 35,
   smallBoxHeight: 10
-
 });
 
 const bullets = document.querySelectorAll('.date-bullet')
 
 pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
+  
   bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets[i].classList.add('date-bullet--full')
+
   const displayDate = d.displayDate.split(" ")
   casesCt
     .transition()
     .duration(500)
     .tween('text', function () {
-      const currentVal = parseInt(this.textContent.replace(/,/g, ""));
+      const currentVal = parseInt(this.innerText.replace(/,/g, ""));
       const i = d3.interpolate(currentVal, parseInt(d.totalCases))
       return (t) => {
         // if (i(t) !== 1) {
@@ -77,7 +78,7 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
     .transition()
     .duration(500)
     .tween('text', function () {
-      const currentVal = parseInt(this.textContent.replace(/,/g, ""));
+      const currentVal = parseInt(this.innerText.replace(/,/g, ""));
       const i = d3.interpolate(currentVal, parseInt(d.totalDeaths))
 
       return (t) => {
@@ -89,11 +90,10 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
     .transition()
     .duration(500)
     .tween('text', function () {
-
-
-      const currentVal = parseInt(this.textContent.split(" ")[1].replace(/,/g, ""));
-
+      const currentVal = parseInt(this.innerText.split(" ")[1].replace(/,/g, ""));
+      
       const i = d3.interpolate(currentVal, parseInt(d.day))
+
 
       return (t) => {
         dayCt.text(`Day ${parseInt(i(t))}`);
@@ -105,13 +105,12 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
     .duration(500)
     .tween('text', function () {
 
-      const currentDay = parseInt(this.textContent.split(" ")[0].replace(/,/g, ""));
-      // const currentYear = parseInt(this.textContent.split(" ")[2].replace(/,/g, ""));
-
-      const i = d3.interpolate(currentDay, parseInt(d.displayDate.split(" ")[0]))
+      const currentDay = parseInt(this.innerText.split(" ")[0].replace(/,/g, ""));
+      const splitDate = d.displayDate.split(" ")
+      const i = d3.interpolate(currentDay, parseInt(splitDate[0]))
 
       return (t) => {
-        dateCt.text(`${parseInt(i(t))} ${displayDate[1]} ${displayDate[2]}`);
+        dateCt.text(`${parseInt(i(t))} ${splitDate[1]} ${splitDate[2]}`);
       }
     });
 

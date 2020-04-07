@@ -19,14 +19,9 @@ class ScrollyTeller {
         const noSmallBoxes = document.querySelectorAll('.scroll-text__inner--half').length 
         const noBigBoxes = document.querySelectorAll('.scroll-text__inner').length - noSmallBoxes
 
-        
-        const height = ((noSmallBoxes -1) * this.smallBoxHeight) + (noBigBoxes * this.bigBoxHeight) + 100
-        
-        // const newL = (100 * (height / 100)) / 100
+        const height = [...document.querySelectorAll('.scroll-text__inner')].map(d => d.getBoundingClientRect().height).reduce((a, b) => a + b) + 100
 
-        this.scrollWrapper.style.height = height + "vh";
-        
-        // console.log(this.scrollWrapper.style.height)
+        this.scrollWrapper.style.height = height + "px";
 
         if(this.transparentUntilActive) {
             config.parent.classList.add("transparent-until-active");
@@ -36,7 +31,6 @@ class ScrollyTeller {
     checkScroll() {
         if(this.lastScroll !== window.pageYOffset) {
             const bbox = this.scrollText.getBoundingClientRect();
-    
             if(!supportsSticky) {
                 if(bbox.top <= 0 && bbox.bottom >= window.innerHeight) {
                     this.scrollInner.classed("fixed-top", true);
@@ -53,7 +47,7 @@ class ScrollyTeller {
                 }
             }
     
-            if(bbox.top < (window.innerHeight*(this.triggerTop)) && bbox.bottom > window.innerHeight/2) { 
+            if(bbox.top < (window.innerHeight*(this.triggerTop)) && bbox.bottom > window.innerHeight/2) {
                 const i = Math.floor(Math.abs(bbox.top - (window.innerHeight*(this.triggerTop)))/bbox.height*this.textBoxes.length);
     
                 if(i !== this.lastI) {

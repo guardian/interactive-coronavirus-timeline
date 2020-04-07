@@ -1,37 +1,49 @@
-import * as topojson from 'topojson'
-import * as geo from 'd3-geo-projection'
-import * as d3B from 'd3'
-import { $ } from './util'
+import * as topojson from "topojson";
+import * as geo from "d3-geo-projection";
+import * as d3B from "d3";
+import { $ } from "./util";
 // import countries from '../assets/countries.json'
 import countriesLow from '../assets/ne_10m_admin_0_countries.json'
 
 // const countriesFC = topojson.feature(countries, countries.objects.countries);
 const countriesLowFC = topojson.feature(countriesLow, countriesLow.objects.ne_10m_admin_0_countries);
 
+// const countriesFC = topojson.feature(countries, countries.objects.countries);
+
 const d3 = Object.assign({}, d3B, geo);
 
-const atomEl = $('.scroll-inner');
+const atomEl = $(".scroll-inner");
 
-let isMobile = window.matchMedia('(max-width: 740px)').matches;
+let isMobile = window.matchMedia("(max-width: 640px)").matches;
+let isTablet = window.matchMedia("(max-width: 979px)").matches;
 
-let width = isMobile ? window.innerWidth : window.innerHeight - 100;
+let width =
+  isTablet && isMobile === false
+    ? window.innerWidth * 0.75
+    : isMobile
+    ? window.innerWidth
+    : window.innerHeight - 100;
 let height = width;
 
-const canvas = d3.select("canvas")
-.attr("width", width)
-.attr("height", height);
+const canvas = d3.select("canvas").attr("width", width).attr("height", height);
 
 let context = canvas.node().getContext("2d");
 
-let projection = d3.geoOrthographic()
-.translate([width / 2, height / 2])
-.clipAngle(90);
+let projection = d3
+  .geoOrthographic()
+  .translate([width / 2, height / 2])
+  .clipAngle(90);
 
-projection.fitExtent([[0, 0], [width, height - 50]], countriesLowFC);
+projection.fitExtent(
+  [
+    [0, 0],
+    [width, height - 50],
+  ],
+  countriesLowFC
+);
 
-let path = d3.geoPath()
-.projection(projection)
-.context(context);
+let path = d3.geoPath().projection(projection).context(context);
+
 
 let colorLand = "#ececec";
 let colorLandSelected = "#fff3f5";
@@ -48,11 +60,9 @@ let graticule = d3.geoGraticule();
 // let feature;
 // let bounds;
 
-let point
+let point;
 
-const radius = d3.scaleSqrt()
-.range([0, 30])
-.domain([0, 200000]);
+const radius = d3.scaleSqrt().range([0, 30]).domain([0, 200000]);
 
 const updateMap = (d, cases) => {
 
@@ -122,7 +132,8 @@ const updateCases = (cases, countries) =>{
     context.lineWidth = 0.5;
     context.stroke();
 
-    countries.map(coun => {
+
+        countries.map(coun => {
         const feature = topojson.feature(countriesLow, {
             type: "GeometryCollection",
             geometries: countriesLow.objects.ne_10m_admin_0_countries.geometries.filter(c => c.properties.ISO_A3 === coun.iso)
@@ -163,5 +174,4 @@ const updateCases = (cases, countries) =>{
 
 
 export { updateMap }
-
 
