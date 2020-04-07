@@ -220,17 +220,23 @@
 .date-bullet {
   position: absolute;
   background: #fff;
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  transform: translate(-22px, 50%);
-  border: 2px solid $news-red;
+  transform: translate(-19px, 75%);
+  border: 1px solid $news-red;
+
+  @include mq(desktop) {
+    width: 20px;
+    height: 20px;
+    transform: translate(-22px, 50%);
+  }
 }
 
 .date-bullet--small {
-  height: 8px;
-  width: 8px;
-  transform: translate(-17px, 10px);
+  height: 9px;
+  width: 9px;
+  transform: translate(-16px, 10px);
 }
 
 .date-bullet--full {
