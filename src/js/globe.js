@@ -82,7 +82,7 @@ const updateMap = (d, cases) => {
 
                 path.projection(projection);
 
-                updateCases(cases, d.cases)
+                //updateCases(cases, d.cases)
             }
         })
 
