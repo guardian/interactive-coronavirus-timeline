@@ -45,8 +45,8 @@ projection.fitExtent(
 let path = d3.geoPath().projection(projection).context(context);
 
 
-let colorLand = "#ececec";
-let colorLandSelected = "#fff3f5";
+let colorLand = "#eaeaea";
+let colorLandSelected = "#fff1f4";
 let graticuleColor = "#333333";
 let lineLand = "#e4e4e4";
 let colorGlobe = "#ffffff";
@@ -96,6 +96,7 @@ const updateMap = (d, cases) => {
                 //updateCases(cases, d.cases)
             }
         })
+        .on('end', d =>  updateCases(cases, d.cases));
 
     }
     else
