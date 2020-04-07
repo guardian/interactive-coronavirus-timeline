@@ -1,6 +1,7 @@
 import * as d3 from 'd3'
 import ScrollyTeller from "./scrollyteller"
 import { updateMap } from './globe.js'
+import { numberWithCommas } from './util.js'
 // import customPoints from '../assets/customPoints'
 import pointsWithFeature from '../assets/data'
 const casesCt = d3.select('.gv-ticker__cases')
@@ -25,7 +26,7 @@ pointsWithFeature.forEach((d, i) => {
         <div class='date-bullet ${i === 0 ? 'date-bullet--full' : ''}'>&nbsp;</div>
         <h2 class='h2-key-date'>
           <span>Day ${d.day}</span> /
-          <span>Case ${d.totalCases}</span>
+          <span>Case ${numberWithCommas(d.totalCases)}</span>
         </h2>
         <h3 class='h3-key-date'>${d.displayDate}</h3>
         <p>${d.keyDayCopy}</p>
@@ -71,7 +72,7 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
         //   moreThan.style.display = "none";
         //   lessThan.style.display = "inline";
         // }
-        casesCt.text(parseInt(i(t)));
+        casesCt.text(numberWithCommas(parseInt(i(t))));
       }
     });
   deathsCt
@@ -82,7 +83,7 @@ pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
       const i = d3.interpolate(currentVal, parseInt(d.totalDeaths))
 
       return (t) => {
-        deathsCt.text(parseInt(i(t)));
+        deathsCt.text(numberWithCommas(parseInt(i(t))));
       }
     });
 

@@ -89,7 +89,7 @@ export async function render() {
         })
     })
     // console.log(pointsWithFeature)
-    writeFileSync('src/assets/data.json', JSON.stringify(pointsWithFeature))
+    // writeFileSync('src/assets/data.json', JSON.stringify(pointsWithFeature))
 
     return templateHTML;
 }
