@@ -195,11 +195,10 @@
   &::before {
     content: "";
     display: block;
-    background-image: url("<%= path %>/header.svg");
+    background-image: url("<%= path %>/assets/header-image.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 10px 1px;
-
     height: 40vw;
     border-top: 1px solid #dcdcdc;
     @include mq(tablet) {
