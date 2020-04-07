@@ -149,6 +149,7 @@ canvas {
     z-index: 9;
     left: -10px;
     background: #fff;
+    margin: 0 auto;
     margin-top: 50px;
   }
   @include mq(mobileMedium) {

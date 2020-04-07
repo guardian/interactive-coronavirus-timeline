@@ -12,9 +12,10 @@ const d3 = Object.assign({}, d3B, geo);
 
 const atomEl = $('.scroll-inner');
 
-let isMobile = window.matchMedia('(max-width: 740px)').matches;
+let isMobile = window.matchMedia('(max-width: 640px)').matches;
+let isTablet = window.matchMedia('(max-width: 979px)').matches;
 
-let width = isMobile ? window.innerWidth : window.innerHeight - 100;
+let width = isTablet && isMobile === false ? window.innerWidth * 0.75 : isMobile ? window.innerWidth : window.innerHeight - 100;
 let height = width;
 
 const canvas = d3.select("canvas")

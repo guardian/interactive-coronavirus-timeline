@@ -52,9 +52,9 @@ const scrolly = new ScrollyTeller({
 const bullets = document.querySelectorAll('.date-bullet')
 
 pointsWithFeature.forEach((d, i) => scrolly.addTrigger({ num: i + 1, do: () => {
+  
   bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets[i].classList.add('date-bullet--full')
-
 
   const displayDate = d.displayDate.split(" ")
   casesCt
