@@ -150,11 +150,13 @@
       margin-right: -20px;
       margin-left: -20px;
       padding-left: 10px;
-      // padding-right: 10px;
+      padding-right: 10px;
     }
     @include mq(leftCol) {
-      margin-left: 0px;
-      margin-right: 0px;
+      margin-left: -10px;
+      margin-right: -10px;
+      padding-left: 10px;
+      padding-right: 0px;
     }
   }
   .meta__extras {
@@ -166,10 +168,10 @@
 
 .content__meta-container {
   @include mq(desktop) {
-    width: 950px !important;
+    width: 960px !important;
   }
   @include mq(wide) {
-    width: 1030px !important;
+    width: 1040px !important;
   }
 }
 
@@ -300,86 +302,79 @@ a,
   padding-top: 12px;
   border-top: none;
 }
-.content__main-column--interactive,
-.article .from-content-api {
-  & > p,
-  & > h2,
-  & > ul,
-  & > sub,
-  .element-atom,
-  .element-interactive,
-  .element-video {
-    max-width: 620px;
+// .content__main-column--interactive,
+// .article .from-content-api {
+//   & > p,
+//   & > h2,
+//   & > ul,
+//   & > sub,
+//   .element-atom,
+//   .element-interactive,
+//   .element-video {
+//     max-width: 620px;
 
-    @include mq(leftCol) {
-      margin-left: 160px !important;
-    }
-    @include mq(wide) {
-      margin-left: 240px !important;
-    }
-  }
+//     @include mq(leftCol) {
+//       margin-left: 160px !important;
+//     }
+//     @include mq(wide) {
+//       margin-left: 240px !important;
+//     }
+//   }
 
-  & > p {
-    font-size: 17px;
-    line-height: 24px;
+//   & > p {
+//     font-size: 17px;
+//     line-height: 24px;
 
-    strong,
-    b {
-      background-color: none;
-      box-shadow: none;
-      font-weight: bold;
-    }
+//     strong,
+//     b {
+//       background-color: none;
+//       box-shadow: none;
+//       font-weight: bold;
+//     }
 
-    sub {
-      bottom: 0px;
-      font-size: 100%;
-      font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia;
-      font-weight: 700;
-    }
-  }
+//     sub {
+//       bottom: 0px;
+//       font-size: 100%;
+//       font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia;
+//       font-weight: 700;
+//     }
+//   }
 
-  & > h2 {
-    font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia;
-    // @include fs-titlepiece(2);
-    font-size: 28px;
-    line-height: 1.2;
-    font-weight: 700;
-    margin-top: 24px;
-    color: #333;
-    margin-top: 72px;
-    margin-bottom: 24px;
+//   & > h2 {
+//     font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia;
+//     // @include fs-titlepiece(2);
+//     font-size: 28px;
+//     line-height: 1.2;
+//     font-weight: 700;
+//     margin-top: 24px;
+//     color: #333;
+//     margin-top: 72px;
+//     margin-bottom: 24px;
 
-    padding-left: 10px;
-    border-bottom: 1px solid #dcdcdc;
-    transform: translateX(-10px);
-    padding-bottom: 24px;
-    padding-right: 200px;
-    box-sizing: border-box;
-    max-width: 630px !important;
-    min-height: 124px;
-    display: block;
+//     padding-left: 10px;
+//     border-bottom: 1px solid #dcdcdc;
+//     transform: translateX(-10px);
+//     padding-bottom: 24px;
+//     padding-right: 200px;
+//     box-sizing: border-box;
+//     max-width: 630px !important;
+//     min-height: 124px;
+//     display: block;
 
-    @include mq($until: tablet) {
-      min-height: auto;
-      padding-right: 0;
-      width: 100%;
-      border-bottom: 0;
-      margin-top: 1px;
-      margin-bottom: 0px;
-    }
+//     @include mq($until: tablet) {
+//       min-height: auto;
+//       padding-right: 0;
+//       width: 100%;
+//       border-bottom: 0;
+//       margin-top: 1px;
+//       margin-bottom: 0px;
+//     }
 
-    @include mq($until: desktop) {
-      font-size: 24px;
-    }
-  }
-}
-
-.meta__contact-wrap,
-.meta__social {
-  @include mq(desktop) {
-    padding-left: 10px;
-  }
-}
+//     @include mq($until: desktop) {
+//       font-size: 24px;
+//     }
+//   }
+// }
 
 //   .element-atom {
 //     margin-top: 36px !important;
