@@ -331,6 +331,16 @@ a,
   border-top: none;
 }
 
+.ios, .android {
+  .article__header .headline {
+    padding: 4px 12px 30px 12px;
+  }
+  .standfirst {
+    margin-bottom: 20px;
+    margin-top: 0px;
+  }
+}
+
 .content__main-column--interactive .element--immersive {
   font-size: 17px !important;
 }
