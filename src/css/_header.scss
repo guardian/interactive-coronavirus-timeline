@@ -114,26 +114,30 @@
   font-size: 32px;
   line-height: 36px;
   position: relative;
+  @include mq(mobileMedium) {
+    font-size: 40px;
+    line-height: 44px;
+  }
 
   @include mq(tablet) {
-    font-size: 34px;
-    line-height: 38px;
+    font-size: 50px;
+    line-height: 54px;
   }
 
   @include mq(leftCol) {
-    font-size: 50px;
-    line-height: 50px;
+    font-size: 70px;
+    line-height: 76px;
   }
 }
 
 .content__standfirst,
 .standfirst {
   font-weight: 200;
-  line-height: 24px;
-  font-size: 18px;
+  line-height: 28px;
+  font-size: 22px;
   margin-top: 24px;
   max-width: 90%;
-  margin-bottom: 44px;
+  margin-bottom: 72px;
   @include mq(mobileLandscape) {
     max-width: 80%;
   }
@@ -141,8 +145,8 @@
     max-width: 540px;
   }
   @include mq(desktop) {
-    font-size: 22px;
-    line-height: 26px;
+    font-size: 28px;
+    line-height: 32px;
   }
 }
 
