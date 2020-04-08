@@ -168,11 +168,13 @@ canvas {
     background: #fff;
     margin: 0 auto;
     margin-top: 50px;
+    padding-left: 10px;
   }
   @include mq(mobileMedium) {
     margin-top: 52px;
   }
   @include mq(desktop) {
+    padding-left: 0px;
     background: none;
     margin-top: 0px;
   }
