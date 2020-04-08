@@ -58,7 +58,7 @@
     font-size: 14px;
   }
   @include mq(tablet) {
-    margin-left: -20px;
+    margin-left: -10px;
   }
 
   & div {
@@ -168,7 +168,7 @@ canvas {
     background: #fff;
     margin: 0 auto;
     margin-top: 50px;
-    padding-left: 10px;
+    // padding-left: 10px;
   }
   @include mq(mobileMedium) {
     margin-top: 52px;
@@ -226,4 +226,15 @@ canvas {
 
 .content__main-column--interactive > h2 {
   margin-top: 0px !important;
+}
+
+.canvas-wrapper {
+  @include mq(mobile) {
+    display: flex;
+    margin-left: 10px;
+  }
+  @include mq(desktop) {
+    display: block;
+    margin-left: 0;
+  }
 }

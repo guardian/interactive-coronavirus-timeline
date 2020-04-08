@@ -29,7 +29,8 @@ const stored = pointsWithFeature.map((o) => {
 
 const d3 = Object.assign({}, d3B, geo);
 
-const atomEl = $(".scroll-inner");
+// const atomEl = $(".scroll-inner");
+const atomEl = $(".canvas-wrapper");
 
 let isMobile = window.matchMedia("(max-width: 600px)").matches;
 let isTablet = window.matchMedia("(min-width: 600px)").matches;
@@ -38,12 +39,12 @@ let isDesktop = window.matchMedia("(min-width: 780px)").matches;
 let scrollText = $(".scroll-text");
 //let width = isMobile ? atomEl.getBoundingClientRect().width : (atomEl.getBoundingClientRect().width - scrollText.clientWidth) * 0.9;
 
+const tallRatio = (window.innerHeight / window.innerWidth) >= 1.9
 let width;
-if (isMobile) width = atomEl.getBoundingClientRect().width;
+if (isMobile) width = atomEl.getBoundingClientRect().width - (tallRatio ? 0 : 50);
 if (isTablet) width = atomEl.getBoundingClientRect().width * 0.8;
 if (isDesktop)
   width = (atomEl.getBoundingClientRect().width - scrollText.clientWidth) * 0.8;
-
 
 let height = width;
 
