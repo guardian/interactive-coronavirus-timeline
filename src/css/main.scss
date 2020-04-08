@@ -14,8 +14,8 @@
 .interactive-atom {
   margin: 0 !important;
   background: none !important;
-  padding-bottom: 0px;
-  padding-top: 0px;
+  padding-bottom: 6px !important;
+  padding-top: 10px !important;
 }
 
 // .gs-container {
@@ -24,7 +24,6 @@
 //     padding-right: 0.14rem !important;
 //   }
 // }
-
 
 .scroll-inner {
   background: #ffffff;
@@ -206,6 +205,12 @@ canvas {
 
 .inner-spacer {
   height: 50px;
+  border: none !important;
+  background: #fff;
+  position: relative;
+  background: #fff;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 //Immersive over rides //
@@ -213,10 +218,10 @@ canvas {
   font-size: 17px !important;
 }
 
-.content__main-column--interactive .element--immersive {
+.content__main .content__main-column--interactive .element--immersive {
   margin-bottom: 0px !important;
 }
 
 .content__main-column--interactive > h2 {
-  margin-top: 0px;
+  margin-top: 0px !important;
 }

@@ -14,7 +14,8 @@ deathsCt.text(pointsWithFeature[0].totalDeaths);
 
 let stopUpdates = false
 
-updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
+
+updateMap(pointsWithFeature[0], 0)
 
 const scrollText = d3.select(".scroll-text")
 
@@ -68,11 +69,10 @@ const bullets = document.querySelectorAll('.date-bullet')
 pointsWithFeature
 .concat([{}, {}, {}])
 .forEach((d, i) => scrolly.addTrigger({ num: i , do: () => {
-
+  console.log(i)
   if (i <= 99) {
   if (stopUpdates === false) {
   
-
   // bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets.forEach((b, j) => j <= i ? b.classList.add('date-bullet--full') : b.classList.remove('date-bullet--full'))
 
@@ -137,7 +137,7 @@ pointsWithFeature
     });
     
 
-  updateMap(d, d.cases)
+  updateMap(d, i)
 
   
 }
