@@ -88,7 +88,7 @@
     }
   }
   & > div:nth-of-type(2) {
-    width: 30%;
+    width: 35%;
   }
 
   @include mq(desktop) {
@@ -166,6 +166,20 @@ canvas {
 .ios, .android {
   .article {
     overflow: visible !important;
+  }
+
+  .gv-ticker {
+    padding-top: 16px;
+    @include mq(mobile) {
+      height: 100px;
+    }
+    @include mq(tablet) {
+      height: auto;
+    }
+  }
+
+  canvas {
+    margin-top: 67px;
   }
 }
 
