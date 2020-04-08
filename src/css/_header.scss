@@ -330,6 +330,11 @@ a,
   padding-top: 12px;
   border-top: none;
 }
+
+.element--immersive {
+  font-size: 17px;
+}
+
 // .content__main-column--interactive,
 // .article .from-content-api {
 //   & > p,
@@ -408,10 +413,10 @@ a,
 //     margin-top: 36px !important;
 //   }
 
-//   .element--immersive {
+// .element--immersive {
 //     max-width: initial;
 //     margin-bottom: 24px !important;
-//     // font-size: 0;
+// font-size: 0;
 
 //     @include mq(leftCol) {
 //       width: 1140px;
