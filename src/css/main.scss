@@ -25,6 +25,10 @@
 //   }
 // }
 
+.scroll-inner {
+  background: #ffffff;
+}
+
 .interactive-wrapper {
   max-width: 100%;
 }
@@ -201,28 +205,6 @@ canvas {
 
 .inner-spacer {
   height: 50px;
-}
-
-.key {
-  width: 100px;
-  height: 55px;
-
-  position: absolute;
-
-  bottom: 5px;
-
-  z-index: 10000;
-
-  .legend-line {
-    stroke-width: 0.5px;
-  }
-
-  .legend-text {
-    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial,
-      "Lucida Grande", sans-serif;
-    font-size: 12px;
-    color: #dcdcdc;
-  }
 }
 
 //Immersive over rides //

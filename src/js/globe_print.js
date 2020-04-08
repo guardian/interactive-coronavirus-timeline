@@ -17,14 +17,15 @@ const atomEl = $(".scroll-inner");
 let isMobile = window.matchMedia("(max-width: 640px)").matches;
 let isTablet = window.matchMedia("(max-width: 979px)").matches;
 
-let scrollText = $(".scroll-text");
-console.log(scrollText)
-let width = isMobile ? atomEl.getBoundingClientRect().width : atomEl.getBoundingClientRect().width - scrollText.clientWidth;
 
-if(isTablet)width = atomEl.getBoundingClientRect().width * 0.8;
-
+let width = 3600;
 
 let height = width;
+
+const svg = d3.select('.key')
+.append('svg')
+.attr('width', 50)
+.attr('height', 50)
 
 let circle = d3.geoCircle();
 
@@ -37,33 +38,88 @@ let projection = d3
   .translate([width / 2, height / 2])
   .clipAngle(90);
 
+let projection2 = d3
+  .geoOrthographic()
+  .translate([50 / 2, 50 / 2])
+  .clipAngle(90);
+
 projection.fitExtent(
   [
-    [20, 20],
-    [width - 20, height - 20],
+    [0, 0],
+    [width, height],
   ],
   countriesLowFC
 );
 
 let path = d3.geoPath().projection(projection).context(context);
 
-let colorLand = "#eaeaea";
-let colorLandSelected = "#fff1f4";
-let graticuleColor = "#333333";
-let lineLand = "#e4e4e4";
-let colorGlobe = "#ffffff";
+let path2 = d3.geoPath().projection(projection2);
+
+let colorLand = "#ffffff";
+let colorLandSelected = "#fab0cf";
+let graticuleColor = "#9cb4be";
+let lineLand = "#9cb4be";
+let colorGlobe = "#e2e7ea";
 let textColors = "#333";
-let blobColor = "#c70000";
+let blobColor = "#e1058c";
 
 let sphere = { type: "Sphere" };
 
 let graticule = d3.geoGraticule();
 
+
 let point;
 
 const radius = d3.scaleSqrt().range([0, 30]).domain([0, 400000]);
 
+/*let r1 = d3.geoCircle().center([0,0]).radius(radius(10000));
+let r2 = d3.geoCircle().center([0,0]).radius(radius(1000));
+
+svg.append('path')
+.attr('d', path2(r1()))
+.attr('fill',blobColor)
+.attr('fill-opacity',0.2)
+.style('stroke', blobColor)
+.style('stroke-width', 1)
+.style('stroke-opacity',1)
+
+let line1 = svg
+.append('path')
+.attr('class', 'legend-line')
+.attr('d', "M25 45 H25 50 Z" )
+.attr('stroke', 'black')
+
+let txt1 = svg
+.append('text')
+.attr('class', 'legend-text')
+.attr('x', 55 )
+.attr('y', 50)
+.text('10,000')
+
+svg.append('path')
+.attr('d', path2(r2()))
+.attr('fill',blobColor)
+.attr('fill-opacity',0.2)
+.style('stroke', blobColor)
+.style('stroke-width', 1)
+.style('stroke-opacity',1)
+
+let line2 = svg
+.append('path')
+.attr('class', 'legend-line')
+.attr('d', "M25 25 H25 50 Z" )
+.attr('stroke', 'black')
+
+let txt2 = svg
+.append('text')
+.attr('class', 'legend-text')
+.attr('x', 55 )
+.attr('y', 30)
+.text('1,000')*/
+
 const updateMap = (d, cases) => {
+
+    console.log(d)
 
         if (d.fLengthPos)
             {
@@ -108,7 +164,7 @@ const updateCases = (cases, countries) =>{
 
     context.beginPath();
     context.strokeStyle = graticuleColor;
-    context.lineWidth = 0.1;
+    context.lineWidth = 4;
     path(graticule());
     context.stroke();
     context.closePath();
@@ -120,7 +176,7 @@ const updateCases = (cases, countries) =>{
     context.closePath();
 
     context.strokeStyle = lineLand;
-    context.lineWidth = 0.5;
+    context.lineWidth = 4;
     context.stroke();
 
 
@@ -151,7 +207,7 @@ const updateCases = (cases, countries) =>{
             let circleFill = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();
             context.fillStyle = blobColor;
-            context.globalAlpha = 0.1;
+            context.globalAlpha = 0.3;
             path(circleFill());
             context.fill();
             context.closePath();
@@ -160,7 +216,7 @@ const updateCases = (cases, countries) =>{
             context.beginPath();
             context.strokeStyle = blobColor;
             context.globalAlpha = 1;
-            context.lineWidth = 1 ;
+            context.lineWidth = 2 ;
             path(circleStroke());
             context.stroke();
             context.closePath();
