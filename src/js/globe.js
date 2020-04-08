@@ -22,7 +22,10 @@ let width =
     ? window.innerWidth * 0.75
     : isMobile
     ? window.innerWidth
-    : window.innerHeight - 100;
+    : window.innerHeight - 200;
+
+console.log(width)
+
 
 let height = width;
 
@@ -32,8 +35,6 @@ const svg = d3.select('.key')
 .attr('height', 50)
 
 let circle = d3.geoCircle();
-
-
 
 const canvas = d3.select("canvas").attr("width", width).attr("height", height);
 
@@ -47,23 +48,19 @@ let projection = d3
 let projection2 = d3
   .geoOrthographic()
   .translate([50 / 2, 50 / 2])
+  .clipAngle(90);
 
 projection.fitExtent(
   [
-    [0, 0],
-    [width, height - 50],
+    [20, 20],
+    [width - 20, height - 20],
   ],
   countriesLowFC
 );
 
 let path = d3.geoPath().projection(projection).context(context);
 
-
 let path2 = d3.geoPath().projection(projection2);
-
-
-
-
 
 let colorLand = "#eaeaea";
 let colorLandSelected = "#fff1f4";
@@ -77,8 +74,6 @@ let sphere = { type: "Sphere" };
 
 let graticule = d3.geoGraticule();
 
-// let feature;
-// let bounds;
 
 let point;
 
@@ -91,24 +86,46 @@ svg.append('path')
 .attr('d', path2(r1()))
 .attr('fill',blobColor)
 .attr('fill-opacity',0.2)
-.style('opacity',.3)
 .style('stroke', blobColor)
 .style('stroke-width', 1)
 .style('stroke-opacity',1)
+
+let line1 = svg
+.append('path')
+.attr('class', 'legend-line')
+.attr('d', "M25 45 H25 50 Z" )
+.attr('stroke', 'black')
+
+let txt1 = svg
+.append('text')
+.attr('class', 'legend-text')
+.attr('x', 55 )
+.attr('y', 50)
+.text('10,000')
 
 svg.append('path')
 .attr('d', path2(r2()))
 .attr('fill',blobColor)
 .attr('fill-opacity',0.2)
-.style('opacity',.3)
 .style('stroke', blobColor)
 .style('stroke-width', 1)
 .style('stroke-opacity',1)
 
+let line2 = svg
+.append('path')
+.attr('class', 'legend-line')
+.attr('d', "M25 25 H25 50 Z" )
+.attr('stroke', 'black')
+
+let txt2 = svg
+.append('text')
+.attr('class', 'legend-text')
+.attr('x', 55 )
+.attr('y', 30)
+.text('1,000')
+
 const updateMap = (d, cases) => {
 
-    /*if (d.fLengthPos)
-    {*/
         if (d.fLengthPos)
             {
                 point = d.point
@@ -134,37 +151,6 @@ const updateMap = (d, cases) => {
                 updateCases(cases, d.cases)
             }
         })
-        //.on('end', updateCases(cases, d.cases))
-
-       /* d3.transition()
-        .duration(10000)
-        .tween('tween', (i) => {
-
-            console.log('alksjdc;kajsbc')
-
-            let r = d3.interpolate(currentRotate, nextRotate);
-
-            return (t) => {
-
-                projection
-                .rotate(r(t))
-
-                path.projection(projection);
-
-                //updateCases(cases, d.cases)
-            }
-        })
-        .on('end', console.log('end'));*/
-        // .on('end', d =>  updateCases(cases, d.cases));
-
-
-   /* }
-    else
-    {
-        //updateCases(cases, d.cases)
-    }*/
-
-    
 }
 
 
