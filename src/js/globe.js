@@ -5,8 +5,20 @@ import { $ } from "./util";
 // import countries from '../assets/countries.json'
 import countriesLow from '../assets/ne_10m_admin_0_countries.json'
 
+import pointsWithFeature from '../assets/data'
+
 // const countriesFC = topojson.feature(countries, countries.objects.countries);
 const countriesLowFC = topojson.feature(countriesLow, countriesLow.objects.ne_10m_admin_0_countries);
+
+const stored = pointsWithFeature.map( o => {
+
+  return {
+    type : 'FeatureCollection',
+    
+    features : topojson.feature(countriesLow, countriesLow.objects.ne_10m_admin_0_countries)
+      .features
+      .filter(c => o.cases.some(coun => c.properties.ISO_A3 === coun.iso)) }
+})
 
 // const countriesFC = topojson.feature(countries, countries.objects.countries);
 
@@ -123,7 +135,7 @@ let txt2 = svg
 
 let lastRotate;
 
-const updateMap = (d, cases) => {
+const updateMap = (d, i) => {
 
         if (d.fLengthPos)
             {
@@ -147,14 +159,14 @@ const updateMap = (d, cases) => {
             return(t) => {
                 projection.rotate(r(t))
                 path.projection(projection);
-                updateCases(cases, d.cases)
+                updateCases(d, stored[i])
             }
         })            
         
 }
 
 
-const updateCases = (cases, countries) =>{
+const updateCases = (d, storedEntry) =>{
 
     context.clearRect(0, 0, width, height);
 
@@ -183,45 +195,34 @@ const updateCases = (cases, countries) =>{
     context.lineWidth = 0.5;
     context.stroke();
 
+    context.fillStyle = colorLandSelected;
+    context.strokeStyle = lineLand;
+    context.beginPath();
+    path(storedEntry);
+    context.fill();
+    context.stroke();
+    context.closePath();
 
-        countries.map(coun => {
-        const feature = topojson.feature(countriesLow, {
-            type: "GeometryCollection",
-            geometries: countriesLow.objects.ne_10m_admin_0_countries.geometries.filter(c => c.properties.ISO_A3 === coun.iso)
-        })
+       
+    
 
-
-        context.fillStyle = colorLandSelected;
-        context.beginPath();
-        path(feature);
-        context.fill();
-        context.closePath();
-
-        context.strokeStyle = lineLand;
-        context.beginPath();
-        path(feature);
-        context.stroke();
-        context.closePath();
-    })
-
-    cases.forEach(c => {
+    d.cases.forEach(c => {
             let posX = projection([c.lon, c.lat])[0];
             let posY = projection([c.lon, c.lat])[1];
 
-            let circleFill = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
+            let circle = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();
             context.fillStyle = blobColor;
             context.globalAlpha = 0.1;
-            path(circleFill());
+            path(circle());
             context.fill();
             context.closePath();
 
-            let circleStroke = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();
             context.strokeStyle = blobColor;
             context.globalAlpha = 1;
             context.lineWidth = 1 ;
-            path(circleStroke());
+            path(circle())
             context.stroke();
             context.closePath();
     })
