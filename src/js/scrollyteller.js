@@ -1,4 +1,4 @@
-import { supportsSticky, $$ } from "./util.js"
+import { supportsSticky, $$, $ } from "./util.js"
 
 class ScrollyTeller {
     constructor(config) {
@@ -14,6 +14,8 @@ class ScrollyTeller {
         this.transparentUntilActive = config.transparentUntilActive;
         this.bigBoxHeight = config.bigBoxHeight
         this.smallBoxHeight = config.smallBoxHeight
+
+        this.divs = $$('.scroll-text__div')
 
 
         const noSmallBoxes = document.querySelectorAll('.scroll-text__inner--half').length 
@@ -51,10 +53,18 @@ class ScrollyTeller {
                 
                 //const i = Math.floor(Math.abs(bbox.top - (window.innerHeight*(this.triggerTop)))/bbox.height*this.textBoxes.length);
 
-                const i = $$('.scroll-text__div').findIndex( el => el.getBoundingClientRect().top > this.triggerTop*window.innerHeight ) - 1
+                let i = this.divs.findIndex( el => el.getBoundingClientRect().top > this.triggerTop*window.innerHeight ) - 1
+
+                if(i < 0) {
+
+                    if($('.scroll-text__div').getBoundingClientRect().top < 0) {
+                        i = 99
+                    }
+                }
 
                 if(i >= 0 && i !== this.lastI) {
                     this.lastI = i; 
+
                     this.doScrollAction(i);
 
                     if(this.transparentUntilActive) {
@@ -76,7 +86,7 @@ class ScrollyTeller {
     }
 
     doScrollAction(i) {
-        const trigger = this.triggerPoints.find(d => d.num === i+1);
+        const trigger = this.triggerPoints.find(d => d.num === i);
         if(trigger) {
             trigger.do();
         }

@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import ScrollyTeller from "./scrollyteller"
 import { updateMap } from './globe.js'
-import { numberWithCommas } from './util.js'
+import { numberWithCommas, $$ } from './util.js'
 // import customPoints from '../assets/customPoints'
 import pointsWithFeature from '../assets/data'
 const casesCt = d3.select('.gv-ticker__cases')
@@ -11,9 +11,6 @@ const dateCt = d3.select('.gv-ticker__date')
 
 casesCt.text(pointsWithFeature[0].totalCases);
 deathsCt.text(pointsWithFeature[0].totalDeaths);
-
-let stopUpdates = false
-
 
 updateMap(pointsWithFeature[0], 0)
 
@@ -64,18 +61,23 @@ const scrolly = new ScrollyTeller({
   smallBoxHeight: 10
 });
 
-const bullets = document.querySelectorAll('.date-bullet')
+const bullets = $$('.date-bullet')
 
 pointsWithFeature
 .concat([{}, {}, {}])
-.forEach((d, i) => scrolly.addTrigger({ num: i , do: () => {
+.forEach((d, i) => scrolly.addTrigger({ num: i, do: () => {
+
+
+  console.log("Triggering", i)
 
   if (i <= 99) {
-  if (stopUpdates === false) {
+  if (true) {
   
 
   // bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets.forEach((b, j) => j <= i ? b.classList.add('date-bullet--full') : b.classList.remove('date-bullet--full'))
+
+  console.log(bullets.map((b, j) => j <= i ))
 
   // bullets[i].classList.add('date-bullet--full')
 
@@ -142,8 +144,7 @@ pointsWithFeature
 
   
 }
-if (i <= 98 && stopUpdates === true) { stopUpdates = false }
-if (i > 99) { stopUpdates = true }
+
   }
   
 }}))
