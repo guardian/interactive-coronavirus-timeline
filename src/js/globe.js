@@ -19,7 +19,7 @@ let isTablet = window.matchMedia("(max-width: 979px)").matches;
 
 let width =
   isTablet && isMobile === false
-    ? window.innerWidth * 0.75
+    ? window.innerWidth - 50
     : isMobile
     ? window.innerWidth
     : window.innerHeight - 200;
