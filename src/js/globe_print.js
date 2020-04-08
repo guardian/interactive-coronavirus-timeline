@@ -17,22 +17,15 @@ const atomEl = $(".scroll-inner");
 let isMobile = window.matchMedia("(max-width: 640px)").matches;
 let isTablet = window.matchMedia("(max-width: 979px)").matches;
 
-
-let scrollText = $(".scroll-text");
-console.log(scrollText)
-let width = isMobile ? atomEl.getBoundingClientRect().width : atomEl.getBoundingClientRect().width - scrollText.clientWidth;
-
-if(isTablet)width = atomEl.getBoundingClientRect().width
-
-//let hheight = isMobile ? w * 1.6 : 752 * w / 1260;
-
 /*let width =
   isTablet && isMobile === false
-    ? window.innerWidth - scrollText.clientWidth
+    ? window.innerWidth - 50
     : isMobile
     ? window.innerWidth
-    : window.innerHeight - scrollText.clientWidth;
-*/
+    : window.innerHeight - 200;*/
+
+
+let width = 3200;
 
 let height = width;
 
