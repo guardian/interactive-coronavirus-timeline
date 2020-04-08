@@ -53,22 +53,8 @@
   }
 }
 
-.content--interactive .content__main-column .content__headline {
-  @include fs-titlepiece(1);
-  font-size: 32px;
-  line-height: 36px;
-  position: relative;
-
-  @include mq(tablet) {
-    font-size: 34px;
-    line-height: 38px;
-  }
-
-  @include mq(leftCol) {
-    font-size: 50px;
-    line-height: 50px;
-  }
-
+..content--interactive .content__headline,
+.headline {
   &::before {
     content: "";
     display: block;
@@ -120,6 +106,23 @@
       left: -10px;
       width: 1050px;
     }
+  }
+}
+
+.content--interactive .content__main-column .content__headline {
+  @include fs-titlepiece(1);
+  font-size: 32px;
+  line-height: 36px;
+  position: relative;
+
+  @include mq(tablet) {
+    font-size: 34px;
+    line-height: 38px;
+  }
+
+  @include mq(leftCol) {
+    font-size: 50px;
+    line-height: 50px;
   }
 }
 
