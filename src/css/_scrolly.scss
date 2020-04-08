@@ -1,16 +1,18 @@
 .scroll-wrapper {
-    @include mq(mobile) {
-        border-bottom: none;
-    }
+  @include mq(mobile) {
+    border-bottom: none;
+    margin-top: 24px;
+  }
 
   @include mq(tablet) {
     width: 700px;
   }
 
   @include mq(desktop) {
+    margin-top: 30px;
     width: 940px;
     padding-bottom: 160px;
-     border-bottom: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
   }
 
   @include mq(leftCol) {
@@ -25,7 +27,7 @@
   position: relative;
   z-index: 100;
   //   border-top: 1px solid #dcdcdc;
-  margin-top: 18px;
+
   // margin-bottom: 36px;
   border-bottom: 1px solid #dcdcdc;
 
