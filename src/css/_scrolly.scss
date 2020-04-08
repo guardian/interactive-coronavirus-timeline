@@ -54,6 +54,13 @@
   height: auto;
   max-height: 100vh;
 
+  @include mq(mobile) {
+      margin-left: -10px;
+  }
+  @include mq(desktop) {
+      margin-left: 0;
+  }
+
   &.fixed-top {
     position: fixed;
   }
@@ -79,7 +86,7 @@
     width: calc(100% + 20px);
     z-index: 1000;
     position: absolute;
-    bottom: 6px;
+    // bottom: 6px;
     left: -10px;
 
     @include mq(mobileLandscape) {
@@ -254,6 +261,12 @@
 .date-bullet--full {
   background: $news-red;
   transition: 0.25s linear;
+}
+
+.ios, .android {
+    .date-bullet--small {
+        transform: translate(-15px, 10px);
+    }
 }
 
 // #scrolly-1 {

@@ -36,7 +36,6 @@ let isTablet = window.matchMedia("(min-width: 600px)").matches;
 let isDesktop = window.matchMedia("(min-width: 780px)").matches;
 
 let scrollText = $(".scroll-text");
-console.log(scrollText);
 //let width = isMobile ? atomEl.getBoundingClientRect().width : (atomEl.getBoundingClientRect().width - scrollText.clientWidth) * 0.9;
 
 let width;
@@ -45,7 +44,6 @@ if (isTablet) width = atomEl.getBoundingClientRect().width * 0.8;
 if (isDesktop)
   width = (atomEl.getBoundingClientRect().width - scrollText.clientWidth) * 0.8;
 
-console.log("isMobile", isMobile, "isTablet", isTablet);
 
 let height = width;
 

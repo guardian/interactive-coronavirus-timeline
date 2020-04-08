@@ -111,13 +111,13 @@ export async function render() {
 
     const duped = datesWithLocalisedCases.map((d, i) => {
 
-        if (i >= 97 && d.cases.length === 0) {
+        if (i >= 99 && d.cases.length === 0) {
             d.cases = datesWithLocalisedCases[i - 1].cases
         }
-        if (i >= 97 && d.totalCases === "0") {
+        if (i >= 99 && d.totalCases === "0") {
             d.totalCases = datesWithLocalisedCases[i - 1].totalCases
         }
-    if (i >= 97 && d.totalDeaths === "0") {
+    if (i >= 99 && d.totalDeaths === "0") {
             d.totalDeaths = datesWithLocalisedCases[i - 1].totalDeaths
         }
         return d
