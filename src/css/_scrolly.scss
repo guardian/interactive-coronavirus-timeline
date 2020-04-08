@@ -1,10 +1,18 @@
 .scroll-wrapper {
+  @include mq(mobile) {
+    border-bottom: none;
+    margin-top: 24px;
+  }
+
   @include mq(tablet) {
     width: 700px;
   }
 
   @include mq(desktop) {
+    margin-top: 30px;
     width: 940px;
+    padding-bottom: 160px;
+    border-bottom: 1px solid #dcdcdc;
   }
 
   @include mq(leftCol) {
@@ -19,7 +27,7 @@
   position: relative;
   z-index: 100;
   //   border-top: 1px solid #dcdcdc;
-  margin-top: 18px;
+
   // margin-bottom: 36px;
   border-bottom: 1px solid #dcdcdc;
 
@@ -91,11 +99,12 @@
     border-left: 1px solid #dcdcdc;
     pointer-events: none;
     z-index: -1;
-    border-bottom: 1px solid #dcdcdc;
+    border-bottom: none;
   }
 
   @include mq(desktop) {
     height: 100%;
+    border-bottom: 1px solid #dcdcdc;
     position: absolute;
     right: -20px;
     width: 33%;
@@ -246,3 +255,9 @@
   background: $news-red;
   transition: 0.25s linear;
 }
+
+// #scrolly-1 {
+//     @include mq(mobile) {
+//         margin-bottom
+//     }
+// }
