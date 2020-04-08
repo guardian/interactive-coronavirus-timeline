@@ -14,6 +14,7 @@
 .interactive-atom {
   margin: 0 !important;
   background: none !important;
+  padding-bottom: 0 !important;
 }
 
 // .gs-container {
@@ -199,6 +200,12 @@ canvas {
 
 .inner-spacer {
   height: 50px;
+  border: none !important;
+  background: #fff;
+  position: relative;
+  background: #fff;
+  border-top: none !important;
+  border-bottom: none !important;
 }
 
 .key {
