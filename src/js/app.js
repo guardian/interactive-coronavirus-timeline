@@ -69,11 +69,10 @@ const bullets = document.querySelectorAll('.date-bullet')
 pointsWithFeature
 .concat([{}, {}, {}])
 .forEach((d, i) => scrolly.addTrigger({ num: i , do: () => {
-
+  console.log(i)
   if (i <= 99) {
   if (stopUpdates === false) {
   
-
   // bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets.forEach((b, j) => j <= i ? b.classList.add('date-bullet--full') : b.classList.remove('date-bullet--full'))
 
