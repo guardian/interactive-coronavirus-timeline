@@ -38,7 +38,7 @@
   padding-bottom: 8px;
   position: absolute;
   top: 0;
-  margin-left: -10px;
+  margin-left: 0px;
   display: flex;
   justify-content: flex-start;
   @include mq(mobile) {
@@ -164,7 +164,7 @@ canvas {
   @include mq(mobile) {
     position: relative;
     z-index: 9;
-    left: -10px;
+    // left: -10px;
     background: #fff;
     margin: 0 auto;
     margin-top: 50px;
