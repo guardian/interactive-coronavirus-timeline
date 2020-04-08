@@ -14,7 +14,8 @@
 .interactive-atom {
   margin: 0 !important;
   background: none !important;
-  padding-bottom: 0 !important;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
 // .gs-container {
@@ -23,6 +24,11 @@
 //     padding-right: 0.14rem !important;
 //   }
 // }
+
+
+.scroll-inner {
+  background: #ffffff;
+}
 
 .interactive-wrapper {
   max-width: 100%;
@@ -208,24 +214,15 @@ canvas {
   border-bottom: none !important;
 }
 
-.key {
-  width: 100px;
-  height: 55px;
+//Immersive over rides //
+.content__main-column--interactive .element--immersive {
+  font-size: 17px !important;
+}
 
-  position: absolute;
+.content__main-column--interactive .element--immersive {
+  margin-bottom: 0px !important;
+}
 
-  bottom: 5px;
-
-  z-index: 10000;
-
-  .legend-line {
-    stroke-width: 0.5px;
-  }
-
-  .legend-text {
-    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial,
-      "Lucida Grande", sans-serif;
-    font-size: 12px;
-    color: #dcdcdc;
-  }
+.content__main-column--interactive > h2 {
+  margin-top: 0px;
 }

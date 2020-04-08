@@ -14,7 +14,8 @@ deathsCt.text(pointsWithFeature[0].totalDeaths);
 
 let stopUpdates = false
 
-updateMap(pointsWithFeature[0], pointsWithFeature[0].cases)
+
+updateMap(pointsWithFeature[0], 0)
 
 const scrollText = d3.select(".scroll-text")
 
@@ -136,7 +137,7 @@ pointsWithFeature
     });
     
 
-  updateMap(d, d.cases)
+  updateMap(d, i)
 
   
 }
