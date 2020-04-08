@@ -53,8 +53,7 @@
   }
 }
 
-.content--interactive .content__headline,
-.headline {
+.content--interactive .content__main-column .content__headline {
   @include fs-titlepiece(1);
   font-size: 32px;
   line-height: 36px;
@@ -122,11 +121,6 @@
       width: 1050px;
     }
   }
-}
-
-.headline {
-  font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia, serif;
-  padding-top: 0px;
 }
 
 .content__standfirst,
