@@ -34,7 +34,14 @@
   margin-left: -10px;
   display: flex;
   justify-content: flex-start;
-  width: 100%;
+  @include mq(mobile) {
+    width: 100vw;
+    height: 100px;
+  }
+  @include mq(desktop) {
+    width: 100%;
+    height: auto;
+  }
   // max-width: 280px;
   // height: 60px;
   @include fs-textSans(3);
@@ -177,6 +184,10 @@ canvas {
     }
     @include mq(tablet) {
       height: auto;
+    }
+
+    & > div:nth-of-type(2) {
+      width: 40%;
     }
   }
 

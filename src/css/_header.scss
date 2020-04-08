@@ -330,115 +330,13 @@ a,
   padding-top: 12px;
   border-top: none;
 }
-// .content__main-column--interactive,
-// .article .from-content-api {
-//   & > p,
-//   & > h2,
-//   & > ul,
-//   & > sub,
-//   .element-atom,
-//   .element-interactive,
-//   .element-video {
-//     max-width: 620px;
 
-//     @include mq(leftCol) {
-//       margin-left: 160px !important;
-//     }
-//     @include mq(wide) {
-//       margin-left: 240px !important;
-//     }
-//   }
-
-//   & > p {
-//     font-size: 17px;
-//     line-height: 24px;
-
-//     strong,
-//     b {
-//       background-color: none;
-//       box-shadow: none;
-//       font-weight: bold;
-//     }
-
-//     sub {
-//       bottom: 0px;
-//       font-size: 100%;
-//       font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia;
-//       font-weight: 700;
-//     }
-//   }
-
-//   & > h2 {
-//     font-family: "Guardian Headline", "Guardian Egyptian Web", Georgia;
-//     // @include fs-titlepiece(2);
-//     font-size: 28px;
-//     line-height: 1.2;
-//     font-weight: 700;
-//     margin-top: 24px;
-//     color: #333;
-//     margin-top: 72px;
-//     margin-bottom: 24px;
-
-//     padding-left: 10px;
-//     border-bottom: 1px solid #dcdcdc;
-//     transform: translateX(-10px);
-//     padding-bottom: 24px;
-//     padding-right: 200px;
-//     box-sizing: border-box;
-//     max-width: 630px !important;
-//     min-height: 124px;
-//     display: block;
-
-//     @include mq($until: tablet) {
-//       min-height: auto;
-//       padding-right: 0;
-//       width: 100%;
-//       border-bottom: 0;
-//       margin-top: 1px;
-//       margin-bottom: 0px;
-//     }
-
-//     @include mq($until: desktop) {
-//       font-size: 24px;
-//     }
-//   }
-// }
-
-//   .element-atom {
-//     margin-top: 36px !important;
-//   }
-
-//   .element--immersive {
-//     max-width: initial;
-//     margin-bottom: 24px !important;
-//     // font-size: 0;
-
-//     @include mq(leftCol) {
-//       width: 1140px;
-//       margin-left: -20px !important;
-//       margin-right: -20px;
-//     }
-
-//     @include mq(wide) {
-//       width: 1300px;
-//       margin-left: -20px !important;
-//       margin-right: -20px;
-//       // margin-left: -240px !important;
-//     }
-
-//     .ge-grid {
-//       @include mq(leftCol) {
-//         padding-left: 20px;
-//         padding-right: 20px;
-//       }
-//     }
-//   }
-
-//   .element--showcase {
-//     max-width: 860px;
-//   }
-// }
-
-// .content--interactive:not(.paid-content) .element-interactive {
-//   background-color: #fff;
-// }
+.ios, .android {
+  .article__header .headline {
+    padding: 4px 12px 30px 12px;
+  }
+  .standfirst {
+    margin-bottom: 20px;
+    margin-top: 0px;
+  }
+}
