@@ -43,7 +43,7 @@ let width;
 if (isMobile) width = atomEl.getBoundingClientRect().width;
 if (isTablet) width = atomEl.getBoundingClientRect().width * 0.8;
 if (isDesktop)
-  width = (atomEl.getBoundingClientRect().width - scrollText.clientWidth) * 0.9;
+  width = (atomEl.getBoundingClientRect().width - scrollText.clientWidth) * 0.8;
 
 console.log("isMobile", isMobile, "isTablet", isTablet);
 
