@@ -24,9 +24,6 @@ let width =
     ? window.innerWidth
     : window.innerHeight - 200;
 
-console.log(width)
-
-
 let height = width;
 
 const svg = d3.select('.key')
@@ -124,6 +121,8 @@ let txt2 = svg
 .attr('y', 30)
 .text('1,000')
 
+let lastRotate;
+
 const updateMap = (d, cases) => {
 
         if (d.fLengthPos)
@@ -150,7 +149,8 @@ const updateMap = (d, cases) => {
                 path.projection(projection);
                 updateCases(cases, d.cases)
             }
-        })
+        })            
+        
 }
 
 

@@ -181,7 +181,9 @@ canvas {
 
   position: absolute;
 
-  bottom: 0;
+  bottom: 5px;
+
+  z-index: 10000;
 
   .legend-line{
     stroke-width:0.5px;
