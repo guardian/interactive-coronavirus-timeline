@@ -37,7 +37,7 @@ let projection = d3
 projection.fitExtent(
   [
     [0, 0],
-    [width, height - 50],
+    [width, (isMobile ? height - 20 : height - 50)],
   ],
   countriesLowFC
 );
