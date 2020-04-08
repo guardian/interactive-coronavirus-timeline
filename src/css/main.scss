@@ -26,9 +26,8 @@
 // }
 
 
-.scroll-inner{
-  //background: #ffffff;
-  
+.scroll-inner {
+  background: #ffffff;
 }
 
 .interactive-wrapper {
@@ -207,4 +206,17 @@ canvas {
 
 .inner-spacer {
   height: 50px;
+}
+
+//Immersive over rides //
+.content__main-column--interactive .element--immersive {
+  font-size: 17px !important;
+}
+
+.content__main-column--interactive .element--immersive {
+  margin-bottom: 0px !important;
+}
+
+.content__main-column--interactive > h2 {
+  margin-top: 0px;
 }
