@@ -17,15 +17,8 @@ const atomEl = $(".scroll-inner");
 let isMobile = window.matchMedia("(max-width: 640px)").matches;
 let isTablet = window.matchMedia("(max-width: 979px)").matches;
 
-/*let width =
-  isTablet && isMobile === false
-    ? window.innerWidth - 50
-    : isMobile
-    ? window.innerWidth
-    : window.innerHeight - 200;*/
 
-
-let width = 3200;
+let width = 3600;
 
 let height = width;
 
@@ -52,8 +45,8 @@ let projection2 = d3
 
 projection.fitExtent(
   [
-    [20, 20],
-    [width - 20, height - 20],
+    [0, 0],
+    [width, height],
   ],
   countriesLowFC
 );
@@ -62,13 +55,13 @@ let path = d3.geoPath().projection(projection).context(context);
 
 let path2 = d3.geoPath().projection(projection2);
 
-let colorLand = "#eaeaea";
-let colorLandSelected = "#fff1f4";
-let graticuleColor = "#333333";
-let lineLand = "#e4e4e4";
-let colorGlobe = "#ffffff";
+let colorLand = "#ffffff";
+let colorLandSelected = "#fab0cf";
+let graticuleColor = "#9cb4be";
+let lineLand = "#9cb4be";
+let colorGlobe = "#e2e7ea";
 let textColors = "#333";
-let blobColor = "#c70000";
+let blobColor = "#e1058c";
 
 let sphere = { type: "Sphere" };
 
@@ -126,6 +119,8 @@ let txt2 = svg
 
 const updateMap = (d, cases) => {
 
+    console.log(d)
+
         if (d.fLengthPos)
             {
                 point = d.point
@@ -169,7 +164,7 @@ const updateCases = (cases, countries) =>{
 
     context.beginPath();
     context.strokeStyle = graticuleColor;
-    context.lineWidth = 0.1;
+    context.lineWidth = 4;
     path(graticule());
     context.stroke();
     context.closePath();
@@ -181,7 +176,7 @@ const updateCases = (cases, countries) =>{
     context.closePath();
 
     context.strokeStyle = lineLand;
-    context.lineWidth = 0.5;
+    context.lineWidth = 4;
     context.stroke();
 
 
@@ -212,7 +207,7 @@ const updateCases = (cases, countries) =>{
             let circleFill = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();
             context.fillStyle = blobColor;
-            context.globalAlpha = 0.1;
+            context.globalAlpha = 0.3;
             path(circleFill());
             context.fill();
             context.closePath();
@@ -221,7 +216,7 @@ const updateCases = (cases, countries) =>{
             context.beginPath();
             context.strokeStyle = blobColor;
             context.globalAlpha = 1;
-            context.lineWidth = 1 ;
+            context.lineWidth = 2 ;
             path(circleStroke());
             context.stroke();
             context.closePath();

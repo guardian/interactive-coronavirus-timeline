@@ -17,29 +17,14 @@ const atomEl = $(".scroll-inner");
 let isMobile = window.matchMedia("(max-width: 640px)").matches;
 let isTablet = window.matchMedia("(max-width: 979px)").matches;
 
-
 let scrollText = $(".scroll-text");
 console.log(scrollText)
 let width = isMobile ? atomEl.getBoundingClientRect().width : atomEl.getBoundingClientRect().width - scrollText.clientWidth;
 
-if(isTablet)width = atomEl.getBoundingClientRect().width
+if(isTablet)width = atomEl.getBoundingClientRect().width * 0.8;
 
-//let hheight = isMobile ? w * 1.6 : 752 * w / 1260;
-
-/*let width =
-  isTablet && isMobile === false
-    ? window.innerWidth - scrollText.clientWidth
-    : isMobile
-    ? window.innerWidth
-    : window.innerHeight - scrollText.clientWidth;
-*/
 
 let height = width;
-
-const svg = d3.select('.key')
-.append('svg')
-.attr('width', 50)
-.attr('height', 50)
 
 let circle = d3.geoCircle();
 
@@ -52,11 +37,6 @@ let projection = d3
   .translate([width / 2, height / 2])
   .clipAngle(90);
 
-let projection2 = d3
-  .geoOrthographic()
-  .translate([50 / 2, 50 / 2])
-  .clipAngle(90);
-
 projection.fitExtent(
   [
     [20, 20],
@@ -66,8 +46,6 @@ projection.fitExtent(
 );
 
 let path = d3.geoPath().projection(projection).context(context);
-
-let path2 = d3.geoPath().projection(projection2);
 
 let colorLand = "#eaeaea";
 let colorLandSelected = "#fff1f4";
@@ -81,55 +59,9 @@ let sphere = { type: "Sphere" };
 
 let graticule = d3.geoGraticule();
 
-
 let point;
 
 const radius = d3.scaleSqrt().range([0, 30]).domain([0, 400000]);
-
-/*let r1 = d3.geoCircle().center([0,0]).radius(radius(10000));
-let r2 = d3.geoCircle().center([0,0]).radius(radius(1000));
-
-svg.append('path')
-.attr('d', path2(r1()))
-.attr('fill',blobColor)
-.attr('fill-opacity',0.2)
-.style('stroke', blobColor)
-.style('stroke-width', 1)
-.style('stroke-opacity',1)
-
-let line1 = svg
-.append('path')
-.attr('class', 'legend-line')
-.attr('d', "M25 45 H25 50 Z" )
-.attr('stroke', 'black')
-
-let txt1 = svg
-.append('text')
-.attr('class', 'legend-text')
-.attr('x', 55 )
-.attr('y', 50)
-.text('10,000')
-
-svg.append('path')
-.attr('d', path2(r2()))
-.attr('fill',blobColor)
-.attr('fill-opacity',0.2)
-.style('stroke', blobColor)
-.style('stroke-width', 1)
-.style('stroke-opacity',1)
-
-let line2 = svg
-.append('path')
-.attr('class', 'legend-line')
-.attr('d', "M25 25 H25 50 Z" )
-.attr('stroke', 'black')
-
-let txt2 = svg
-.append('text')
-.attr('class', 'legend-text')
-.attr('x', 55 )
-.attr('y', 30)
-.text('1,000')*/
 
 const updateMap = (d, cases) => {
 
