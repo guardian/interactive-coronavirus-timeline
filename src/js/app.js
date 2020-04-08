@@ -67,7 +67,6 @@ pointsWithFeature
 .concat([{}, {}, {}])
 .forEach((d, i) => scrolly.addTrigger({ num: i, do: () => {
 
-  console.log("Triggering", i)
 
   if (i <= 99) {
   if (true) {
@@ -75,7 +74,6 @@ pointsWithFeature
   // bullets.forEach(b => b.classList.remove('date-bullet--full'))
   bullets.forEach((b, j) => j <= i ? b.classList.add('date-bullet--full') : b.classList.remove('date-bullet--full'))
 
-  console.log(bullets.map((b, j) => j <= i ))
 
   // bullets[i].classList.add('date-bullet--full')
 
