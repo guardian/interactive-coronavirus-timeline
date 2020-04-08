@@ -181,6 +181,7 @@
   font-size: 32px;
   line-height: 36px;
   font-weight: 700;
+  position: relative;
 
   @include mq(tablet) {
     font-size: 34px;
@@ -198,21 +199,49 @@
     background-image: url("<%= path %>/assets/header-image.png");
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: 10px 1px;
-    height: 40vw;
-    border-top: 1px solid #dcdcdc;
+    background-position: 10px 0px;
+    height: 32vw;
+    padding-top: 5px;
+    margin-top: 10px;
     @include mq(tablet) {
       border-top: 0;
       height: 285px;
     }
-    margin-top: -4px;
-    border-bottom: 1px solid #dcdcdc;
-    margin-bottom: -1px;
+
     @include mq(desktop) {
       margin-left: -10px;
       width: 970px;
     }
     @include mq(wide) {
+      width: 1050px;
+    }
+  }
+  &::after {
+    content: "";
+    width: calc(100% + 20px);
+    background-color: $neutral-86;
+    position: absolute;
+    height: 1px;
+    top: calc(32vw + 18px);
+    left: -10px;
+
+    @include mq(mobileLandscape) {
+      left: -20px;
+      width: calc(100% + 40px);
+    }
+
+    @include mq(tablet) {
+      top: 303px;
+    }
+    @include mq(desktop) {
+      width: 980px;
+    }
+    @include mq(leftCol) {
+      left: -10px;
+      width: 970px;
+    }
+    @include mq(wide) {
+      left: -10px;
       width: 1050px;
     }
   }
@@ -301,6 +330,18 @@ a,
   padding-top: 12px;
   border-top: none;
 }
+
+.ios,
+.android {
+  .article__header .headline {
+    padding: 4px 12px 30px 12px;
+  }
+  .standfirst {
+    margin-bottom: 20px;
+    margin-top: 0px;
+  }
+}
+
 // .content__main-column--interactive,
 // .article .from-content-api {
 //   & > p,
@@ -379,10 +420,10 @@ a,
 //     margin-top: 36px !important;
 //   }
 
-//   .element--immersive {
+// .element--immersive {
 //     max-width: initial;
 //     margin-bottom: 24px !important;
-//     // font-size: 0;
+// font-size: 0;
 
 //     @include mq(leftCol) {
 //       width: 1140px;

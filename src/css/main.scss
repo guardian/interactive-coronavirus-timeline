@@ -13,6 +13,9 @@
 .element-atom,
 .interactive-atom {
   margin: 0 !important;
+  background: none !important;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
 // .gs-container {
@@ -39,7 +42,14 @@
   margin-left: -10px;
   display: flex;
   justify-content: flex-start;
-  width: 100%;
+  @include mq(mobile) {
+    width: 100vw;
+    height: 100px;
+  }
+  @include mq(desktop) {
+    width: 100%;
+    height: auto;
+  }
   // max-width: 280px;
   // height: 60px;
   @include fs-textSans(3);
@@ -57,7 +67,7 @@
   }
 
   & > div {
-    padding-right: 10px;
+    padding-right: 8px;
     padding-left: 8px;
     position: relative;
 
@@ -79,6 +89,7 @@
 
   & > div:first-of-type {
     width: 75px;
+    padding-right: 0px;
     &:before {
       display: none;
       @include mq(tablet) {
@@ -93,7 +104,7 @@
     }
   }
   & > div:nth-of-type(2) {
-    width: 35%;
+    width: 36%;
   }
 
   @include mq(desktop) {
@@ -131,12 +142,12 @@
 .gv-toll {
   @include mq(mobile) {
     @include fs-titlepiece(1);
-    font-size: 26px;
+    font-size: 25px;
     line-height: 24px;
     // font-size: 32px;
   }
   @include mq(mobileMedium) {
-    font-size: 32px;
+    font-size: 30px;
   }
   @include mq(tablet) {
     font-size: 38px;
@@ -168,7 +179,8 @@ canvas {
   }
 }
 
-.ios, .android {
+.ios,
+.android {
   .article {
     overflow: visible !important;
   }
@@ -181,6 +193,10 @@ canvas {
     @include mq(tablet) {
       height: auto;
     }
+
+    & > div:nth-of-type(2) {
+      width: 40%;
+    }
   }
 
   canvas {
@@ -191,5 +207,3 @@ canvas {
 .inner-spacer {
   height: 50px;
 }
-
-
