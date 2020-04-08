@@ -2,9 +2,10 @@ import { supportsSticky, $$, $ } from "./util.js"
 
 class ScrollyTeller {
     constructor(config) {
-        this.isMobile = window.innerWidth < 740;
-        this.triggerTop = (!this.isMobile) ? config.triggerTop : config.triggerTopMobile;
-        this.scrollInner = config.parent.querySelector(".scroll-inner");
+        this.isMobile = window.innerWidth < 600;
+        this.isTablet = window.innerWidth < 780 && window.innerWidth >= 600;
+        this.triggerTop = (this.isMobile) ? config.triggerTopMobile : this.isTablet ? config.triggerTopTablet : config.triggerTop
+        this.scrollInner = config.parent.querySelector(".scroll-inner");1
         this.scrollText = config.parent.querySelector(".scroll-text");
         this.scrollWrapper = config.parent.querySelector(".scroll-wrapper");
         this.lastScroll = null;
