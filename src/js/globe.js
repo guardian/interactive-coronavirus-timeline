@@ -22,8 +22,19 @@ let width =
     ? window.innerWidth * 0.75
     : isMobile
     ? window.innerWidth
-    : window.innerHeight - 100;
+    : window.innerHeight - 200;
+
+console.log(width)
+
+
 let height = width;
+
+const svg = d3.select('.key')
+.append('svg')
+.attr('width', 50)
+.attr('height', 50)
+
+let circle = d3.geoCircle();
 
 const canvas = d3.select("canvas").attr("width", width).attr("height", height);
 
@@ -34,16 +45,22 @@ let projection = d3
   .translate([width / 2, height / 2])
   .clipAngle(90);
 
+let projection2 = d3
+  .geoOrthographic()
+  .translate([50 / 2, 50 / 2])
+  .clipAngle(90);
+
 projection.fitExtent(
   [
-    [0, 0],
-    [width, (isMobile ? height - 20 : height - 50)],
+    [20, 20],
+    [width - 20, height - 20],
   ],
   countriesLowFC
 );
 
 let path = d3.geoPath().projection(projection).context(context);
 
+let path2 = d3.geoPath().projection(projection2);
 
 let colorLand = "#eaeaea";
 let colorLandSelected = "#fff1f4";
@@ -57,22 +74,64 @@ let sphere = { type: "Sphere" };
 
 let graticule = d3.geoGraticule();
 
-// let feature;
-// let bounds;
 
 let point;
 
-const radius = d3.scaleSqrt().range([0, 30]).domain([0, 200000]);
+const radius = d3.scaleSqrt().range([0, 30]).domain([0, 400000]);
+
+let r1 = d3.geoCircle().center([0,0]).radius(radius(10000));
+let r2 = d3.geoCircle().center([0,0]).radius(radius(1000));
+
+svg.append('path')
+.attr('d', path2(r1()))
+.attr('fill',blobColor)
+.attr('fill-opacity',0.2)
+.style('stroke', blobColor)
+.style('stroke-width', 1)
+.style('stroke-opacity',1)
+
+let line1 = svg
+.append('path')
+.attr('class', 'legend-line')
+.attr('d', "M25 45 H25 50 Z" )
+.attr('stroke', 'black')
+
+let txt1 = svg
+.append('text')
+.attr('class', 'legend-text')
+.attr('x', 55 )
+.attr('y', 50)
+.text('10,000')
+
+svg.append('path')
+.attr('d', path2(r2()))
+.attr('fill',blobColor)
+.attr('fill-opacity',0.2)
+.style('stroke', blobColor)
+.style('stroke-width', 1)
+.style('stroke-opacity',1)
+
+let line2 = svg
+.append('path')
+.attr('class', 'legend-line')
+.attr('d', "M25 25 H25 50 Z" )
+.attr('stroke', 'black')
+
+let txt2 = svg
+.append('text')
+.attr('class', 'legend-text')
+.attr('x', 55 )
+.attr('y', 30)
+.text('1,000')
 
 const updateMap = (d, cases) => {
 
-
-    if (d.fLengthPos)
-    {
-        point = d.point
+        if (d.fLengthPos)
+            {
+                point = d.point
+            }
 
         let currentRotate = projection.rotate();
-        let currentScale = projection.scale();
 
         projection.rotate([- point[0], - point[1]]);
         path.projection(projection);
@@ -81,30 +140,17 @@ const updateMap = (d, cases) => {
 
         d3.transition()
         .duration(500)
-        .tween('tween', () => {
+        .tween('tween', () => { 
+
 
             let r = d3.interpolate(currentRotate, nextRotate);
 
-            return (t) => {
-
-                projection
-                .rotate(r(t))
-
+            return(t) => {
+                projection.rotate(r(t))
                 path.projection(projection);
-
-                //updateCases(cases, d.cases)
+                updateCases(cases, d.cases)
             }
         })
-        // .on('end', d =>  updateCases(cases, d.cases));
-        .on('end', updateCases(cases, d.cases));
-
-    }
-    else
-    {
-        updateCases(cases, d.cases)
-    }
-
-    
 }
 
 
@@ -114,20 +160,24 @@ const updateCases = (cases, countries) =>{
 
     context.fillStyle = colorGlobe;
     context.globalAlpha =1;
+
     context.beginPath();
     path(sphere);
     context.fill();
+    context.closePath();
 
     context.beginPath();
     context.strokeStyle = graticuleColor;
     context.lineWidth = 0.1;
     path(graticule());
     context.stroke();
+    context.closePath();
 
     context.fillStyle = colorLand;
     context.beginPath();
     path(countriesLowFC);
     context.fill();
+    context.closePath();
 
     context.strokeStyle = lineLand;
     context.lineWidth = 0.5;
@@ -145,11 +195,13 @@ const updateCases = (cases, countries) =>{
         context.beginPath();
         path(feature);
         context.fill();
+        context.closePath();
 
         context.strokeStyle = lineLand;
         context.beginPath();
         path(feature);
         context.stroke();
+        context.closePath();
     })
 
     cases.forEach(c => {
@@ -162,6 +214,7 @@ const updateCases = (cases, countries) =>{
             context.globalAlpha = 0.1;
             path(circleFill());
             context.fill();
+            context.closePath();
 
             let circleStroke = d3.geoCircle().center([c.lon, c.lat]).radius(radius(c.cases))
             context.beginPath();
@@ -170,7 +223,9 @@ const updateCases = (cases, countries) =>{
             context.lineWidth = 1 ;
             path(circleStroke());
             context.stroke();
+            context.closePath();
     })
+
 }
 
 
