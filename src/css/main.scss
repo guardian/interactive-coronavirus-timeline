@@ -2,6 +2,8 @@
 @import "fonts";
 @import "palette";
 @import "scrolly";
+@import "enhancer";
+@import "header";
 
 // Uncomment for embeds
 //@import "embed";
@@ -132,7 +134,7 @@
     font-size: 32px;
   }
   @include mq(tablet) {
-    font-size: 40px;
+    font-size: 38px;
   }
 }
 
@@ -159,4 +161,14 @@ canvas {
     background: none;
     margin-top: 0px;
   }
+}
+
+.ios, .android {
+  .article {
+    overflow: visible !important;
+  }
+}
+
+.inner-spacer {
+  height: 50px;
 }

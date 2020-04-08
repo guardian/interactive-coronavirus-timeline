@@ -15,14 +15,48 @@ export async function render() {
     const data = await rp('https://interactive.guim.co.uk/docsdata-test/1KVnPUoUDkracHpXlQapzIjsHOs9DtnrvNM8gsWarR3Q.json')
     const json = await JSON.parse(data)
     
-    // const dates = Object.keys(json.sheets.places[0]).filter(key => key.indexOf(' ') > -1)
-    // const dates = Object.keys(json.sheets.place).filter(key => key.indexOf(' ') > -1)
-    const dates = json.sheets.output.map(d => d.displayDate)
+    /* NIKOS SCRIPT */
+    const totals = json.sheets.totals
+
+    const out = []
+
+    const keys = []
+
+    totals.forEach(row => {
+        keys.push(row.day)
+    })
+
+    const fakeKeys = Object.keys(totals[0]).filter(k => k !== 'day')
+
+    const withoutHeader = fakeKeys.map(k => {
+        return totals.map(row => row[k])
+    })
+
+    const withHeader = withoutHeader.map((arr, i) => {
+
+        const out = { day: i + 1 }
+
+        arr.forEach((el, i) => {
+
+            out[keys[i]] = el
+
+        })
+
+        return out
+
+    })
+
+    /* NIKOS SCRIPT */ 
+
+
+    // const dates = json.sheets.output.map(d => d.displayDate)
+    const dates = withHeader.map(d => d.displayDate)
 
     const canada = json.sheets.places.filter(place => place['Country/Region'] === 'Canada');
     const aussie = json.sheets.places.filter(place => place['Country/Region'] === 'Australia');
 
     const places = json.sheets.places
+    .filter(place => place.ISO_A3 !== "")
     .filter(place => place['Country/Region'] !== 'Canada')
     .filter(place => place['Country/Region'] !== 'Australia')
     .map(place => ({
@@ -50,31 +84,47 @@ export async function render() {
         cases: dates.map(date => ({ date, cases: aussie.map(region => Number(region[date])).reduce((a, b) => a + b) }))
     })
 
-    const datesWithLocalisedCases = json.sheets.output.map(d => {
+    const datesWithLocalisedCases = withHeader.map(d => {
         d.totalCases = d.cases
         d.totalDeaths = d.deaths
         delete d.cases
         delete d.deaths
         return d
     })
-    .map(d => {
+    .map((d, i) => {
         const currentDate = d.displayDate;
         let cases = []
 
         places.forEach(p => {
             let currentCases = p.cases.find(c => c.date === currentDate)
 
+            
+
             if (currentCases.cases > 0) {
                 cases.push({ iso:p.iso, lat: p.lat, lon: p.lon, cases: currentCases.cases })
             }
 
         });
-
+        
         return Object.assign({}, d, { cases })
     })
 
+    const duped = datesWithLocalisedCases.map((d, i) => {
 
-    const pointsWithFeature = datesWithLocalisedCases.map(d => {
+        if (i >= 97 && d.cases.length === 0) {
+            d.cases = datesWithLocalisedCases[i - 1].cases
+        }
+        if (i >= 97 && d.totalCases === "0") {
+            d.totalCases = datesWithLocalisedCases[i - 1].totalCases
+        }
+    if (i >= 97 && d.totalDeaths === "0") {
+            d.totalDeaths = datesWithLocalisedCases[i - 1].totalDeaths
+        }
+        return d
+    })
+
+
+    const pointsWithFeature = duped.map((d, i) => {
         const cSet = set(d.areas ? JSON.parse(d.areas) : [])
 
         const features = topojson.feature(countriesLow, {

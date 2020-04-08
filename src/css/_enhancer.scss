@@ -1,0 +1,14 @@
+.content__main-column--interactive {
+  >p, >h2 {
+    @include mq(tablet) {
+      max-width: 620px;
+    }
+    @include mq(leftCol) {
+      margin-left: 160px;
+    }
+
+    @include mq(wide) {
+        margin-left: 240px;
+    }
+  }
+}

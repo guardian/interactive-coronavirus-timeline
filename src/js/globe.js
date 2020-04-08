@@ -107,8 +107,6 @@ svg.append('path')
 
 const updateMap = (d, cases) => {
 
-    console.log(d.fLengthPos, d.point)
-
     /*if (d.fLengthPos)
     {*/
         if (d.fLengthPos)
@@ -157,6 +155,8 @@ const updateMap = (d, cases) => {
             }
         })
         .on('end', console.log('end'));*/
+        // .on('end', d =>  updateCases(cases, d.cases));
+
 
    /* }
     else
