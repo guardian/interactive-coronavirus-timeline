@@ -52,7 +52,7 @@
   }
 
   & > div {
-    padding-right: 10px;
+    padding-right: 8px;
     padding-left: 8px;
     position: relative;
 
@@ -74,6 +74,7 @@
 
   & > div:first-of-type {
     width: 75px;
+    padding-right: 0px;
     &:before {
       display: none;
       @include mq(tablet) {
@@ -88,7 +89,7 @@
     }
   }
   & > div:nth-of-type(2) {
-    width: 35%;
+    width: 36%;
   }
 
   @include mq(desktop) {
@@ -126,12 +127,12 @@
 .gv-toll {
   @include mq(mobile) {
     @include fs-titlepiece(1);
-    font-size: 26px;
+    font-size: 25px;
     line-height: 24px;
     // font-size: 32px;
   }
   @include mq(mobileMedium) {
-    font-size: 32px;
+    font-size: 30px;
   }
   @include mq(tablet) {
     font-size: 38px;
@@ -163,7 +164,8 @@ canvas {
   }
 }
 
-.ios, .android {
+.ios,
+.android {
   .article {
     overflow: visible !important;
   }
@@ -187,11 +189,9 @@ canvas {
   height: 50px;
 }
 
-
-.key{
-
-  width:100px;
-  height:55px;
+.key {
+  width: 100px;
+  height: 55px;
 
   position: absolute;
 
@@ -199,16 +199,14 @@ canvas {
 
   z-index: 10000;
 
-  .legend-line{
-    stroke-width:0.5px;
+  .legend-line {
+    stroke-width: 0.5px;
   }
 
-
-  .legend-text{
-    
-    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+  .legend-text {
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial,
+      "Lucida Grande", sans-serif;
     font-size: 12px;
     color: #dcdcdc;
   }
 }
-
