@@ -168,6 +168,7 @@
     margin-bottom: 32px;
     margin-left: 0 !important;
     max-width: auto;
+    pointer-events: all;
     @include mq(desktop) {
       margin-bottom: 48px;
     }

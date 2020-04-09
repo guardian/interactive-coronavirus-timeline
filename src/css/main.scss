@@ -238,3 +238,9 @@ canvas {
     margin-left: 0;
   }
 }
+
+.ios, .android {
+  .canvas-wrapper {
+    padding-top: 64px;
+  }
+}
