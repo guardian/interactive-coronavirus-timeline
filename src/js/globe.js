@@ -39,7 +39,10 @@ let isDesktop = window.matchMedia("(min-width: 780px)").matches;
 let scrollText = $(".scroll-text");
 //let width = isMobile ? atomEl.getBoundingClientRect().width : (atomEl.getBoundingClientRect().width - scrollText.clientWidth) * 0.9;
 
-const pixelRatio = window.pixelRatio || 1
+const pixelRatio = window.devicePixelRatio
+
+console.log(pixelRatio)
+
 const tallRatio = (window.innerHeight / window.innerWidth) >= 1.9
 let width;
 if (isMobile) width = atomEl.getBoundingClientRect().width - (tallRatio ? 0 : 50);
@@ -53,10 +56,10 @@ let circle = d3.geoCircle();
 
 // const canvas = d3.select("canvas").attr("width", width ).attr("height", height);
 const canvas = document.getElementById('gv-canvas')
-canvas.width = width * 2
-canvas.height = height * 2
-canvas.style.width = width
-canvas.style.height = height
+canvas.width = width * pixelRatio
+canvas.height = height * pixelRatio
+canvas.style.width = `${width}px`
+canvas.style.height = `${height}px`
 
 let context = canvas.getContext("2d");
 
