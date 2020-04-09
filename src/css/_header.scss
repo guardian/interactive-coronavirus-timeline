@@ -218,4 +218,8 @@ a,
     margin-bottom: 20px;
     margin-top: 0px;
   }
+
+  .headline:after {
+    top: calc(32vw + 95px);
+  }
 }

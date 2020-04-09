@@ -41,8 +41,6 @@ let scrollText = $(".scroll-text");
 
 const pixelRatio = window.devicePixelRatio
 
-console.log(pixelRatio)
-
 const tallRatio = (window.innerHeight / window.innerWidth) >= 1.9
 let width;
 if (isMobile) width = atomEl.getBoundingClientRect().width - (tallRatio ? 0 : 50);
