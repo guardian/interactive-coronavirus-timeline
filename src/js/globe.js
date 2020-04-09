@@ -51,10 +51,17 @@ let height = width;
 
 let circle = d3.geoCircle();
 
-const canvas = d3.select("canvas").attr("width", width ).attr("height", height);
-// const canvas = $('.gv-canvas')
+// const canvas = d3.select("canvas").attr("width", width ).attr("height", height);
+const canvas = document.getElementById('gv-canvas')
+canvas.width = width * 2
+canvas.height = height * 2
+canvas.style.width = width
+canvas.style.height = height
 
-let context = canvas.node().getContext("2d");
+let context = canvas.getContext("2d");
+
+
+context.scale(pixelRatio, pixelRatio)
 
 let projection = d3
   .geoOrthographic()
